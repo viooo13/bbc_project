@@ -2,30 +2,190 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PaketController;
+use App\Http\Controllers\PesananController;
+use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\AdminManagementController;
+use Illuminate\Http\Request;
 
 // Authentication Routes
-Route::get('/login', [AuthController::class, 'showLogin'])->name('showLogin')->middleware('guest');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('showLogin');
 Route::post('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister')->middleware('guest');
 Route::post('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Universal login (combined user/admin UI)
-Route::get('/universal-login', function () { return view('auth.universal-login'); })->name('universal.login')->middleware('guest');
-Route::post('/universal-login', [AuthController::class, 'universalLoginSubmit'])->name('universal.login.submit')->middleware('guest');
+Route::get('/universal-login', function () { return view('auth.universal-login'); })->name('universal.login');
+Route::post('/universal-login', [AuthController::class, 'universalLoginSubmit'])->name('universal.login.submit');
+
+Route::post('/admin/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
 
 // Backwards-compatible user-specific routes
-Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.login')->middleware('guest');
+Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.login');
 Route::get('/user/register', [AuthController::class, 'showRegister'])->name('user.register')->middleware('guest');
 Route::post('/user/register', [AuthController::class, 'register'])->name('user.register.submit')->middleware('guest');
 
-// Admin Dashboard
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard')->middleware('auth');
-
-// Default redirect untuk authenticated users
 Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
+    if (!auth()->check()) {
+        return redirect()->route('showLogin');
+    }
+
+    $user = auth()->user();
+    if (isset($user->role) && $user->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+
+    return redirect()->route('home');
+});
+
+// Home page for normal users (after register/login)
+Route::get('/home', [MenuController::class, 'home'])->name('home')->middleware('auth');
+
+Route::get('/tentang-bbc', function () {
+    $testimonials = \App\Models\Testimonial::orderByDesc('created_at')->take(12)->get();
+    return view('pages.tentang-halal', [
+        'testimonials' => $testimonials,
+    ]);
+})->name('pages.tentang')->middleware('auth');
+
+Route::get('/lokasi-dan-kontak', function () {
+    return view('pages.lokasi-kontak');
+})->name('pages.lokasi_kontak')->middleware('auth');
+
+Route::get('/filter-menu', [MenuController::class, 'filterMenu'])->name('menu.filter')->middleware('auth');
+
+Route::post('/contact', function (Request $request) {
+    return back()->with('contact_success', 'Pesan berhasil dikirim.');
+})->name('contact.submit');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+    Route::get('/api/cart-count', [CartController::class, 'apiCount'])->name('cart.api.count');
+
+    Route::post('/testimonial', [TestimonialController::class, 'store'])->name('testimonial.store');
+
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    Route::get('/transaksi/{orderId}', [TransaksiController::class, 'show'])->name('transaksi.show');
+});
+
+// Public menu page (user/customer) - separate from admin CRUD
+Route::get('/menu', [MenuController::class, 'publicIndex'])->name('menu.public')->middleware('auth');
+
+// Backwards compatibility
+Route::get('/menu-public', function () {
+    return redirect()->route('menu.public');
 })->middleware('auth');
 
+// Admin Dashboard
+Route::get('/admin/dashboard', function () {
+    $pendingCount = \App\Models\Pesanan::where('status', 'pending')->count();
+    $totalOrders = \App\Models\Pesanan::count();
+    $latestOrders = \App\Models\Pesanan::orderByDesc('created_at')->limit(5)->get();
+
+    return view('admin.dashboard', compact('pendingCount', 'totalOrders', 'latestOrders'));
+})->name('admin.dashboard')->middleware(['auth:admin', 'admin']);
+
+// Admin routes
+Route::middleware(['auth:admin', 'admin'])->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('/kelola-pesanan', function () {
+            $recentOrders = \App\Models\Pesanan::orderByDesc('created_at')->limit(5)->get();
+            $orders = \App\Models\Pesanan::orderByDesc('created_at')->get();
+
+            return view('admin.kelola-pesanan.index', compact('recentOrders', 'orders'));
+        })->name('admin.kelola_pesanan.index');
+
+        Route::get('/kelola-pesanan/export', function () {
+            $orders = \App\Models\Pesanan::orderByDesc('created_at')->get();
+            $filename = 'kelola-pesanan-' . now()->format('Y-m-d_H-i-s') . '.csv';
+
+            return response()->streamDownload(function () use ($orders) {
+                $out = fopen('php://output', 'w');
+                fwrite($out, "\xEF\xBB\xBF");
+
+                fputcsv($out, ['ID Pesanan', 'Pelanggan', 'Total', 'Status', 'Tanggal'], ';');
+
+                foreach ($orders as $o) {
+                    $status = (string) ($o->status ?? '');
+
+                    if ($status === 'completed') {
+                        $label = 'Selesai';
+                    } elseif ($status === 'shipped') {
+                        $label = 'Dikirim';
+                    } elseif ($status === 'rejected') {
+                        $label = 'Cancel';
+                    } else {
+                        $label = 'Proses';
+                    }
+
+                    fputcsv($out, [
+                        (string) ($o->order_id ?? ''),
+                        (string) ($o->customer_name ?? ''),
+                        (float) ($o->total_price ?? 0),
+                        $label,
+                        optional($o->created_at)->format('Y-m-d H:i:s') ?? '',
+                    ], ';');
+                }
+
+                fclose($out);
+            }, $filename, [
+                'Content-Type' => 'text/csv; charset=UTF-8',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]);
+        })->name('admin.kelola_pesanan.export');
+
+        // Menu CRUD Routes (Admin)
+        Route::get('/menu-management', [MenuController::class, 'index'])->name('admin.menu.index');
+        Route::get('/menu-management/create', [MenuController::class, 'create'])->name('admin.menu.create');
+        Route::post('/menu-management', [MenuController::class, 'store'])->name('admin.menu.store');
+        Route::get('/menu-management/{id}/edit', [MenuController::class, 'edit'])->name('admin.menu.edit');
+        Route::put('/menu-management/{id}', [MenuController::class, 'update'])->name('admin.menu.update');
+        Route::delete('/menu-management/{id}', [MenuController::class, 'destroy'])->name('admin.menu.destroy');
+        Route::get('/menu-management/{id}/delete', function ($id) {
+            // Redirect ke delete
+            return redirect()->route('admin.menu.index');
+        })->name('admin.menu.delete.get');
+    });
+
+    // Paket CRUD Routes
+    Route::get('/paket', [PaketController::class, 'index'])->name('paket.index');
+    Route::get('/paket/create', [PaketController::class, 'create'])->name('paket.create');
+    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store');
+    Route::get('/paket/{id}/edit', [PaketController::class, 'edit'])->name('paket.edit');
+    Route::put('/paket/{id}', [PaketController::class, 'update'])->name('paket.update');
+    Route::delete('/paket/{id}', [PaketController::class, 'destroy'])->name('paket.destroy');
+    Route::get('/paket/{id}/delete', function($id) {
+        // Redirect ke delete
+        return redirect()->route('paket.index');
+    })->name('paket.delete.get');
+
+    // Pesanan (Orders) Routes
+    Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
+    Route::get('/pesanan/{id}', [PesananController::class, 'show'])->name('pesanan.show');
+    Route::get('/pesanan/{id}/confirm', [PesananController::class, 'confirm'])->name('pesanan.confirm');
+    Route::get('/pesanan/{id}/reject', [PesananController::class, 'reject'])->name('pesanan.reject');
+    Route::get('/pesanan/{id}/ship', [PesananController::class, 'ship'])->name('pesanan.ship');
+    Route::get('/pesanan/{id}/complete', [PesananController::class, 'complete'])->name('pesanan.complete');
+    Route::get('/pesanan/{id}/paid', [PesananController::class, 'paid'])->name('pesanan.paid');
+
+    // Admin Management Routes
+    Route::get('/kelola-admin', [AdminManagementController::class, 'index'])->name('admin.management.index');
+    Route::get('/kelola-admin/create', [AdminManagementController::class, 'create'])->name('admin.management.create');
+    Route::post('/kelola-admin', [AdminManagementController::class, 'store'])->name('admin.management.store');
+    Route::get('/kelola-admin/{id}/edit', [AdminManagementController::class, 'edit'])->name('admin.management.edit');
+    Route::put('/kelola-admin/{id}', [AdminManagementController::class, 'update'])->name('admin.management.update');
+    Route::delete('/kelola-admin/{id}', [AdminManagementController::class, 'destroy'])->name('admin.management.destroy');
+    Route::get('/kelola-admin/{id}/delete', function($id) {
+        return redirect()->route('admin.management.index');
+    })->name('admin.management.delete.get');});

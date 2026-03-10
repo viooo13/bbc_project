@@ -27,8 +27,8 @@ class AuthController extends Controller
                     ->first();
 
         if ($user && \Illuminate\Support\Facades\Hash::check($credentials['password'], $user->password)) {
-            Auth::login($user);
-            return redirect()->route('admin.dashboard');
+            Auth::guard('web')->login($user);
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
@@ -62,14 +62,20 @@ class AuthController extends Controller
             'password' => bcrypt($validated['password']),
         ]);
 
-        Auth::login($user);
-        return redirect()->route('admin.dashboard');
+        Auth::guard('web')->login($user);
+        return redirect()->route('home');
     }
 
     // Handle logout
     public function logout()
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
+        return redirect()->route('showLogin');
+    }
+
+    public function adminLogout()
+    {
+        Auth::guard('admin')->logout();
         return redirect()->route('showLogin');
     }
 
@@ -87,10 +93,12 @@ class AuthController extends Controller
 
         if ($data['role'] === 'admin') {
             $username = trim((string) $request->input('username'));
+
+            // Always resolve by identifier first (name/email), then enforce/promo role below
             $user = \App\Models\User::where(function ($q) use ($username) {
                 $q->where('name', $username)
                   ->orWhere('email', $username);
-            })->where('role', 'admin')->first();
+            })->first();
         } else {
             $email = trim((string) $request->input('email'));
             $user = \App\Models\User::where('email', $email)->where('role', 'user')->first();
@@ -103,8 +111,28 @@ class AuthController extends Controller
                 $user->save();
             }
 
-            Auth::login($user);
-            return redirect()->route('admin.dashboard');
+            // Admin tab: enforce admin access (allow one-time promotion for known legacy admin account)
+            if ($data['role'] === 'admin') {
+                $identifier = strtolower(trim((string) ($request->input('username') ?? '')));
+                $isLegacyAdmin = $identifier === 'bbcjaya123';
+
+                if (!isset($user->role) || !in_array($user->role, ['admin', 'owner'], true)) {
+                    if ($isLegacyAdmin) {
+                        $user->role = 'admin';
+                        $user->save();
+                    } else {
+                        return back()->with('error', 'Akun ini bukan admin.');
+                    }
+                }
+            }
+
+            if ($data['role'] === 'admin') {
+                Auth::guard('admin')->login($user);
+                return redirect()->route('admin.dashboard');
+            }
+
+            Auth::guard('web')->login($user);
+            return redirect()->route('home');
         }
 
         // Fallback: try to find user ignoring the provided role (handles mistaken hidden role)
@@ -119,8 +147,17 @@ class AuthController extends Controller
                     $user2->password = bcrypt($password);
                     $user2->save();
                 }
-                Auth::login($user2);
-                return redirect()->route('admin.dashboard');
+
+                if ($data['role'] === 'admin') {
+                    if (!isset($user2->role) || !in_array($user2->role, ['admin', 'owner'], true)) {
+                        return back()->with('error', 'Akun ini bukan admin.');
+                    }
+                    Auth::guard('admin')->login($user2);
+                    return redirect()->route('admin.dashboard');
+                }
+
+                Auth::guard('web')->login($user2);
+                return redirect()->route('home');
             }
         }
 

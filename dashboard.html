@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin BBC - Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="https://via.placeholder.com/40x40?text=🐔" alt="Logo">
+                <span>ADMIN BBC</span>
+            </div>
+            
+            <nav class="menu">
+                <a href="#" class="menu-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-utensils"></i>
+                    <span>Menu Management</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Laporan Penjualan</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-comment"></i>
+                    <span>Testimoni</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Pesanan</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-user-cog"></i>
+                    <span>Kelola Admin</span>
+                </a>
+            </nav>
+            
+            <div class="user-info">
+                <img src="https://via.placeholder.com/40x40?text=👤" alt="User Avatar">
+                <div class="user-details">
+                    <div class="user-name">Admin User</div>
+                    <div class="user-email">admin@bbc.com</div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Dashboard</h1>
+            </header>
+            
+            <!-- Stats Cards -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-change positive">+10.5%</div>
+                        <div class="stat-value">Rp.45.000.000</div>
+                        <div class="stat-label">total pendapatan</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-change positive">+10.5%</div>
+                        <div class="stat-value">1,234</div>
+                        <div class="stat-label">total pesanan</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-change positive">+10.5%</div>
+                        <div class="stat-value">5,678</div>
+                        <div class="stat-label">Total Pelanggan</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-change positive">+10.5%</div>
+                        <div class="stat-value">5,678</div>
+                        <div class="stat-label">Total Outlet</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Info Pesanan Section -->
+            <section class="orders-section">
+                <h2>Info Pesanan</h2>
+                <div class="table-container">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>ID Pesanan</th>
+                                <th>Pelanggan</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#ORD-001</td>
+                                <td>Fauzi</td>
+                                <td>Rp 1,000,000</td>
+                                <td><span class="status-badge completed">Selesai</span></td>
+                                <td><button class="btn-detail">Detail</button></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-002</td>
+                                <td>Fauzi</td>
+                                <td>Rp 1,500,000</td>
+                                <td><span class="status-badge processing">Proses</span></td>
+                                <td><button class="btn-detail">Detail</button></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-003</td>
+                                <td>Fauzi</td>
+                                <td></td>
+                                <td><span class="status-badge shipped">Dikirim</span></td>
+                                <td><button class="btn-detail">Detail</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Aksi Cepat Section -->
+            <section class="quick-actions">
+                <h2>Aksi Cepat</h2>
+                <div class="action-buttons">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Tambah Menu Baru
+                    </button>
+                    <button class="btn btn-warning">
+                        <i class="fas fa-download"></i>
+                        Export Laporan
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

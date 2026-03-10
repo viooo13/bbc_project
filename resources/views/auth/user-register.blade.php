@@ -152,7 +152,7 @@
 
                 <div class="mb-6">
                     <label class="flex items-start">
-                        <input type="checkbox" name="terms" required class="mr-2 mt-1 rounded border-gray-300 text-primary focus:ring-primary">
+                        <input type="checkbox" name="agree" value="1" required class="mr-2 mt-1 rounded border-gray-300 text-primary focus:ring-primary">
                         <span class="text-sm text-gray-700">Saya setuju dengan <a href="#" class="text-primary hover:underline">syarat dan ketentuan</a> yang berlaku</span>
                     </label>
                 </div>
