@@ -10,6 +10,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        body, h1, h2, h3, h4, h5, h6, p, span, a, li, ul, ol, button, input, textarea, div {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        .font-playfair { font-family: 'Poppins', sans-serif !important; }
+    </style>
 </head>
 <body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden">
     @include('partials.navbar')
@@ -27,7 +33,7 @@
                             BAKSO BUNDERAN CIOMAS
                             <img src="logo.jpeg" alt="Logo" class="w-8 h-8 object-contain" />
                         </h3>
-                        <p class="text-gray-700 mb-4 leading-relaxed text-justify font-poppins">
+                        <p class="text-gray-700 mb-4 leading-relaxed text-justify font-fairplay">
                             Berdiri sejak 12 Februari 2025 yang lalu setiap hari melayani pelanggan setia di Diaol & Grobak. Kami menghadirkan Bakso Tulang & Sum-sum dengan bumbu rahasia dan cita rasa yang autentik. Dari influencer hingga pengusaha cita mulai dikenal semua kalangan.
                         </p>
                     </div>

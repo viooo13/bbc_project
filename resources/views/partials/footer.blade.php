@@ -2,10 +2,11 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
             <div class="flex items-center gap-3">
-                <img src="{{ asset('logo.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/48x48/8B0000/ffffff?text=BBC';" alt="Bakso Bunderan Ciomas" class="w-12 h-12 rounded-full object-contain bg-[#EFE1D1] p-1" />
-                <div class="leading-tight">
-                    <div class="text-sm font-extrabold tracking-wide">BAKSO BUNDERAN</div>
-                    <div class="text-sm font-extrabold tracking-wide">CIOMAS BBC</div>
+                <img src="{{ asset('logo.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/48x48/8B0000/ffffff?text=BBC';" alt="Bakso Bunderan Ciomas" class="w-12 h-12 rounded-full object-contain bg-transparent p-1" />
+                <div class="leading-tight text-left font-poopins" style="font-family: 'Poppins', sans-serif;">
+                    <div class="text-sm font-extrabold tracking-wide">bakso</div>
+                    <div class="text-sm font-extrabold tracking-wide">bunderan</div>
+                    <div class="text-sm font-extrabold tracking-wide">ciomas</div>
                 </div>
             </div>
 
