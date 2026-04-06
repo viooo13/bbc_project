@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-<body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden">
+<body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden" style="font-family: 'Poppins', sans-serif;">
     @include('partials.navbar')
 
     <section class="py-32 bg-[#EFE1D1]">
@@ -20,7 +20,7 @@
             <p class="text-center mb-12 text-lg text-gray-700">Nikmati berbagai menu bakso lezat kami yang gurih dan menggugah selera</p>
 
             <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button class="filter-btn active bg-red-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-red-800 transition" data-filter="all">Bakso</button>
+                <button class="filter-btn active bg-red-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-red-800 transition" data-filter="all">Semua</button>
                 @foreach(['bakso', 'mie', 'paket', 'minuman'] as $category)
                 <button class="filter-btn bg-[#3a2a1a] text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-[#2b1b14] transition" data-filter="{{ $category }}">{{ $category == 'mie' ? 'Mie Ayam' : ucfirst($category) }}</button>
                 @endforeach
