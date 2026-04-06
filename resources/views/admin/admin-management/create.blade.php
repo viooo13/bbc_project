@@ -319,24 +319,24 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <img src="https://via.placeholder.com/48x48?text=🐔" alt="Logo">
+                <img src="{{ asset('logo.jpeg') }}" alt="Logo">
                 <span>ADMIN BBC</span>
             </div>
             
             <nav class="menu">
-                <a href="/" class="menu-item">
+                <a href="/admin/dashboard" class="menu-item">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="/menu" class="menu-item">
+                <a href="/admin/menu-management" class="menu-item">
                     <i class="fas fa-utensils"></i>
                     <span>Menu Management</span>
                 </a>
-                <a href="/pesanan" class="menu-item">
+                <a href="/admin/kelola-pesanan" class="menu-item">
                     <i class="fas fa-shopping-bag"></i>
                     <span>Pesanan</span>
                 </a>
-                <a href="#" class="menu-item">
+                <a href="/laporan" class="menu-item">
                     <i class="fas fa-chart-line"></i>
                     <span>Laporan Penjualan</span>
                 </a>

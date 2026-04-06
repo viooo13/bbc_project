@@ -439,7 +439,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <img src="logo.jpeg" alt="Logo">
+                <img src="{{ asset('logo.jpeg') }}" alt="Logo">
                 <span>ADMIN BBC</span>
             </div>
             
@@ -448,21 +448,21 @@
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="/menu" class="menu-item active">
+                <a href="/admin/menu-management" class="menu-item active">
                     <i class="fas fa-utensils"></i>
                     <span>Menu Management</span>
                 </a>
-                <a href="#" class="menu-item">
+                <a href="/admin/kelola-pesanan" class="menu-item">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Pesanan</span>
+                </a>
+                <a href="/laporan" class="menu-item">
                     <i class="fas fa-chart-line"></i>
                     <span>Laporan Penjualan</span>
                 </a>
                 <a href="#" class="menu-item">
                     <i class="fas fa-comment"></i>
                     <span>Testimoni</span>
-                </a>
-                <a href="/pesanan" class="menu-item">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>Pesanan</span>
                 </a>
                 <a href="/kelola-admin" class="menu-item">
                     <i class="fas fa-user-cog"></i>
@@ -487,7 +487,7 @@
                     <p>Kelola menu produk BBC</p>
                 </div>
                 <div class="header-actions">
-                    <a href="/menu/create" class="add-btn">
+                    <a href="/admin/menu-management/create" class="add-btn">
                         <i class="fas fa-plus"></i>
                         Tambah Menu
                     </a>
@@ -545,10 +545,10 @@
                                     </td>
                                     <td>
                                         <div class="action-buttons">
-                                            <a href="/menu/{{ $menu->id }}/edit" class="btn-sm btn-edit">
+                                            <a href="/admin/menu-management/{{ $menu->id }}/edit" class="btn-sm btn-edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <button class="btn-sm btn-delete" onclick="if(confirm('Hapus menu ini?')) window.location.href='/menu/{{ $menu->id }}/delete'">
+                                            <button class="btn-sm btn-delete" onclick="if(confirm('Hapus menu ini?')) window.location.href='/admin/menu-management/{{ $menu->id }}/delete'">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>

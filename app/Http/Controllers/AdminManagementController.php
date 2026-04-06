@@ -58,8 +58,7 @@ class AdminManagementController extends Controller
      */
     public function edit($id)
     {
-        $admin = Admin::findOrFail($id);
-        $admin = (array)$admin;
+        $admin = Admin::findOrFail($id)->toArray();
 
         return view('admin.admin-management.edit', compact('admin'));
     }

@@ -254,7 +254,7 @@
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="logo">
-                <img src="logo.jpeg" alt="Logo">
+                <img src="{{ asset('logo.jpeg') }}" alt="Logo">
                 <span>ADMIN BBC</span>
             </div>
 
@@ -268,12 +268,20 @@
                     <span>Menu Management</span>
                 </a>
                 <a href="/admin/kelola-pesanan" class="menu-item active">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>Kelola Pesanan</span>
-                </a>
-                <a href="/pesanan" class="menu-item">
                     <i class="fas fa-shopping-bag"></i>
                     <span>Pesanan</span>
+                </a>
+                <a href="/laporan" class="menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Laporan Penjualan</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-comment"></i>
+                    <span>Testimoni</span>
+                </a>
+                <a href="/kelola-admin" class="menu-item">
+                    <i class="fas fa-user-cog"></i>
+                    <span>Kelola Admin</span>
                 </a>
             </nav>
 

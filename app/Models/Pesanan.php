@@ -25,5 +25,6 @@ class Pesanan extends Model
     protected $casts = [
         'total_price' => 'decimal:2',
         'items' => 'array',
+        'special_request' => 'array',
     ];
 }

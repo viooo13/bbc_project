@@ -401,24 +401,24 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <img src="https://via.placeholder.com/48x48?text=🐔" alt="Logo">
+                <img src="{{ asset('logo.jpeg') }}" alt="Logo">
                 <span>ADMIN BBC</span>
             </div>
             
             <nav class="menu">
-                <a href="/" class="menu-item">
+                <a href="/admin/dashboard" class="menu-item">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="/menu" class="menu-item">
+                <a href="/admin/menu-management" class="menu-item">
                     <i class="fas fa-utensils"></i>
                     <span>Menu Management</span>
                 </a>
-                <a href="/pesanan" class="menu-item active">
+                <a href="/admin/kelola-pesanan" class="menu-item active">
                     <i class="fas fa-shopping-bag"></i>
                     <span>Pesanan</span>
                 </a>
-                <a href="#" class="menu-item">
+                <a href="/laporan" class="menu-item">
                     <i class="fas fa-chart-line"></i>
                     <span>Laporan Penjualan</span>
                 </a>
@@ -426,7 +426,7 @@
                     <i class="fas fa-comment"></i>
                     <span>Testimoni</span>
                 </a>
-                <a href="#" class="menu-item">
+                <a href="/kelola-admin" class="menu-item">
                     <i class="fas fa-user-cog"></i>
                     <span>Kelola Admin</span>
                 </a>
@@ -487,8 +487,8 @@
                             @foreach($pesanan->items as $item)
                                 <li>
                                     <span class="item-name">{{ $item['name'] }}</span>
-                                    <span class="item-qty">{{ $item['qty'] }}x</span>
-                                    <span class="item-price">Rp {{ number_format($item['price'] * $item['qty'], 0, ',', '.') }}</span>
+                                    <span class="item-qty">{{ $item['quantity'] }}x</span>
+                                    <span class="item-price">Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</span>
                                 </li>
                             @endforeach
                         </ul>
@@ -501,12 +501,17 @@
                     </section>
 
                     <!-- Special Request -->
-                    @if($pesanan->special_request)
+                    @if($pesanan->special_request && array_filter($pesanan->special_request))
                         <section class="content-section">
                             <h2>Catatan Khusus</h2>
-                            <div class="info-row">
-                                <div class="info-value">{{ $pesanan->special_request }}</div>
-                            </div>
+                            @foreach($pesanan->special_request as $key => $value)
+                                @if($value)
+                                    <div class="info-row">
+                                        <div class="info-label">{{ ucfirst(str_replace('_', ' ', $key)) }}</div>
+                                        <div class="info-value">{{ $value }}</div>
+                                    </div>
+                                @endif
+                            @endforeach
                         </section>
                     @endif
                 </div>

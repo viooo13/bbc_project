@@ -330,20 +330,24 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <img src="https://via.placeholder.com/48x48?text=🐔" alt="Logo">
+                <img src="{{ asset('logo.jpeg') }}" alt="Logo">
                 <span>ADMIN BBC</span>
             </div>
             
             <nav class="menu">
-                <a href="/" class="menu-item">
+                <a href="/admin/dashboard" class="menu-item">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="/menu" class="menu-item active">
+                <a href="/admin/menu-management" class="menu-item active">
                     <i class="fas fa-utensils"></i>
                     <span>Menu Management</span>
                 </a>
-                <a href="#" class="menu-item">
+                <a href="/admin/kelola-pesanan" class="menu-item">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Pesanan</span>
+                </a>
+                <a href="/laporan" class="menu-item">
                     <i class="fas fa-chart-line"></i>
                     <span>Laporan Penjualan</span>
                 </a>
@@ -351,11 +355,7 @@
                     <i class="fas fa-comment"></i>
                     <span>Testimoni</span>
                 </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>Pesanan</span>
-                </a>
-                <a href="#" class="menu-item">
+                <a href="/kelola-admin" class="menu-item">
                     <i class="fas fa-user-cog"></i>
                     <span>Kelola Admin</span>
                 </a>
@@ -378,7 +378,7 @@
                     <p>Edit menu produk BBC</p>
                 </div>
                 <div class="header-actions">
-                    <a href="/menu" class="back-btn">
+                    <a href="/admin/menu-management" class="back-btn">
                         <i class="fas fa-arrow-left"></i>
                         Kembali
                     </a>
@@ -405,7 +405,7 @@
 
             <section class="content-section">
                 <h2>Form Edit Menu</h2>
-                <form action="/menu/{{ $menu->id }}" method="POST" enctype="multipart/form-data">
+                <form action="/admin/menu-management/{{ $menu->id }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -455,7 +455,7 @@
                     </div>
 
                     <div class="form-actions">
-                        <a href="/menu" class="btn btn-cancel">
+                        <a href="/admin/menu-management" class="btn btn-cancel">
                             <i class="fas fa-times"></i>
                             Batal
                         </a>

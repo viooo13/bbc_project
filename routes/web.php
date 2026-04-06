@@ -9,6 +9,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\AdminManagementController;
 use Illuminate\Http\Request;
 
@@ -188,4 +189,8 @@ Route::middleware(['auth:admin', 'admin'])->group(function () {
     Route::delete('/kelola-admin/{id}', [AdminManagementController::class, 'destroy'])->name('admin.management.destroy');
     Route::get('/kelola-admin/{id}/delete', function($id) {
         return redirect()->route('admin.management.index');
-    })->name('admin.management.delete.get');});
+    })->name('admin.management.delete.get');
+
+    // Laporan Routes
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('admin.laporan.index');
+});

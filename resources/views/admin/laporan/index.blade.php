@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin BBC - Manajemen Paket</title>
+    <title>Admin BBC - Laporan Penjualan</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -158,9 +158,11 @@
             align-items: center;
         }
 
-        .logout-btn, .add-btn {
-            padding: 8px 16px;
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
             border: none;
+            padding: 8px 16px;
             border-radius: 6px;
             font-size: 14px;
             font-weight: 600;
@@ -171,31 +173,84 @@
             transition: all 0.3s ease;
         }
 
-        .logout-btn {
-            background-color: #dc3545;
-            color: white;
-        }
-
         .logout-btn:hover {
             background-color: #c82333;
             transform: translateY(-1px);
         }
 
-        .add-btn {
-            background-color: #27ae60;
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
             color: white;
         }
 
-        .add-btn:hover {
-            background-color: #229954;
-            transform: translateY(-1px);
+        .stat-card:nth-child(1) .stat-icon {
+            background-color: #27ae60;
         }
 
-        /* Table Section */
+        .stat-card:nth-child(2) .stat-icon {
+            background-color: #8e44ad;
+        }
+
+        .stat-card:nth-child(3) .stat-icon {
+            background-color: #e67e22;
+        }
+
+        .stat-card:nth-child(4) .stat-icon {
+            background-color: #3498db;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        /* Tables */
         .content-section {
             background: white;
             border-radius: 8px;
             padding: 20px;
+            margin-bottom: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -210,12 +265,12 @@
             overflow-x: auto;
         }
 
-        .pakets-table {
+        .data-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .pakets-table th {
+        .data-table th {
             background-color: #f8f9fa;
             padding: 12px;
             text-align: left;
@@ -225,128 +280,26 @@
             font-size: 14px;
         }
 
-        .pakets-table td {
+        .data-table td {
             padding: 12px;
             border-bottom: 1px solid #e9ecef;
             font-size: 14px;
         }
 
-        .pakets-table tr:hover {
+        .data-table tr:hover {
             background-color: #f8fafc;
         }
 
-        .pakets-table tr:last-child td {
+        .data-table tr:last-child td {
             border-bottom: none;
         }
 
-        .paket-image {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 6px;
+        .text-right {
+            text-align: right;
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-badge.active {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .status-badge.inactive {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-sm {
-            padding: 4px 8px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            text-decoration: none;
-        }
-
-        .btn-edit {
-            background-color: #667eea;
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background-color: #5a6fd8;
-        }
-
-        .btn-delete {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
-
-        .empty-state {
+        .text-center {
             text-align: center;
-            padding: 40px;
-            color: #6c757d;
-        }
-
-        .empty-state i {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #ccc;
-        }
-
-        .alert {
-            padding: 12px 20px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .price {
-            font-weight: 600;
-            color: #27ae60;
-        }
-
-        .portion-badge {
-            display: inline-block;
-            background-color: #e3f2fd;
-            color: #1976d2;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
         }
     </style>
 </head>
@@ -372,7 +325,7 @@
                     <i class="fas fa-shopping-bag"></i>
                     <span>Pesanan</span>
                 </a>
-                <a href="/laporan" class="menu-item">
+                <a href="/admin/laporan" class="menu-item active">
                     <i class="fas fa-chart-line"></i>
                     <span>Laporan Penjualan</span>
                 </a>
@@ -399,88 +352,85 @@
         <main class="main-content">
             <header class="page-header">
                 <div>
-                    <h1>Manajemen Paket</h1>
-                    <p>Kelola paket bundle produk BBC</p>
+                    <h1>Laporan Penjualan</h1>
+                    <p>Laporan penjualan dari tahun ke tahun</p>
                 </div>
-                <div class="header-actions">
-                    <a href="/paket/create" class="add-btn">
-                        <i class="fas fa-plus"></i>
-                        Tambah Paket
-                    </a>
-                    <button class="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
-                </div>
+                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <button class="logout-btn" onclick="document.getElementById('logoutForm').submit();">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
             </header>
 
-            @if(session('success'))
-                <div class="alert alert-success">
-                    <i class="fas fa-check-circle"></i>
-                    {{ session('success') }}
+            <!-- Stats Cards -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">Rp {{ number_format($totalSales, 0, ',', '.') }}</div>
+                        <div class="stat-label">Total Penjualan</div>
+                    </div>
                 </div>
-            @endif
 
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">Rp {{ number_format($paketSales, 0, ',', '.') }}</div>
+                        <div class="stat-label">Penjualan Paket Bakso</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">Rp {{ number_format($currentMonthSales, 0, ',', '.') }}</div>
+                        <div class="stat-label">Penjualan Bulan Ini</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">Rp {{ number_format($lastMonthSales, 0, ',', '.') }}</div>
+                        <div class="stat-label">Penjualan Bulan Lalu</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Yearly Sales Report -->
             <section class="content-section">
-                <h2>Daftar Paket</h2>
+                <h2>Laporan Penjualan per Tahun</h2>
                 <div class="table-container">
-                    <table class="pakets-table">
+                    <table class="data-table">
                         <thead>
                             <tr>
-                                <th style="width: 50px;">Gambar</th>
-                                <th>Nama Paket</th>
-                                <th>Deskripsi</th>
-                                <th>Porsi</th>
-                                <th>Harga</th>
-                                <th>Status</th>
-                                <th style="width: 120px;">Aksi</th>
+                                <th>Tahun</th>
+                                <th class="text-center">Jumlah Pesanan</th>
+                                <th class="text-right">Total Penjualan</th>
+                                <th class="text-right">Penjualan Paket Bakso</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($pakets as $paket)
+                            @forelse($yearlySales as $sale)
                                 <tr>
-                                    <td>
-                                        <img src="{{ $paket->image }}" alt="{{ $paket->name }}" class="paket-image">
-                                    </td>
-                                    <td>
-                                        <strong>{{ $paket->name }}</strong>
-                                    </td>
-                                    <td>
-                                        {{ Str::limit($paket->description, 30) }}
-                                    </td>
-                                    <td>
-                                        <span class="portion-badge">{{ $paket->portion }} Orang</span>
-                                    </td>
-                                    <td>
-                                        @if(!empty($paket->original_price))
-                                            <div style="font-size: 12px; color: #6c757d; text-decoration: line-through; font-weight: 600;">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
-                                        @endif
-                                        <span class="price">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</span>
-                                    </td>
-                                    <td>
-                                        <span class="status-badge {{ $paket->status }}">
-                                            {{ $paket->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <a href="/paket/{{ $paket->id }}/edit" class="btn-sm btn-edit">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <button class="btn-sm btn-delete" onclick="if(confirm('Hapus paket ini?')) window.location.href='/paket/{{ $paket->id }}/delete'">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
+                                    <td>{{ $sale->year }}</td>
+                                    <td class="text-center">{{ $sale->orders }}</td>
+                                    <td class="text-right">Rp {{ number_format($sale->total, 0, ',', '.') }}</td>
+                                    <td class="text-right">Rp {{ number_format($yearlyPaketSales[$sale->year] ?? 0, 0, ',', '.') }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7">
-                                        <div class="empty-state">
-                                            <i class="fas fa-inbox"></i>
-                                            <p>Tidak ada paket</p>
-                                        </div>
-                                    </td>
+                                    <td colspan="4" class="text-center">Belum ada data penjualan</td>
                                 </tr>
                             @endforelse
                         </tbody>

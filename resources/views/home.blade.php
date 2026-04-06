@@ -488,21 +488,21 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @if(isset($pakets) && $pakets->count() > 0)
                     @foreach($pakets as $paket)
-                        <div class="package-card bg-[#EFE1D1] rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 fade-up">
+                        <div class="package-card bg-[#EFE1D1] rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 fade-up flex flex-col">
                             <div class="h-64 overflow-hidden bg-[#EFE1D1]">
                                 <img src="{{ $paket->image ? asset($paket->image) : 'https://placehold.co/800x600/efe1d1/3a2a1a?text=Paket' }}"
                                      alt="{{ $paket->name }}"
                                      class="w-full h-full object-cover hover:scale-105 transition duration-300">
                             </div>
-                            <div class="p-6">
+                            <div class="p-6 flex flex-col flex-grow">
                                 <h4 class="text-2xl font-bold mb-2 text-gray-800">{{ $paket->name }}</h4>
                                 @if(!empty($paket->original_price))
                                     <div class="text-sm font-semibold text-gray-600 line-through">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
                                 @endif
                                 <div class="text-3xl font-bold text-red-600 mb-2">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</div>
-                                <div class="text-gray-700 mb-4 text-sm whitespace-pre-line">{{ $paket->description }}</div>
+                                <div class="text-gray-700 mb-4 text-sm whitespace-pre-line flex-grow">{{ $paket->description }}</div>
                                 <div class="text-sm text-gray-700 mb-6">Porsi: {{ $paket->portion }}</div>
-                                <div class="flex gap-3 mt-6">
+                                <div class="flex gap-3 mt-auto">
                                     <button onclick="addPaketToCart({{ (int) $paket->id }})" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition">
                                         <i class="fas fa-cart-plus mr-2"></i>Tambah ke Keranjang
                                     </button>
