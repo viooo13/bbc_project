@@ -158,6 +158,27 @@
             align-items: center;
         }
 
+        .export-btn {
+            background-color: #22c55e;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .export-btn:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
+
         .logout-btn {
             background-color: #dc3545;
             color: white;
@@ -355,57 +376,20 @@
                     <h1>Laporan Penjualan</h1>
                     <p>Laporan penjualan dari tahun ke tahun</p>
                 </div>
-                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-                <button class="logout-btn" onclick="document.getElementById('logoutForm').submit();">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </button>
+                <div class="header-actions">
+                    <a class="export-btn" href="{{ route('admin.laporan.export', request()->query()) }}">
+                        <i class="fas fa-file-excel"></i>
+                        Export Excel
+                    </a>
+                    <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                    <button class="logout-btn" onclick="document.getElementById('logoutForm').submit();">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
             </header>
-
-            <!-- Stats Cards -->
-            <section class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-value">Rp {{ number_format($totalSales, 0, ',', '.') }}</div>
-                        <div class="stat-label">Total Penjualan</div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-box"></i>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-value">Rp {{ number_format($paketSales, 0, ',', '.') }}</div>
-                        <div class="stat-label">Penjualan Paket Bakso</div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-value">Rp {{ number_format($currentMonthSales, 0, ',', '.') }}</div>
-                        <div class="stat-label">Penjualan Bulan Ini</div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-value">Rp {{ number_format($lastMonthSales, 0, ',', '.') }}</div>
-                        <div class="stat-label">Penjualan Bulan Lalu</div>
-                    </div>
-                </div>
-            </section>
 
             <!-- Yearly Sales Report -->
             <section class="content-section">
@@ -431,6 +415,67 @@
                             @empty
                                 <tr>
                                     <td colspan="4" class="text-center">Belum ada data penjualan</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>History Penjualan</h2>
+                <form method="GET" action="{{ route('admin.laporan.index') }}" style="margin-bottom: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: end;">
+                    <div style="display:flex;flex-direction:column;gap:6px;min-width:220px;">
+                        <label for="q" style="font-size:12px;font-weight:700;color:#2c3e50;">Search</label>
+                        <input id="q" name="q" value="{{ request('q') }}" placeholder="Cari ID pesanan / nama pelanggan" style="padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;" />
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                        <label for="from" style="font-size:12px;font-weight:700;color:#2c3e50;">Dari Tanggal</label>
+                        <input id="from" type="date" name="from" value="{{ request('from') }}" style="padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;" />
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                        <label for="to" style="font-size:12px;font-weight:700;color:#2c3e50;">Sampai Tanggal</label>
+                        <input id="to" type="date" name="to" value="{{ request('to') }}" style="padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;" />
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <button type="submit" class="export-btn" style="background-color:#3498db;">
+                            <i class="fas fa-filter"></i>
+                            Filter
+                        </button>
+                        <a href="{{ route('admin.laporan.index') }}" class="export-btn" style="background-color:#64748b;">
+                            <i class="fas fa-rotate-left"></i>
+                            Reset
+                        </a>
+                    </div>
+                </form>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID Pesanan</th>
+                                <th>Tanggal</th>
+                                <th>Pelanggan</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse(($completedOrders ?? []) as $o)
+                                @php
+                                    $items = is_array($o->items ?? null) ? $o->items : [];
+                                    $qty = 0;
+                                    foreach ($items as $it) { $qty += (int) ($it['quantity'] ?? 0); }
+                                @endphp
+                                <tr>
+                                    <td>{{ $o->order_id }}</td>
+                                    <td>{{ optional($o->created_at)->format('d M Y') }}</td>
+                                    <td>{{ $o->customer_name }}</td>
+                                    <td class="text-center">{{ $qty }}</td>
+                                    <td class="text-right">Rp {{ number_format((float) $o->total_price, 0, ',', '.') }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">Belum ada data penjualan</td>
                                 </tr>
                             @endforelse
                         </tbody>

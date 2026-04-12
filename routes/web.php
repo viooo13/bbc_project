@@ -32,33 +32,31 @@ Route::get('/user/register', [AuthController::class, 'showRegister'])->name('use
 Route::post('/user/register', [AuthController::class, 'register'])->name('user.register.submit')->middleware('guest');
 
 Route::get('/', function () {
-    if (!auth()->check()) {
-        return redirect()->route('showLogin');
-    }
-
-    $user = auth()->user();
-    if (isset($user->role) && $user->role === 'admin') {
-        return redirect()->route('admin.dashboard');
+    if (auth()->check()) {
+        $user = auth()->user();
+        if (isset($user->role) && $user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
     }
 
     return redirect()->route('home');
 });
 
 // Home page for normal users (after register/login)
-Route::get('/home', [MenuController::class, 'home'])->name('home')->middleware('auth');
+Route::get('/home', [MenuController::class, 'home'])->name('home');
 
 Route::get('/tentang-bbc', function () {
     $testimonials = \App\Models\Testimonial::orderByDesc('created_at')->take(12)->get();
     return view('pages.tentang-halal', [
         'testimonials' => $testimonials,
     ]);
-})->name('pages.tentang')->middleware('auth');
+})->name('pages.tentang');
 
 Route::get('/lokasi-dan-kontak', function () {
     return view('pages.lokasi-kontak');
-})->name('pages.lokasi_kontak')->middleware('auth');
+})->name('pages.lokasi_kontak');
 
-Route::get('/filter-menu', [MenuController::class, 'filterMenu'])->name('menu.filter')->middleware('auth');
+Route::get('/filter-menu', [MenuController::class, 'filterMenu'])->name('menu.filter');
 
 Route::post('/contact', function (Request $request) {
     return back()->with('contact_success', 'Pesan berhasil dikirim.');
@@ -72,6 +70,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
     Route::get('/api/cart-count', [CartController::class, 'apiCount'])->name('cart.api.count');
 
+    Route::get('/pesanan-saya', [PesananController::class, 'myOrders'])->name('pesanan.saya');
+
     Route::post('/testimonial', [TestimonialController::class, 'store'])->name('testimonial.store');
 
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
@@ -81,20 +81,23 @@ Route::middleware('auth')->group(function () {
 });
 
 // Public menu page (user/customer) - separate from admin CRUD
-Route::get('/menu', [MenuController::class, 'publicIndex'])->name('menu.public')->middleware('auth');
+Route::get('/menu', [MenuController::class, 'publicIndex'])->name('menu.public');
 
 // Backwards compatibility
 Route::get('/menu-public', function () {
     return redirect()->route('menu.public');
-})->middleware('auth');
+});
 
 // Admin Dashboard
 Route::get('/admin/dashboard', function () {
     $pendingCount = \App\Models\Pesanan::where('status', 'pending')->count();
     $totalOrders = \App\Models\Pesanan::count();
+    $totalRevenue = \App\Models\Pesanan::where('status', 'completed')->sum('total_price');
+    $totalCustomers = \App\Models\User::where('role', 'user')->count();
+    $totalMenus = \App\Models\Menu::count();
     $latestOrders = \App\Models\Pesanan::orderByDesc('created_at')->limit(5)->get();
 
-    return view('admin.dashboard', compact('pendingCount', 'totalOrders', 'latestOrders'));
+    return view('admin.dashboard', compact('pendingCount', 'totalOrders', 'totalRevenue', 'totalCustomers', 'totalMenus', 'latestOrders'));
 })->name('admin.dashboard')->middleware(['auth:admin', 'admin']);
 
 // Admin routes
@@ -176,6 +179,7 @@ Route::middleware(['auth:admin', 'admin'])->group(function () {
     Route::get('/pesanan/{id}', [PesananController::class, 'show'])->name('pesanan.show');
     Route::get('/pesanan/{id}/confirm', [PesananController::class, 'confirm'])->name('pesanan.confirm');
     Route::get('/pesanan/{id}/reject', [PesananController::class, 'reject'])->name('pesanan.reject');
+    Route::post('/pesanan/{id}/reject', [PesananController::class, 'reject'])->name('pesanan.reject.post');
     Route::get('/pesanan/{id}/ship', [PesananController::class, 'ship'])->name('pesanan.ship');
     Route::get('/pesanan/{id}/complete', [PesananController::class, 'complete'])->name('pesanan.complete');
     Route::get('/pesanan/{id}/paid', [PesananController::class, 'paid'])->name('pesanan.paid');
@@ -193,4 +197,5 @@ Route::middleware(['auth:admin', 'admin'])->group(function () {
 
     // Laporan Routes
     Route::get('/laporan', [LaporanController::class, 'index'])->name('admin.laporan.index');
+    Route::get('/laporan/export', [LaporanController::class, 'export'])->name('admin.laporan.export');
 });

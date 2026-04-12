@@ -489,7 +489,7 @@
                             <i class="fas fa-arrow-up"></i>
                             +10.5%
                         </div>
-                        <div class="stat-value">Rp.45.000.000</div>
+                        <div class="stat-value">Rp {{ number_format((float) ($totalRevenue ?? 0), 0, ',', '.') }}</div>
                         <div class="stat-label">Total Pendapatan</div>
                     </div>
                 </div>
@@ -517,7 +517,7 @@
                             <i class="fas fa-arrow-up"></i>
                             +10.5%
                         </div>
-                        <div class="stat-value">5,678</div>
+                        <div class="stat-value">{{ isset($totalCustomers) ? number_format((int) $totalCustomers) : '0' }}</div>
                         <div class="stat-label">Total Pelanggan</div>
                     </div>
                 </div>
@@ -531,7 +531,7 @@
                             <i class="fas fa-arrow-up"></i>
                             +10.5%
                         </div>
-                        <div class="stat-value">5,678</div>
+                        <div class="stat-value">{{ isset($totalMenus) ? number_format((int) $totalMenus) : '0' }}</div>
                         <div class="stat-label">Total Menu</div>
                     </div>
                 </div>

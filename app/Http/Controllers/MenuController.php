@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\View;
 
 class MenuController extends Controller
 {
+    private function homeCategoryLimit(string $category): int
+    {
+        return PHP_INT_MAX;
+    }
+
     private function ensureDummyMenus(): void
     {
         if (!Schema::hasTable('menus')) {
@@ -104,7 +109,10 @@ class MenuController extends Controller
     public function home()
     {
         $this->ensureDummyMenus();
-        $menus = Menu::where('status', 'active')->get();
+        $menus = Menu::where('status', 'active')
+            ->where('category', 'bakso')
+            ->latest()
+            ->get();
         $pakets = Paket::where('status', 'active')->get();
         $recommendedItems = Menu::where('status', 'active')->latest()->take(3)->get();
         $testimonials = Testimonial::orderByDesc('created_at')->take(12)->get();
@@ -136,7 +144,7 @@ class MenuController extends Controller
             $query->where('category', $category);
         }
 
-        $menus = $query->get();
+        $menus = $query->latest()->get();
 
         if (!View::exists('partials.menu-items')) {
             return response()->json([

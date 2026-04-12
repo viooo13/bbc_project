@@ -392,93 +392,6 @@
         </div>
     </section>
 
-    <!-- ABOUT BBC HALAL -->
-    <section class="py-12 md:py-20 bg-[#EFE1D1]">
-        <div class="max-w-7xl mx-auto px-6 space-y-8 md:space-y-12">
-
-            <!-- CARD 1 - Image Left, Text Right -->
-            <div class="bg-[#F9EDDE] rounded-3xl shadow-lg overflow-hidden fade-up">
-                <div class="grid md:grid-cols-2 gap-6 md:gap-8 items-center p-6 sm:p-8 md:p-12">
-                    <!-- Left: Image -->
-                    <div class="flex justify-center order-1 md:order-1">
-                        <img src="https://placehold.co/520x360/efe1d1/3a2a1a?text=About+Image" alt="Bakso Bunderan Ciomas" class="w-full h-auto rounded-2xl shadow-lg max-w-sm">
-                    </div>
-
-                    <!-- Right: Text Content -->
-                    <div class="order-2 md:order-2">
-                        <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-[#3a2a1a] flex items-center gap-2 font-poopins">
-                            BAKSO BUNDERAN CIOMAS
-                            <img src="logo.jpeg" alt="Logo" class="w-8 h-8 object-contain" />
-                        </h3>
-                        <p class="text-gray-700 mb-4 leading-relaxed text-justify font-poppins">
-                            Berdiri sejak 12 Februari 2025 yang lalu setiap hari melayani pelanggan setia di Diaol & Grobak. Kami menghadirkan Bakso Tulang & Sum-sum dengan bumbu rahasia dan cita rasa yang autentik. Dari influencer hingga pengusaha cita mulai dikenal semua kalangan.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 2 - Image Right, Text Left -->
-            <div class="bg-[#F9EDDE] rounded-3xl shadow-lg overflow-hidden fade-up">
-                <div class="grid md:grid-cols-2 gap-6 md:gap-8 items-center p-6 sm:p-8 md:p-12">
-
-                    <!-- Left: Text Content -->
-                    <div class="order-2 md:order-1">
-                        <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-[#3a2a1a] flex items-center gap-2 font-poopins">
-                            BAKSO BUNDERAN CIOMAS
-                            <img src="logo.jpeg" alt="Logo" class="w-8 h-8 object-contain" />
-                        </h3>
-                        <p class="text-gray-700 mb-4 leading-relaxed text-justify font-poppins">
-                            Setiap porsi bakso kami dibuat dengan dedikasi penuh menggunakan bahan-bahan pilihan berkualitas tinggi. Proses produksi yang ketat memastikan setiap bakso yang kami sajikan memiliki cita rasa yang konsisten, tekstur yang sempurna, dan selalu higienis. Kepuasan pelanggan adalah prioritas utama kami.
-                        </p>
-                    </div>
-
-                    <!-- Right: Image -->
-                    <div class="flex justify-center order-1 md:order-2">
-                        <img src="https://placehold.co/520x360/efe1d1/3a2a1a?text=About+Image" alt="Bakso Bunderan Ciomas" class="w-full h-auto rounded-2xl shadow-lg max-w-sm">
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="py-12 bg-[#EFE1D1]">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="relative bg-[#EFE1D1]">
-                <div class="relative text-center">
-                    <div class="flex justify-center mb-4">
-                        <img src="{{ asset('halal.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/160x80/efe1d1/3a2a1a?text=Halal';" alt="Halal" class="w-24 sm:w-28 h-auto" />
-                    </div>
-                    <p class="text-sm md:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed">
-                        Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen boo
-                    </p>
-
-                    <h3 class="text-2xl md:text-3xl font-extrabold mt-8 mb-6 tracking-wide">MENU REKOMENDASI</h3>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 items-start justify-items-center">
-                        @foreach($recommendedItems->take(3) as $item)
-                            <div class="text-center">
-                                <div class="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-[#F9EDDE] shadow mx-auto">
-                                    <img src="{{ $item->image ? asset($item->image) : 'https://placehold.co/300x300/f9edde/3a2a1a?text=Menu' }}" alt="{{ $item->name }}" class="w-full h-full object-cover" />
-                                </div>
-                                <div class="mt-3 text-sm font-extrabold uppercase">{{ $item->name }}</div>
-                                <div class="mt-1 text-[11px] text-gray-700 leading-relaxed max-h-8 overflow-hidden">
-                                    {{ $item->description }}
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <div class="mt-10">
-                        <a href="#menu" class="inline-flex items-center justify-center bg-red-400 text-black px-10 py-3 rounded-lg font-semibold hover:bg-red-500 transition">
-                            lihat menu
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- PAKET ACARA -->
     <section id="paket" class="py-20 bg-[#EFE1D1]">
         <div class="max-w-7xl mx-auto px-6">
@@ -522,23 +435,39 @@
         </div>
     </section>
 
-    <!-- MENU BAKSO BUNDERAN CIOMAS -->
-    <section id="menu" class="py-32 bg-[#EFE1D1]">
-        <div class="max-w-7xl mx-auto px-6">
-            <h3 class="text-4xl font-bold text-center mb-6">Menu Bakso Bunderan Ciomas</h3>
-            <p class="text-center mb-12 text-lg text-gray-700">Nikmati berbagai menu bakso lezat kami yang gurih dan menggugah selera</p>
-            
-            <!-- FILTER BUTTONS -->
-            <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button class="filter-btn active bg-red-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-red-800 transition" data-filter="all">Bakso</button>
-                @foreach(['bakso', 'mie', 'paket', 'minuman'] as $category)
-                <button class="filter-btn bg-[#3a2a1a] text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-[#2b1b14] transition" data-filter="{{ $category }}">{{ $category == 'mie' ? 'Mie Ayam' : ucfirst($category) }}</button>
-                @endforeach
-            </div>
-            
-            <!-- GRID MENU 2x2 -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" id="menuContainer">
-                @include('partials.menu-items')
+    <section class="py-12 bg-[#EFE1D1]">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="relative bg-[#EFE1D1]">
+                <div class="relative text-center">
+                    <div class="flex justify-center mb-4">
+                        <img src="{{ asset('halal.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/160x80/efe1d1/3a2a1a?text=Halal';" alt="Halal" class="w-24 sm:w-28 h-auto" />
+                    </div>
+                    <p class="text-sm md:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                        Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen boo
+                    </p>
+
+                    <h3 class="text-2xl md:text-3xl font-extrabold mt-8 mb-6 tracking-wide">MENU REKOMENDASI</h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 items-start justify-items-center">
+                        @foreach($recommendedItems->take(3) as $item)
+                            <div class="text-center">
+                                <div class="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-[#F9EDDE] shadow mx-auto">
+                                    <img src="{{ $item->image ? asset($item->image) : 'https://placehold.co/300x300/f9edde/3a2a1a?text=Menu' }}" alt="{{ $item->name }}" class="w-full h-full object-cover" />
+                                </div>
+                                <div class="mt-3 text-sm font-extrabold uppercase">{{ $item->name }}</div>
+                                <div class="mt-1 text-[11px] text-gray-700 leading-relaxed max-h-8 overflow-hidden">
+                                    {{ $item->description }}
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="mt-10">
+                        <a href="{{ route('menu.public') }}" class="inline-flex items-center justify-center bg-red-400 text-black px-10 py-3 rounded-lg font-semibold hover:bg-red-500 transition">
+                            lihat menu
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -681,79 +610,6 @@
         </div>
     </section>
 
-    <!-- LOKASI -->
-    <section id="lokasi" class="bg-[#EFE1D1]">
-        <div class="w-full h-[340px] overflow-hidden">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.1234567890!2d106.7890123!3d-6.5678901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5f2e5f2e5f2%3A0x1234567890abcdef!2sBakso+Bunderan+Ciomas!5e0!3m2!1sen!2sid!4v1234567890"
-                class="w-full h-full border-0" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-    </section>
-
-    <!-- KONTAK KAMI -->
-    <section id="kontak" class="py-16 bg-[#EFE1D1]">
-        <div class="max-w-xl mx-auto px-6">
-            <h3 class="text-4xl font-bold text-center mb-10">KONTAK KAMI</h3>
-            
-            @if(session('contact_success'))
-            <div class="bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-lg mb-6">
-                <div class="flex items-center">
-                    <i class="fas fa-check-circle mr-3 text-xl"></i>
-                    <span class="font-medium">{{ session('contact_success') }}</span>
-                </div>
-            </div>
-            @endif
-
-            @if(session('contact_error'))
-            <div class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg mb-6">
-                <div class="flex items-center">
-                    <i class="fas fa-exclamation-circle mr-3 text-xl"></i>
-                    <span class="font-medium">{{ session('contact_error') }}</span>
-                </div>
-            </div>
-            @endif
-
-            <form action="{{ route('contact.submit') }}" method="POST" class="bg-[#EFE1D1] rounded-2xl p-0">
-                @csrf
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-gray-800 font-extrabold tracking-wide text-sm mb-2">NAMA</label>
-                        <input type="text" name="name" required
-                               class="w-full bg-[#F9EDDE] px-4 py-3 rounded-lg border border-transparent focus:outline-none focus:ring-2 focus:ring-red-500 transition">
-                    </div>
-
-                    <div>
-                        <label class="block text-gray-800 font-extrabold tracking-wide text-sm mb-2">EMAIL</label>
-                        <input type="email" name="email" required
-                               class="w-full bg-[#F9EDDE] px-4 py-3 rounded-lg border border-transparent focus:outline-none focus:ring-2 focus:ring-red-500 transition">
-                    </div>
-
-                    <div>
-                        <label class="block text-gray-800 font-extrabold tracking-wide text-sm mb-2">NOMOR WA</label>
-                        <input type="tel" name="phone" required
-                               class="w-full bg-[#F9EDDE] px-4 py-3 rounded-lg border border-transparent focus:outline-none focus:ring-2 focus:ring-red-500 transition">
-                    </div>
-
-                    <div>
-                        <label class="block text-gray-800 font-extrabold tracking-wide text-sm mb-2">PESAN</label>
-                        <textarea name="message" rows="6" required
-                                  class="w-full bg-[#F9EDDE] px-4 py-3 rounded-lg border border-transparent focus:outline-none focus:ring-2 focus:ring-red-500 transition resize-none"></textarea>
-                    </div>
-
-                    <div class="text-center pt-2">
-                        <button type="submit" class="bg-red-600 text-white px-10 py-3 rounded-lg font-semibold hover:bg-red-700 transition">
-                            Kirim
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </section>
-
     @include('partials.footer')
 
     <!-- Add to Cart Modal -->
@@ -803,7 +659,7 @@
                 
                 // Show loading state
                 const menuContainer = document.getElementById('menuContainer');
-                menuContainer.innerHTML = '<div class="col-span-2 text-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-red-600"></i><p class="mt-4 text-gray-600">Memuat menu...</p></div>';
+                menuContainer.innerHTML = '<div class="col-span-full text-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-red-600"></i><p class="mt-4 text-gray-600">Memuat menu...</p></div>';
                 
                 // Ajax filter
                 fetch(`/filter-menu?category=${filter}`)
@@ -825,7 +681,7 @@
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        menuContainer.innerHTML = '<div class="col-span-2 text-center py-8 text-red-600"><i class="fas fa-exclamation-triangle text-3xl"></i><p class="mt-4">Terjadi kesalahan saat memuat menu</p></div>';
+                        menuContainer.innerHTML = '<div class="col-span-full text-center py-8 text-red-600"><i class="fas fa-exclamation-triangle text-3xl"></i><p class="mt-4">Terjadi kesalahan saat memuat menu</p></div>';
                     });
             });
         });

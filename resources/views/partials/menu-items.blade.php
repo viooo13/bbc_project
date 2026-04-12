@@ -1,20 +1,18 @@
 @if(isset($menus) && $menus->count() > 0)
          @foreach($menus as $menu)
-         <div class="menu-item bg-[#F9EDDE] rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 p-5">
-             <div class="flex items-start gap-4">
-                 <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-[#EFE1D1] shrink-0">
+         <div class="menu-item bg-[#F9EDDE] rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 p-7">
+             <div class="flex items-center gap-4">
+                 <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-white shrink-0 shadow">
                      <img src="{{ $menu->image ? asset($menu->image) : 'https://placehold.co/300x300/f9edde/3a2a1a?text=Menu' }}"
                           alt="{{ $menu->name }}"
                           class="w-full h-full object-cover">
                  </div>
 
                  <div class="min-w-0 flex-1">
-                     <div class="flex items-start justify-between gap-3">
-                         <h4 class="text-xs sm:text-sm font-extrabold text-[#3a2a1a] uppercase leading-snug">{{ $menu->name }}</h4>
-                         
-                     </div>
-                     <p class="text-[11px] text-[#3a2a1a] mt-1 leading-relaxed max-h-10 overflow-hidden">{{ $menu->description }}</p>
-                    
+                     <h4 class="text-base sm:text-lg font-extrabold text-[#3a2a1a] uppercase leading-snug truncate">{{ $menu->name }}</h4>
+                     <p class="text-xs sm:text-sm text-[#3a2a1a] mt-2 leading-relaxed">
+                         1 bakso urat + 3 bakso halus + mie kuning + daging cincang + bihun + tahu + telur
+                     </p>
                  </div>
              </div>
          </div>

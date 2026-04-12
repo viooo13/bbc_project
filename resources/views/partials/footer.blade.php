@@ -1,7 +1,7 @@
 <footer class="bg-[#3a2a1a] text-[#EFE1D1]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-items-center text-center">
-            <div class="flex items-center gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-start text-center sm:text-left">
+            <div class="flex items-center gap-3 justify-center sm:justify-start">
                 <img src="{{ asset('logo.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/48x48/8B0000/ffffff?text=BBC';" alt="Bakso Bunderan Ciomas" class="w-12 h-12 rounded-full object-contain bg-transparent p-1" />
                 <div class="leading-tight text-left font-poopins" style="font-family: 'Poppins', sans-serif;">
                     <div class="text-sm font-extrabold tracking-wide">Bakso</div>
@@ -20,7 +20,7 @@
 
             <div class="text-xs">
                 <div class="font-bold mb-2">Media sosial</div>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 justify-center sm:justify-start">
                     <a href="#" class="hover:text-white transition" aria-label="Instagram">
                         <i class="fab fa-instagram text-lg"></i>
                     </a>

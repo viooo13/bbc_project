@@ -7,6 +7,34 @@ use Illuminate\Http\Request;
 
 class PesananController extends Controller
 {
+    public function myOrders(Request $request)
+    {
+        $user = $request->user();
+        $tab = (string) $request->query('tab', 'belum-bayar');
+
+        $query = Pesanan::query();
+
+        if ($user && !empty($user->email)) {
+            $query->where('customer_email', $user->email);
+        }
+
+        if ($tab === 'diproses') {
+            $query->whereIn('status', ['confirmed', 'shipped']);
+        } elseif ($tab === 'beri-penilaian') {
+            $query->where('status', 'completed');
+        } else {
+            $tab = 'belum-bayar';
+            $query->where('status', 'pending');
+        }
+
+        $orders = $query->orderByDesc('created_at')->get();
+
+        return view('pages.pesanan-saya', [
+            'orders' => $orders,
+            'tab' => $tab,
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -55,7 +83,7 @@ class PesananController extends Controller
 
         Pesanan::findOrFail($id)->update(['status' => 'rejected']);
 
-        return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil ditolak');
+        return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil ditolak. Alasan: ' . $request->input('reason'));
     }
 
     /**
@@ -84,7 +112,7 @@ class PesananController extends Controller
         $pesanan = Pesanan::findOrFail($id);
 
         if ($pesanan->status !== 'confirmed') {
-            return redirect()->route('pesanan.index')->with('success', 'Status pesanan tidak bisa ditandai sudah dibayar.');
+            return redirect()->route('pesanan.index')->with('error', 'Status pesanan tidak bisa ditandai sudah dibayar.');
         }
 
         $pesanan->update(['status' => 'completed']);

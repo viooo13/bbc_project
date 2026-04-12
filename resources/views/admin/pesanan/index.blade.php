@@ -363,6 +363,24 @@
             background-color: #e68900;
         }
 
+        .btn-paid {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn-paid:hover {
+            background-color: #45a049;
+        }
+
+        .btn-complete {
+            background-color: #2196f3;
+            color: white;
+        }
+
+        .btn-complete:hover {
+            background-color: #1e88e5;
+        }
+
         .empty-state {
             text-align: center;
             padding: 40px;
@@ -388,6 +406,12 @@
             background-color: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
 
         .price {
@@ -585,6 +609,13 @@
                 </div>
             @endif
 
+            @if(session('error'))
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <!-- Stats Cards -->
             <section class="stats-grid">
                 <div class="stat-card pending">
@@ -621,7 +652,7 @@
                                 <th>Total</th>
                                 <th>Status</th>
                                 <th>Tanggal</th>
-                                <th style="width: 200px;">Aksi</th>
+                                <th style="width: 170px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -654,9 +685,6 @@
                                     <td>{{ $pesanan->created_at->format('d M Y') }}</td>
                                     <td>
                                         <div class="action-buttons">
-                                            <a href="/pesanan/{{ $pesanan->id }}" class="btn-sm btn-detail">
-                                                <i class="fas fa-eye"></i> Detail
-                                            </a>
                                             @if($pesanan->status === 'pending')
                                                 <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $pesanan->id }})">
                                                     <i class="fas fa-check"></i> Konfirmasi
@@ -668,13 +696,15 @@
                                                 <button class="btn-sm btn-ship" onclick="shipOrder({{ $pesanan->id }})">
                                                     <i class="fas fa-truck"></i> Kirim
                                                 </button>
-                                                <button class="btn-sm" style="background-color: #4caf50; color: white;" onclick="paidOrder({{ $pesanan->id }})">
+                                                <button class="btn-sm btn-paid" onclick="paidOrder({{ $pesanan->id }})">
                                                     <i class="fas fa-money-check"></i> Sudah Dibayar
                                                 </button>
                                             @elseif($pesanan->status === 'shipped')
-                                                <button class="btn-sm" style="background-color: #2196f3; color: white;" onclick="completeOrder({{ $pesanan->id }})">
+                                                <button class="btn-sm btn-complete" onclick="completeOrder({{ $pesanan->id }})">
                                                     <i class="fas fa-check-double"></i> Selesai
                                                 </button>
+                                            @else
+                                                <span style="color:#94a3b8;font-weight:600;">-</span>
                                             @endif
                                         </div>
                                     </td>
@@ -734,7 +764,8 @@
         document.getElementById('rejectForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (currentRejectOrderId) {
-                window.location.href = `/pesanan/${currentRejectOrderId}/reject?reason=${encodeURIComponent(document.getElementById('reason').value)}`;
+                this.action = `/pesanan/${currentRejectOrderId}/reject`;
+                this.submit();
             }
         });
 

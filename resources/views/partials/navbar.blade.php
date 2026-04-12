@@ -30,11 +30,23 @@
         <div class="flex items-center gap-3">
             <!-- Cart Icon -->
             @auth
-            <a href="{{ route('cart.index') }}" class="relative bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-red-700 flex items-center gap-2">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="hidden sm:inline">Keranjang</span>
-                <span id="cartCount" class="absolute -top-2 -right-2 bg-yellow-400 text-red-600 text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-            </a>
+            <div class="relative group">
+                <button type="button" class="relative bg-red-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-red-700 flex items-center justify-between gap-3 min-w-[150px]">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="hidden sm:inline">Keranjang</span>
+                    <i class="fas fa-chevron-down text-xs opacity-90"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-yellow-400 text-red-600 text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+
+                <div class="absolute right-0 mt-2 w-44 bg-white text-[#3a2a1a] rounded-xl shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+                    <a href="{{ route('cart.index') }}" class="block px-4 py-3 text-sm font-semibold hover:bg-gray-50 rounded-t-xl">
+                        Keranjang
+                    </a>
+                    <a href="{{ route('pesanan.saya') }}" class="block px-4 py-3 text-sm font-semibold hover:bg-gray-50 rounded-b-xl">
+                        Pesanan saya
+                    </a>
+                </div>
+            </div>
             @else
             <a href="{{ route('user.login') }}" class="bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-red-700">
                 <i class="fas fa-user mr-2"></i>

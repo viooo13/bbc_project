@@ -56,8 +56,12 @@
 
         $special = [];
         if (!empty($pesanan->special_request)) {
-            $decoded = json_decode($pesanan->special_request, true);
-            if (is_array($decoded)) $special = $decoded;
+            if (is_array($pesanan->special_request)) {
+                $special = $pesanan->special_request;
+            } elseif (is_string($pesanan->special_request)) {
+                $decoded = json_decode($pesanan->special_request, true);
+                if (is_array($decoded)) $special = $decoded;
+            }
         }
     @endphp
 

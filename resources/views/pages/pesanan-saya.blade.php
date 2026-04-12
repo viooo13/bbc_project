@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembelian Saya - Bakso Bunderan Ciomas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden" style="font-family: 'Poppins', sans-serif;">
+    @include('partials.navbar')
+
+    <section class="py-24 bg-[#EFE1D1]">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl sm:text-3xl font-extrabold">PEMBELIAN SAYA</h2>
+            </div>
+
+            @php
+                $activeTabClass = 'text-[#3a2a1a] border-b-2 border-red-600';
+                $inactiveTabClass = 'text-[#3a2a1a]/70 border-b-2 border-transparent hover:text-[#3a2a1a]';
+            @endphp
+
+            <div class="bg-white/50 rounded-2xl px-4 pt-4">
+                <div class="grid grid-cols-3 gap-2">
+                    <a href="{{ route('pesanan.saya', ['tab' => 'belum-bayar']) }}" class="text-center pb-3 text-xs sm:text-sm font-extrabold {{ ($tab ?? 'belum-bayar') === 'belum-bayar' ? $activeTabClass : $inactiveTabClass }}">
+                        Belum Bayar
+                    </a>
+                    <a href="{{ route('pesanan.saya', ['tab' => 'diproses']) }}" class="text-center pb-3 text-xs sm:text-sm font-extrabold {{ ($tab ?? '') === 'diproses' ? $activeTabClass : $inactiveTabClass }}">
+                        Diproses
+                    </a>
+                    <a href="{{ route('pesanan.saya', ['tab' => 'beri-penilaian']) }}" class="text-center pb-3 text-xs sm:text-sm font-extrabold {{ ($tab ?? '') === 'beri-penilaian' ? $activeTabClass : $inactiveTabClass }}">
+                        Beri Penilaian
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-6 space-y-4">
+                @forelse(($orders ?? collect()) as $order)
+                    <div class="bg-[#F9EDDE] rounded-2xl shadow-md p-5 sm:p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-white shadow shrink-0">
+                                <img src="https://placehold.co/200x200/f9edde/3a2a1a?text=Menu" alt="Menu" class="w-full h-full object-cover" />
+                            </div>
+
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="min-w-0">
+                                        <div class="text-sm sm:text-base font-extrabold uppercase truncate">{{ $order->order_id }}</div>
+                                        <div class="text-xs text-[#3a2a1a]/70 mt-1">{{ optional($order->created_at)->format('d M Y, H:i') }}</div>
+                                    </div>
+                                    <div class="text-right shrink-0">
+                                        <div class="text-sm sm:text-base font-extrabold text-red-700">Rp {{ number_format((float) ($order->total_price ?? 0), 0, ',', '.') }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    @php
+                                        $status = (string) ($order->status ?? '');
+                                        $statusLabel = 'Diproses';
+                                        if ($status === 'pending') $statusLabel = 'Belum Bayar';
+                                        elseif ($status === 'completed') $statusLabel = 'Selesai';
+                                        elseif ($status === 'rejected') $statusLabel = 'Dibatalkan';
+                                        elseif ($status === 'shipped') $statusLabel = 'Dikirim';
+                                        elseif ($status === 'confirmed') $statusLabel = 'Diproses';
+                                    @endphp
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-white/70">{{ $statusLabel }}</span>
+                                </div>
+
+                                <div class="mt-4 flex items-center justify-end gap-2">
+                                    @if(($tab ?? 'belum-bayar') === 'belum-bayar')
+                                        <a href="{{ route('transaksi.show', ['orderId' => $order->order_id]) }}" class="bg-red-600 text-white text-xs font-extrabold px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                                            Bayar
+                                        </a>
+                                    @elseif(($tab ?? '') === 'beri-penilaian')
+                                        <a href="{{ route('pages.tentang') }}#testimoni" class="bg-red-600 text-white text-xs font-extrabold px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                                            Beri Nilai
+                                        </a>
+                                    @else
+                                        <a href="{{ route('transaksi.show', ['orderId' => $order->order_id]) }}" class="bg-red-600 text-white text-xs font-extrabold px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                                            Detail
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="bg-[#F9EDDE] rounded-2xl p-10 text-center shadow">
+                        <div class="text-lg font-extrabold">Belum ada pesanan.</div>
+                        <div class="text-sm text-[#3a2a1a]/70 mt-2">Silakan pesan menu terlebih dahulu.</div>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    @include('partials.footer')
+</body>
+</html>
