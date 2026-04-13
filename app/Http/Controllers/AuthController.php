@@ -94,14 +94,26 @@ class AuthController extends Controller
         if ($data['role'] === 'admin') {
             $username = trim((string) $request->input('username'));
 
-            // Always resolve by identifier first (name/email), then enforce/promo role below
-            $user = \App\Models\User::where(function ($q) use ($username) {
-                $q->where('name', $username)
-                  ->orWhere('email', $username);
+            $admin = \App\Models\Admin::where(function ($q) use ($username) {
+                $q->where('username', $username)
+                    ->orWhere('email', $username);
             })->first();
         } else {
             $email = trim((string) $request->input('email'));
             $user = \App\Models\User::where('email', $email)->where('role', 'user')->first();
+        }
+
+        if ($data['role'] === 'admin') {
+            if (!$admin || !\Illuminate\Support\Facades\Hash::check($password, $admin->password)) {
+                return back()->with('error', 'Username/email atau password tidak sesuai.');
+            }
+
+            if (($admin->status ?? 'active') !== 'active') {
+                return back()->with('error', 'Akun admin sedang nonaktif.');
+            }
+
+            Auth::guard('admin')->login($admin);
+            return redirect()->route('admin.dashboard');
         }
 
         if ($user && (\Illuminate\Support\Facades\Hash::check($password, $user->password) || $user->password === $password)) {
@@ -111,54 +123,8 @@ class AuthController extends Controller
                 $user->save();
             }
 
-            // Admin tab: enforce admin access (allow one-time promotion for known legacy admin account)
-            if ($data['role'] === 'admin') {
-                $identifier = strtolower(trim((string) ($request->input('username') ?? '')));
-                $isLegacyAdmin = $identifier === 'bbcjaya123';
-
-                if (!isset($user->role) || !in_array($user->role, ['admin', 'owner'], true)) {
-                    if ($isLegacyAdmin) {
-                        $user->role = 'admin';
-                        $user->save();
-                    } else {
-                        return back()->with('error', 'Akun ini bukan admin.');
-                    }
-                }
-            }
-
-            if ($data['role'] === 'admin') {
-                Auth::guard('admin')->login($user);
-                return redirect()->route('admin.dashboard');
-            }
-
             Auth::guard('web')->login($user);
             return redirect()->route('home');
-        }
-
-        // Fallback: try to find user ignoring the provided role (handles mistaken hidden role)
-        $identifier = trim((string) ($request->input('username') ?? $request->input('email')));
-        if ($identifier) {
-            $user2 = \App\Models\User::where('name', $identifier)
-                        ->orWhere('email', $identifier)
-                        ->first();
-
-            if ($user2 && (\Illuminate\Support\Facades\Hash::check($password, $user2->password) || $user2->password === $password)) {
-                if ($user2->password === $password) {
-                    $user2->password = bcrypt($password);
-                    $user2->save();
-                }
-
-                if ($data['role'] === 'admin') {
-                    if (!isset($user2->role) || !in_array($user2->role, ['admin', 'owner'], true)) {
-                        return back()->with('error', 'Akun ini bukan admin.');
-                    }
-                    Auth::guard('admin')->login($user2);
-                    return redirect()->route('admin.dashboard');
-                }
-
-                Auth::guard('web')->login($user2);
-                return redirect()->route('home');
-            }
         }
 
         return back()->with('error', 'Username/email atau password tidak sesuai.');
