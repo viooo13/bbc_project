@@ -38,6 +38,9 @@
             <a href="{{ route('home') }}" class="rounded-xl px-3 py-2 text-sm font-semibold {{ request()->routeIs('home') ? 'bg-red-600 text-white' : 'text-[#2f2218] bg-white/40' }}">HOME</a>
             <a href="{{ route('pages.tentang') }}" class="rounded-xl px-3 py-2 text-sm font-semibold {{ request()->routeIs('pages.tentang') ? 'bg-red-600 text-white' : 'text-[#2f2218] bg-white/40' }}">TENTANG BBC</a>
             <a href="{{ route('menu.public') }}" class="rounded-xl px-3 py-2 text-sm font-semibold {{ request()->routeIs('menu.public') ? 'bg-red-600 text-white' : 'text-[#2f2218] bg-white/40' }}">MENU</a>
+            <a href="https://gofood.co.id" target="_blank" rel="noopener" class="rounded-xl px-3 py-2 bg-white/45 flex items-center justify-center">
+                <img src="{{ asset('gofood.png') }}" alt="GoFood" class="h-6 w-auto object-contain" />
+            </a>
             <a href="{{ route('pages.lokasi_kontak') }}" class="rounded-xl px-3 py-2 text-sm font-semibold {{ request()->routeIs('pages.lokasi_kontak') ? 'bg-red-600 text-white' : 'text-[#2f2218] bg-white/40' }}">LOKASI DAN KONTAK</a>
 
             @auth
@@ -69,6 +72,30 @@
     #mainNavbar .nav-item-button,
     #mainNavbar .nav-action-btn {
         transition: padding 0.35s ease, color 0.3s ease, background-color 0.3s ease;
+    }
+
+    #mainNavbar .nav-gofood-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.1rem 0.25rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    }
+
+    #mainNavbar .nav-gofood-link:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
+        background: rgba(255, 255, 255, 0.66);
+    }
+
+    #mainNavbar .nav-gofood-logo {
+        height: 20px;
+        width: auto;
+        object-fit: contain;
+        display: block;
     }
 
     #mobileNavbarMenu {

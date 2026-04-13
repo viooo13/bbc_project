@@ -47,22 +47,38 @@
             font-size: 0.84rem;
             font-weight: 700;
             line-height: 1;
-            transition: transform 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease;
+            background: transparent;
+            border: 1px solid rgba(58, 32, 24, 0.35);
+            color: #3a2018;
+            transition: transform 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease, color 0.22s ease, border-color 0.22s ease;
         }
 
         .filter-btn.filter-active {
             background: #ef2f24;
-            color: #fff;
-            box-shadow: 0 8px 18px rgba(239, 47, 36, 0.28);
+            color: #ffffff;
+            border-color: #ef2f24;
+            box-shadow: 0 8px 16px rgba(239, 47, 36, 0.3);
         }
 
         .filter-btn.filter-inactive {
-            background: #3a2018;
-            color: #fff;
+            background: transparent;
+            color: #3a2018;
+            border-color: rgba(58, 32, 24, 0.35);
         }
 
         .filter-btn:hover {
             transform: translateY(-1px);
+            background: rgba(239, 47, 36, 0.12);
+            color: #c7221a;
+            border-color: rgba(239, 47, 36, 0.5);
+            box-shadow: 0 6px 14px rgba(239, 47, 36, 0.14);
+        }
+
+        .filter-btn.filter-active:hover {
+            background: #e0261d;
+            color: #ffffff;
+            border-color: #e0261d;
+            box-shadow: 0 8px 16px rgba(224, 38, 29, 0.32);
         }
 
         .pager-wrap {
@@ -106,6 +122,77 @@
             color: #4a2d21;
         }
 
+        .delivery-availability {
+            margin-top: 1.6rem;
+            padding-top: 1.25rem;
+            border-top: 2px solid rgba(239, 47, 36, 0.9);
+        }
+
+        .delivery-title {
+            text-align: center;
+            color: #ef2f24;
+            font-size: 2.05rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 1rem;
+            letter-spacing: 0.01em;
+        }
+
+        .delivery-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 0.9rem;
+            justify-items: center;
+        }
+
+        .delivery-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            min-width: 190px;
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            color: #7a0f15;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .delivery-link:hover {
+            transform: translateY(-1px);
+            filter: brightness(0.96);
+        }
+
+        .delivery-pill-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #ef2f24;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+        }
+
+        .delivery-pill-text {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.005em;
+            line-height: 1;
+            color: #8b0f16;
+        }
+
+        @media (min-width: 768px) {
+            .delivery-grid {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+                gap: 1.4rem;
+            }
+
+            .delivery-title {
+                margin-bottom: 1.2rem;
+            }
+        }
+
         @media (max-width: 1280px) {
             .menu-shell::before,
             .menu-shell::after {
@@ -120,16 +207,16 @@
     <section class="py-24 bg-[#EFE1D1]">
         <div class="menu-shell px-4 sm:px-6">
             <h3 class="text-3xl md:text-4xl font-bold text-center mb-3">Menu Bakso Bunderan Ciomas</h3>
-            <p class="text-center mb-9 text-base md:text-lg text-gray-700 max-w-2xl mx-auto">Nikmati berbagai menu bakso kami yang gurih dan lezat</p>
+            <p class="text-center mb-8 text-base md:text-lg text-gray-700 max-w-2xl mx-auto">Nikmati berbagai menu bakso kami yang gurih dan lezat</p>
 
-            <div class="flex flex-wrap justify-center gap-3 mb-10">
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
                 <button class="filter-btn filter-active" data-filter="all">Semua</button>
                 @foreach(['bakso', 'mie', 'paket', 'minuman'] as $category)
                 <button class="filter-btn filter-inactive" data-filter="{{ $category }}">{{ $category == 'mie' ? 'Mie Ayam' : ucfirst($category) }}</button>
                 @endforeach
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5" id="menuContainer">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 items-stretch" id="menuContainer">
                 @include('partials.menu-items')
             </div>
 
@@ -142,13 +229,22 @@
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
+
+            <div class="delivery-availability">
+                <h4 class="delivery-title">Tersedia di</h4>
+                <div class="delivery-grid">
+                    <a href="https://gofood.co.id" target="_blank" rel="noopener" class="delivery-link" aria-label="GoFood">
+                        <span class="delivery-pill-icon"><i class="fas fa-utensils"></i></span>
+                        <span class="delivery-pill-text">gofood</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
     @include('partials.footer')
 
     <script>
-        const PAGE_SIZE = 6;
         let currentPage = 1;
 
         const menuContainer = document.getElementById('menuContainer');
@@ -157,6 +253,14 @@
         const nextPageBtn = document.getElementById('menuNextPage');
         const pageInfo = document.getElementById('menuPageInfo');
 
+        function getPageSize() {
+            const width = window.innerWidth;
+            if (width >= 1280) return 8;
+            if (width >= 1024) return 6;
+            if (width >= 640) return 4;
+            return 4;
+        }
+
         function getMenuItems() {
             if (!menuContainer) return [];
             return Array.from(menuContainer.querySelectorAll('.menu-item'));
@@ -164,14 +268,15 @@
 
         function applyMenuPagination() {
             const items = getMenuItems();
-            const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+            const pageSize = getPageSize();
+            const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
 
             if (currentPage > totalPages) {
                 currentPage = totalPages;
             }
 
-            const start = (currentPage - 1) * PAGE_SIZE;
-            const end = start + PAGE_SIZE;
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
 
             items.forEach((item, index) => {
                 item.style.display = index >= start && index < end ? '' : 'none';
@@ -190,7 +295,7 @@
             }
 
             if (paginationWrap) {
-                paginationWrap.classList.toggle('hidden', items.length <= PAGE_SIZE);
+                paginationWrap.classList.toggle('hidden', items.length <= pageSize);
             }
         }
 
@@ -219,7 +324,7 @@
         if (nextPageBtn) {
             nextPageBtn.addEventListener('click', () => {
                 const totalItems = getMenuItems().length;
-                const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+                const totalPages = Math.max(1, Math.ceil(totalItems / getPageSize()));
                 if (currentPage >= totalPages) return;
                 currentPage += 1;
                 applyMenuPagination();
@@ -258,6 +363,11 @@
                         menuContainer.innerHTML = '<div class="col-span-full text-center py-8 text-red-600"><i class="fas fa-exclamation-triangle text-3xl"></i><p class="mt-4">Terjadi kesalahan saat memuat menu</p></div>';
                     });
             });
+        });
+
+        window.addEventListener('resize', () => {
+            applyMenuPagination();
+            animateVisibleItems();
         });
 
         applyMenuPagination();
