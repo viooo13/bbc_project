@@ -4,17 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Paket;
+use App\Models\UserCart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
     private function getCart(Request $request): array
     {
+        $user = $request->user();
+        if ($user) {
+            $userCart = UserCart::firstOrCreate(
+                ['user_id' => $user->id],
+                ['items' => []]
+            );
+
+            return is_array($userCart->items) ? $userCart->items : [];
+        }
+
         return $request->session()->get('cart', []);
     }
 
     private function saveCart(Request $request, array $cart): void
     {
+        $user = $request->user();
+        if ($user) {
+            UserCart::updateOrCreate(
+                ['user_id' => $user->id],
+                ['items' => $cart]
+            );
+        }
+
         $request->session()->put('cart', $cart);
     }
 

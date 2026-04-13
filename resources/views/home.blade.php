@@ -931,7 +931,7 @@
                     @forelse(($influencerTestimonials ?? collect()) as $idx => $influencer)
                         <article class="influencer-card fade-up" style="transition-delay: {{ number_format($idx * 0.08, 2) }}s;">
                             <div class="influencer-media">
-                                <img src="{{ $influencer->thumbnail ? asset($influencer->thumbnail) : 'https://placehold.co/420x240/ffffff/3a2a1a?text=Influencer' }}" alt="Influencer" class="w-full h-52 md:h-56 object-cover" />
+                                <img src="{{ $influencer->thumbnail_url }}" alt="Influencer" class="w-full h-52 md:h-56 object-cover" />
                                 <div class="influencer-play"><i class="fas fa-play"></i></div>
                                 <div class="influencer-badge">{{ $influencer->title ?: 'Video Influencer' }}</div>
                             </div>
@@ -956,8 +956,8 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start" id="daftarTestimoni">
                     @if(isset($testimonials) && $testimonials->count() > 0)
-                        @foreach($testimonials as $testimonial)
-                            <div class="bg-[#F9EDDE] p-6 rounded-xl shadow-md hover:shadow-lg transition self-start">
+                        @foreach($testimonials as $idx => $testimonial)
+                            <div class="bg-[#F9EDDE] p-6 rounded-xl shadow-md hover:shadow-lg transition self-start fade-up" style="transition-delay: {{ number_format($idx * 0.07, 2) }}s;">
                                 <div class="flex items-center justify-between">
                                     <div class="font-extrabold text-sm text-[#3a2a1a]">{{ $testimonial->customer_name }}</div>
                                     <div class="text-amber-500 text-sm font-semibold">
@@ -1192,7 +1192,7 @@
         function showNotification(message, type = 'success') {
             // Buat elemen notifikasi
             const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300`;
+            notification.className = `fixed bottom-4 right-4 ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300`;
             notification.innerHTML = `
                 <div class="flex items-center">
                     <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>

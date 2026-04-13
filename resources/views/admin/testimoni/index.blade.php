@@ -74,7 +74,7 @@
                     <thead>
                         <tr>
                             <th>Thumbnail</th>
-                            <th>Judul</th>
+                            <th>Nama Influencer / Media</th>
                             <th>URL YouTube</th>
                             <th>Urutan</th>
                             <th>Status</th>
@@ -85,10 +85,10 @@
                     @forelse($influencerTestimonials as $item)
                         <tr>
                             <td>
-                                <img class="thumb" src="{{ $item->thumbnail ? asset($item->thumbnail) : 'https://placehold.co/400x250/f1f5f9/475569?text=Influencer' }}" alt="thumbnail">
+                                <img class="thumb" src="{{ $item->thumbnail_url }}" alt="thumbnail">
                             </td>
                             <td>
-                                <strong>{{ $item->title ?: 'Tanpa Judul' }}</strong>
+                                <strong>{{ $item->title ?: 'Tanpa Nama' }}</strong>
                             </td>
                             <td>
                                 <a href="{{ $item->youtube_url }}" target="_blank" rel="noopener">{{ $item->youtube_url }}</a>

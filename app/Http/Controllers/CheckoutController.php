@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pesanan;
+use App\Models\UserCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -10,6 +11,16 @@ class CheckoutController extends Controller
 {
     private function getCart(Request $request): array
     {
+        $user = $request->user();
+        if ($user) {
+            $userCart = UserCart::firstOrCreate(
+                ['user_id' => $user->id],
+                ['items' => []]
+            );
+
+            return is_array($userCart->items) ? $userCart->items : [];
+        }
+
         return $request->session()->get('cart', []);
     }
 
@@ -47,14 +58,14 @@ class CheckoutController extends Controller
 
         $data = $request->validate([
             'customer_name' => 'required|string|max:255',
-            'customer_phone' => 'required|string|max:50',
+            'customer_phone' => ['required', 'string', 'max:50', 'regex:/^[0-9]+$/'],
             'customer_email' => 'required|email|max:255',
-            'event_name' => 'nullable|string|max:255',
-            'event_date' => 'nullable|date',
-            'delivery_time' => 'nullable|string|max:50',
-            'delivery_address' => 'nullable|string|max:1000',
-            'delivery_method' => 'nullable|string|max:100',
-            'payment_method' => 'nullable|string|max:100',
+            'event_name' => 'required|string|max:255',
+            'event_date' => 'required|date',
+            'delivery_time' => 'required|string|max:50',
+            'delivery_address' => 'required|string|max:1000',
+            'delivery_method' => 'required|string|max:100',
+            'payment_method' => 'required|string|max:100',
             'notes' => 'nullable|string|max:2000',
         ]);
 
@@ -63,6 +74,7 @@ class CheckoutController extends Controller
         $orderId = 'ORD-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(5));
 
         Pesanan::create([
+            'user_id' => optional($request->user())->id,
             'order_id' => $orderId,
             'customer_name' => $data['customer_name'],
             'customer_email' => $data['customer_email'],
@@ -80,8 +92,6 @@ class CheckoutController extends Controller
             ]),
             'status' => 'pending',
         ]);
-
-        $request->session()->put('cart', []);
 
         return redirect()->route('transaksi.show', ['orderId' => $orderId]);
     }

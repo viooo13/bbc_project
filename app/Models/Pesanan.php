@@ -12,6 +12,7 @@ class Pesanan extends Model
     protected $table = 'pesanan';
     
     protected $fillable = [
+        'user_id',
         'order_id',
         'customer_name',
         'customer_email',

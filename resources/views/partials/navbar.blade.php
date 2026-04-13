@@ -15,12 +15,21 @@
             </div>
         </div>
 
-        <button id="mobileNavToggle" type="button" aria-label="Toggle mobile menu" aria-controls="mobileNavbarMenu" aria-expanded="false" class="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/35 bg-white/20 text-[#3a2a1a]">
-            <i id="mobileNavIconOpen" class="fas fa-bars text-sm"></i>
-            <i id="mobileNavIconClose" class="fas fa-times text-sm hidden"></i>
-        </button>
+        <div class="md:hidden inline-flex items-center gap-2">
+            @auth
+            <a href="{{ route('cart.index') }}" aria-label="Keranjang" class="mobile-cart-btn">
+                <i class="fas fa-shopping-cart text-lg"></i>
+                <span id="cartCountMobile" class="mobile-cart-count">0</span>
+            </a>
+            @endauth
 
-        <div class="hidden md:flex items-center justify-end md:min-w-[112px]">
+            <button id="mobileNavToggle" type="button" aria-label="Toggle mobile menu" aria-controls="mobileNavbarMenu" aria-expanded="false" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-transparent bg-transparent text-[#3a2a1a] hover:text-[#1f1410]">
+                <i id="mobileNavIconOpen" class="fas fa-bars text-xl"></i>
+                <i id="mobileNavIconClose" class="fas fa-times text-xl hidden"></i>
+            </button>
+        </div>
+
+        <div class="hidden md:flex items-center justify-end gap-2 md:min-w-[112px]">
             @auth
             <button type="button" class="nav-action-btn relative bg-white/10 text-[#3a2a1a] px-4 py-0.5 rounded-full text-[13px] font-semibold hover:bg-white/20 transition-all duration-300" onclick="window.location.href='{{ route('cart.index') }}'">
                 <i class="fas fa-shopping-cart"></i>
@@ -30,23 +39,27 @@
             @else
             <button type="button" class="nav-action-btn bg-red-600 text-white px-[18px] py-0.5 rounded-full text-[13px] font-semibold hover:bg-red-700 transition-all duration-300" onclick="window.location.href='{{ route('login') }}'">MASUK</button>
             @endauth
+
+            <a href="https://wa.me/6282123368495?text=Halo%20BBC%2C%20saya%20ingin%20tanya%20menu." target="_blank" rel="noopener" class="wa-top-chat" aria-label="Chat WhatsApp">
+                <span class="wa-top-chat-orbit" aria-hidden="true"></span>
+                <span class="wa-top-chat-core">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="wa-top-chat-text">Chat WA</span>
+                </span>
+            </a>
         </div>
     </div>
 
     <div id="mobileNavbarMenu" class="md:hidden rounded-2xl border border-white/30 bg-white/15 px-3 py-3 backdrop-blur-2xl shadow-xl shadow-black/15">
         <div class="flex flex-col gap-2">
-            <a href="{{ route('home') }}" class="rounded-xl px-3 py-2 text-sm font-semibold {{ request()->routeIs('home') ? 'bg-red-600 text-white' : 'text-[#2f2218] bg-white/40' }}">HOME</a>
-            <a href="{{ route('pages.tentang') }}" class="rounded-xl px-3 py-2 text-sm font-semibold {{ request()->routeIs('pages.tentang') ? 'bg-red-600 text-white' : 'text-[#2f2218] bg-white/40' }}">TENTANG BBC</a>
-            <a href="{{ route('menu.public') }}" class="rounded-xl px-3 py-2 text-sm font-semibold {{ request()->routeIs('menu.public') ? 'bg-red-600 text-white' : 'text-[#2f2218] bg-white/40' }}">MENU</a>
-            <a href="https://gofood.co.id" target="_blank" rel="noopener" class="rounded-xl px-3 py-2 bg-white/45 flex items-center justify-center">
-                <img src="{{ asset('gofood.png') }}" alt="GoFood" class="h-6 w-auto object-contain" />
-            </a>
-            <a href="{{ route('pages.lokasi_kontak') }}" class="rounded-xl px-3 py-2 text-sm font-semibold {{ request()->routeIs('pages.lokasi_kontak') ? 'bg-red-600 text-white' : 'text-[#2f2218] bg-white/40' }}">LOKASI DAN KONTAK</a>
+            <a href="{{ route('home') }}" class="mobile-nav-link px-1 py-2 text-sm font-semibold {{ request()->routeIs('home') ? 'mobile-nav-link-active' : '' }}">HOME</a>
+            <a href="{{ route('pages.tentang') }}" class="mobile-nav-link px-1 py-2 text-sm font-semibold {{ request()->routeIs('pages.tentang') ? 'mobile-nav-link-active' : '' }}">TENTANG BBC</a>
+            <a href="{{ route('menu.public') }}" class="mobile-nav-link px-1 py-2 text-sm font-semibold {{ request()->routeIs('menu.public') ? 'mobile-nav-link-active' : '' }}">MENU</a>
+            <a href="{{ route('pages.lokasi_kontak') }}" class="mobile-nav-link px-1 py-2 text-sm font-semibold {{ request()->routeIs('pages.lokasi_kontak') ? 'mobile-nav-link-active' : '' }}">LOKASI DAN KONTAK</a>
 
             @auth
-            <a href="{{ route('cart.index') }}" class="rounded-xl px-3 py-2 text-sm font-semibold text-[#2f2218] bg-white/40">KERANJANG</a>
             @else
-            <a href="{{ route('login') }}" class="rounded-xl px-3 py-2 text-sm font-semibold bg-red-600 text-white text-center">MASUK</a>
+            <a href="{{ route('login') }}" class="mobile-action-btn mobile-action-btn-login">MASUK</a>
             @endauth
         </div>
     </div>
@@ -72,6 +85,83 @@
     #mainNavbar .nav-item-button,
     #mainNavbar .nav-action-btn {
         transition: padding 0.35s ease, color 0.3s ease, background-color 0.3s ease;
+    }
+
+    #mainNavbar .nav-item-button {
+        position: relative;
+    }
+
+    #mainNavbar .nav-active-bg {
+        pointer-events: none;
+    }
+
+    #mobileNavbarMenu .mobile-nav-link {
+        color: #2f2218;
+        border-bottom: 2px solid transparent;
+        text-decoration: none;
+    }
+
+    #mobileNavbarMenu .mobile-nav-link-active {
+        border-bottom-color: #dc2626;
+    }
+
+    .mobile-cart-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 999px;
+        color: #2f2218;
+        text-decoration: none;
+    }
+
+    .mobile-cart-count {
+        position: absolute;
+        top: -0.25rem;
+        right: -0.3rem;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #facc15;
+        color: #dc2626;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    #mobileNavbarMenu .mobile-action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-start;
+        margin-top: 0.3rem;
+        padding: 0.26rem 0.95rem;
+        border-radius: 999px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        width: auto;
+        max-width: max-content;
+        transition: background-color 0.25s ease, transform 0.25s ease;
+    }
+
+    #mobileNavbarMenu .mobile-action-btn-cart {
+        background: rgba(255, 255, 255, 0.45);
+        color: #2f2218;
+    }
+
+    #mobileNavbarMenu .mobile-action-btn-login {
+        background: #dc2626;
+        color: #fff;
+    }
+
+    #mobileNavbarMenu .mobile-action-btn:hover {
+        transform: translateY(-1px);
     }
 
     #mainNavbar .nav-gofood-link {
@@ -128,6 +218,100 @@
         transform: scale(0.94);
     }
 
+    .wa-top-chat {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        margin-left: 0.15rem;
+    }
+
+    .wa-top-chat-orbit {
+        position: absolute;
+        width: 56px;
+        height: 56px;
+        border-radius: 999px;
+        border: 1px dashed rgba(34, 197, 94, 0.65);
+        animation: waOrbitSpin 7s linear infinite;
+        pointer-events: none;
+    }
+
+    .wa-top-chat-core {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.42rem;
+        padding: 0.52rem 0.9rem;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #1fbf5b 0%, #159447 100%);
+        color: #fff;
+        box-shadow: 0 12px 22px rgba(21, 148, 71, 0.34);
+        transform-origin: top center;
+        transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+        animation: waIdleFloat 3.6s ease-in-out infinite;
+    }
+
+    .wa-top-chat-core i {
+        font-size: 0.95rem;
+    }
+
+    .wa-top-chat-text {
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+    }
+
+    .wa-top-chat:hover .wa-top-chat-core {
+        animation: waHoverSwing 1.9s ease-in-out infinite;
+        box-shadow: 0 16px 30px rgba(21, 148, 71, 0.45);
+        filter: brightness(1.04);
+    }
+
+    .wa-top-chat:hover .wa-top-chat-orbit {
+        animation-duration: 2.8s;
+        border-color: rgba(34, 197, 94, 0.9);
+    }
+
+    @keyframes waOrbitSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes waIdleFloat {
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-2px) rotate(0deg); }
+        100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    @keyframes waHoverSwing {
+        0% { transform: rotate(0deg) translateY(-1px); }
+        25% { transform: rotate(-4deg) translateY(-2px); }
+        50% { transform: rotate(3.4deg) translateY(0); }
+        75% { transform: rotate(-2.6deg) translateY(-1px); }
+        100% { transform: rotate(0deg) translateY(-1px); }
+    }
+
+    @media (max-width: 767px) {
+        .wa-top-chat {
+            display: none;
+        }
+
+        .wa-top-chat-core {
+            padding: 0.5rem 0.75rem;
+        }
+
+        .wa-top-chat-text {
+            display: none;
+        }
+
+        .wa-top-chat-orbit {
+            width: 44px;
+            height: 44px;
+        }
+    }
+
 </style>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -142,7 +326,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenu = document.getElementById('mobileNavbarMenu');
     const mobileIconOpen = document.getElementById('mobileNavIconOpen');
     const mobileIconClose = document.getElementById('mobileNavIconClose');
+    const desktopCartCount = document.getElementById('cartCount');
+    const mobileCartCount = document.getElementById('cartCountMobile');
     let activeBtn = null;
+
+    function syncMobileCartCount() {
+        if (!desktopCartCount || !mobileCartCount) return;
+        mobileCartCount.textContent = desktopCartCount.textContent || '0';
+    }
+
+    function refreshCartCount() {
+        if (!desktopCartCount) return;
+
+        fetch('/api/cart-count', {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then((response) => {
+                if (!response.ok) throw new Error('Failed to fetch cart count');
+                return response.json();
+            })
+            .then((data) => {
+                desktopCartCount.textContent = String(data.count ?? 0);
+                syncMobileCartCount();
+            })
+            .catch(() => {
+                // Keep existing badge value if request fails.
+            });
+    }
 
     function syncNavbarOnScroll() {
         if (!navbar) return;
@@ -219,6 +431,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setMobileMenu(false);
     }
+
+    syncMobileCartCount();
+    if (desktopCartCount && mobileCartCount && 'MutationObserver' in window) {
+        const cartObserver = new MutationObserver(syncMobileCartCount);
+        cartObserver.observe(desktopCartCount, { childList: true, subtree: true, characterData: true });
+    }
+
+    refreshCartCount();
 
     window.addEventListener('resize', () => {
         if (window.innerWidth >= 768) {
