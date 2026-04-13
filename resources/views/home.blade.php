@@ -159,9 +159,247 @@
             opacity: 1;
             transform: translateY(0);
         }
-        .rekomendasi-slider { overflow: hidden; position: relative; }
-        .rekomendasi-track { display: flex; gap: 2rem; transition: transform 1s ease-in-out; }
-        .rekomendasi-item { min-width: calc(33.333% - 1.333rem); flex-shrink: 0; }
+        .halal-intro {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        .js .halal-intro {
+            opacity: 0;
+            transform: translateY(80px) scale(0.965);
+        }
+        .halal-intro.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .halal-logo,
+        .halal-desc {
+            opacity: 0;
+            transform: translateY(34px) scale(0.985);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        .halal-intro.visible .halal-logo,
+        .halal-intro.visible .halal-desc {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .halal-intro.visible .halal-logo {
+            transition-delay: 0.12s;
+        }
+        .halal-intro.visible .halal-desc {
+            transition-delay: 0.34s;
+        }
+        .rekomendasi-slider {
+            position: relative;
+            overflow: hidden;
+            max-width: 1020px;
+            margin: 0 auto;
+            padding: 0.35rem 2.6rem;
+        }
+
+        .rekomendasi-track {
+            display: flex;
+            gap: 1rem;
+            transition: none;
+            will-change: transform;
+        }
+
+        .rekomendasi-item {
+            flex: 0 0 175px;
+            padding: 0;
+        }
+
+        @media (min-width: 640px) {
+            .rekomendasi-item {
+                flex-basis: 195px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .rekomendasi-item {
+                flex-basis: 220px;
+            }
+        }
+
+        .influencer-card {
+            border-radius: 16px;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .influencer-media {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 10px 22px rgba(58, 42, 26, 0.14);
+        }
+
+        .influencer-media img {
+            transition: transform 0.55s ease;
+        }
+
+        .influencer-media::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 45%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0));
+            pointer-events: none;
+        }
+
+        .influencer-play {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 46px;
+            height: 46px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #b42318;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
+            transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .influencer-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #b42318;
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            padding: 0.35rem 0.65rem;
+            border-radius: 999px;
+            max-width: 82%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .influencer-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            background: #b42318;
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            padding: 0.58rem 1.1rem;
+            border-radius: 999px;
+            transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 8px 16px rgba(180, 35, 24, 0.28);
+        }
+
+        .influencer-cta .external-icon {
+            font-size: 0.68rem;
+            opacity: 0.9;
+            transform: translateY(0);
+            transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+
+        .influencer-meta {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+        }
+
+        .influencer-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.62);
+            border: 1px solid rgba(122, 46, 32, 0.12);
+            border-radius: 999px;
+            padding: 0.38rem 0.72rem;
+            font-size: 0.72rem;
+            color: #5a1f18;
+            font-weight: 600;
+        }
+
+        .influencer-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .influencer-card:hover .influencer-media {
+            box-shadow: 0 16px 30px rgba(58, 42, 26, 0.2);
+        }
+
+        .influencer-card:hover .influencer-media img {
+            transform: scale(1.045);
+        }
+
+        .influencer-card:hover .influencer-play {
+            transform: translate(-50%, -50%) scale(1.07);
+            background: #b42318;
+            color: #fff;
+        }
+
+        .influencer-card:hover .influencer-cta {
+            transform: translateY(-2px);
+            background: #8f1e14;
+            box-shadow: 0 12px 20px rgba(143, 30, 20, 0.3);
+        }
+
+        .influencer-card:hover .influencer-cta .external-icon {
+            transform: translate(1px, -1px);
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .influencer-card,
+            .influencer-media,
+            .influencer-media img,
+            .influencer-play,
+            .influencer-cta,
+            .influencer-cta .external-icon {
+                transition: none !important;
+            }
+        }
+
+        .rekomendasi-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            border: 1px solid rgba(90, 31, 24, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            color: #5a1f18;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 2;
+        }
+
+        .rekomendasi-nav:hover {
+            background: #ffffff;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .rekomendasi-nav.prev {
+            left: 0.35rem;
+        }
+
+        .rekomendasi-nav.next {
+            right: 0.35rem;
+        }
         
         /* Filter Button Styles */
         .filter-btn {
@@ -279,6 +517,88 @@
         #bg1, #bg2 {
             transition: opacity 0.8s ease-in-out;
         }
+
+        .typing-title {
+            display: inline-block;
+            min-height: 1.2em;
+        }
+
+        .typing-caret {
+            border-right: 2px solid rgba(255, 255, 255, 0.95);
+            padding-right: 0.12em;
+            animation: caretBlink 0.7s steps(1, end) infinite;
+        }
+
+        .hero-accent-kuah {
+            position: relative;
+            display: inline-block;
+            padding: 0.02em 0.4em 0.06em;
+            margin-left: 0.08em;
+            color: #fffaf4;
+            z-index: 1;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+            isolation: isolate;
+        }
+
+        .hero-accent-kuah::before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            left: -0.1em;
+            right: -0.12em;
+            top: 50%;
+            bottom: -0.14em;
+            transform: translateY(-50%) rotate(-1.5deg);
+            background:
+                radial-gradient(130% 96% at 14% 35%, rgba(255, 192, 121, 0.96) 0%, rgba(240, 123, 49, 0.95) 38%, rgba(197, 65, 27, 0.96) 72%, rgba(142, 35, 16, 0.98) 100%);
+            border-radius: 44% 56% 48% 52% / 42% 54% 46% 58%;
+            box-shadow: 0 8px 18px rgba(109, 27, 10, 0.38), inset 0 2px 4px rgba(255, 220, 182, 0.35), inset 0 -1px 3px rgba(120, 34, 16, 0.35);
+            animation: kuahBlob 3.2s ease-in-out infinite;
+        }
+
+        .hero-accent-kuah::after {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            left: 16%;
+            right: 20%;
+            top: 46%;
+            height: 42%;
+            border-radius: 999px;
+            background: linear-gradient(105deg, rgba(255, 239, 211, 0.42) 0%, rgba(255, 239, 211, 0.08) 55%, rgba(255, 239, 211, 0) 100%);
+            filter: blur(0.4px);
+            animation: kuahShine 2.6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes kuahBlob {
+            0%, 100% {
+                transform: translateY(-50%) rotate(-1.5deg) scale(1);
+            }
+            50% {
+                transform: translateY(-50%) rotate(-0.4deg) scale(1.03, 0.98);
+            }
+        }
+
+        @keyframes kuahShine {
+            0%, 100% {
+                opacity: 0.62;
+                transform: translateX(0);
+            }
+            50% {
+                opacity: 0.9;
+                transform: translateX(3%);
+            }
+        }
+
+        @keyframes caretBlink {
+            0%, 50% {
+                border-right-color: rgba(255, 255, 255, 0.95);
+            }
+            51%, 100% {
+                border-right-color: transparent;
+            }
+        }
         
         /* Animasi Scroll Horizontal */
         @keyframes scrollX {
@@ -296,6 +616,94 @@
         
         .animate-scroll-x:hover {
             animation-play-state: paused;
+        }
+
+        .package-trust-chip {
+            color: #5a1f18;
+            padding: 0.22rem 0.1rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .package-card {
+            transition: transform 0.35s ease, opacity 0.25s ease, box-shadow 0.3s ease;
+            will-change: transform;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .package-carousel {
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            overscroll-behavior-x: contain;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            padding-bottom: 0.25rem;
+        }
+
+        .package-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .package-track {
+            display: flex;
+            gap: 1rem;
+            width: max-content;
+            padding-right: 0.25rem;
+        }
+
+        .package-slide {
+            flex: 0 0 280px;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        .package-nav-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 999px;
+            border: 1px solid rgba(90, 31, 24, 0.15);
+            background: rgba(255, 255, 255, 0.78);
+            color: #5a1f18;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .package-nav-btn:hover {
+            background: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .package-nav-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (min-width: 640px) {
+            .package-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .package-slide {
+                flex-basis: 295px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .package-slide {
+                flex-basis: 310px;
+            }
         }
     </style>
     <style>
@@ -343,20 +751,19 @@
         .font-playfair { font-family: 'Poppins', sans-serif !important; }
     </style>
 </head>
-<body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden">
+<body class="font-poppins bg-transparent text-[#3a2a1a] overflow-x-hidden">
     @include('partials.navbar')
+    @include('partials.review-readmore')
 
     <!-- HERO -->
-    <section id="home" class="relative overflow-hidden">
+    <section id="home" class="relative min-h-screen overflow-hidden">
         <!-- Background Container -->
         <div class="absolute inset-0">
-            <!-- Background 1 (Active by default) -->
-            <div id="bg1" class="bg-slide active">
-                <img src="https://placehold.co/1920x580/2b1b14/ffffff?text=Hero+Background+1" alt="Bakso Bunderan Ciomas" class="w-full h-[420px] sm:h-[520px] lg:h-[580px] object-cover" />
+            <div id="bg1" class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
+                <img src="bg_home.jpeg" alt="Bakso Bunderan Ciomas" class="absolute inset-0 w-full h-full object-cover" />
             </div>
-            <!-- Background 2 (Hidden by default) -->
-            <div id="bg2" class="bg-slide">
-                <img src="background2.jpeg" alt="Bakso Bunderan Ciomas" class="w-full h-[420px] sm:h-[520px] lg:h-[580px] object-cover" />
+            <div id="bg2" class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0">
+                <img src="background2.jpeg" alt="Bakso Bunderan Ciomas" class="absolute inset-0 w-full h-full object-cover" />
             </div>
         </div>
         
@@ -364,14 +771,26 @@
         <div class="absolute inset-0 bg-black/45 z-10"></div>
         
         <!-- Content -->
-        <div class="relative z-20 flex items-center h-[420px] sm:h-[520px] lg:h-[580px]">
+        <div class="relative z-20 min-h-screen flex items-center pt-24 sm:pt-28">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 text-white">
-                <div class="w-full md:w-2/3 lg:w-1/2">
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4 font-playfair fade-in-left">Bakso Bunderan Ciomas</h2>
-                    <p class="mb-6 text-base sm:text-lg font-poppins slide-in">Gurih, halal, dan favorit keluarga sejak lama. Cita rasa autentik yang memanjakan lidah Anda.</p>
-                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                        <a href="{{ route('menu.public') }}" class="bg-red-600 px-6 py-3 rounded-md font-semibold hover:bg-red-700 font-poppins btn-animated hover-scale fade-in-up text-center">LIHAT MENU</a>
-                        <a href="#lokasi" class="bg-pink-300 text-black px-6 py-3 rounded-md font-semibold hover:bg-pink-400 font-poppins btn-animated hover-scale fade-in-up text-center" style="animation-delay: 0.2s">LOKASI KAMI</a>
+                <div class="w-full md:w-2/3 lg:w-[58%]">
+                    <p class="inline-flex items-center gap-2 mb-4 px-1 text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase text-[#f8e9cf] fade-in-up">
+                        <span class="w-2 h-2 rounded-full bg-[#f4c95d]"></span>
+                        Selamat Datang di Cita Rasa Legendaris
+                    </p>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4 font-playfair fade-in-left">
+                        <span id="typedHeroTitle" class="typing-title" data-text="Bakso Bunderan Ciomas"></span>
+                    </h2>
+                    <p class="mb-6 text-base sm:text-lg font-poppins text-white/95 slide-in">Nikmati semangkuk bakso gurih halal dengan racikan autentik yang konsisten sejak lama, cocok untuk keluarga dan momen hangat bersama.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-stretch max-w-xl">
+                        <button onclick="window.location.href='{{ route('menu.public') }}'" class="w-full min-h-[48px] sm:min-h-[52px] inline-flex items-center justify-center gap-2 bg-[#b42318] px-5 sm:px-6 py-3 rounded-xl font-semibold text-sm sm:text-base tracking-wide text-white shadow-lg shadow-[#5a1a12]/35 transition-all duration-300 hover:bg-white hover:text-[#b42318] hover:-translate-y-0.5 hover:shadow-2xl hover:brightness-100 font-poppins btn-animated hover-scale fade-in-up text-center border border-transparent hover:border-[#b42318]">
+                            <i class="fas fa-utensils text-sm"></i>
+                            <span>LIHAT MENU</span>
+                        </button>
+                        <button onclick="document.getElementById('lokasi')?.scrollIntoView({ behavior: 'smooth' })" class="w-full min-h-[48px] sm:min-h-[52px] inline-flex items-center justify-center gap-2 bg-white/90 text-[#b42318] px-5 sm:px-6 py-3 rounded-xl font-semibold text-sm sm:text-base tracking-wide border border-white/80 shadow-md shadow-black/10 transition-all duration-300 hover:bg-[#b42318] hover:text-white hover:-translate-y-0.5 hover:shadow-2xl hover:border-[#b42318] font-poppins btn-animated hover-scale fade-in-up text-center" style="animation-delay: 0.2s">
+                            <i class="fas fa-location-dot text-sm"></i>
+                            <span>LOKASI KAMI</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -379,79 +798,97 @@
         
         <!-- Background Selector Dots -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex gap-3">
-            <!-- Dot 1 - Background 1 -->
-            <button onclick="changeBackground(1)" 
-                    id="dot1" 
-                    class="w-3 h-3 rounded-full bg-white/80 hover:bg-white transition-all duration-300 border-2 border-white active-dot">
-            </button>
-            <!-- Dot 2 - Background 2 -->
-            <button onclick="changeBackground(2)" 
-                    id="dot2" 
-                    class="w-3 h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 border-2 border-transparent">
-            </button>
+            <button onclick="changeBackground(1)" id="dot1" class="w-3 h-3 rounded-full bg-white/80 hover:bg-white transition-all duration-300 border-2 border-white"></button>
+            <button onclick="changeBackground(2)" id="dot2" class="w-3 h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 border-2 border-transparent"></button>
         </div>
     </section>
 
     <!-- PAKET ACARA -->
-    <section id="paket" class="py-20 bg-[#EFE1D1]">
-        <div class="max-w-7xl mx-auto px-6">
+    <section id="paket" class="py-16 bg-[#EFE1D1]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <h3 class="text-4xl font-bold text-center mb-4">PAKET ACARA</h3>
-            <p class="text-center mb-12 text-lg text-gray-700">Pilihan paket terbaik untuk acara spesial Anda</p>
+            <p class="text-center mb-5 text-lg text-gray-700">Pilihan paket terbaik untuk acara spesial Anda</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @if(isset($pakets) && $pakets->count() > 0)
-                    @foreach($pakets as $paket)
-                        <div class="package-card bg-[#EFE1D1] rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 fade-up flex flex-col">
-                            <div class="h-64 overflow-hidden bg-[#EFE1D1]">
-                                <img src="{{ $paket->image ? asset($paket->image) : 'https://placehold.co/800x600/efe1d1/3a2a1a?text=Paket' }}"
-                                     alt="{{ $paket->name }}"
-                                     class="w-full h-full object-cover hover:scale-105 transition duration-300">
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="text-2xl font-bold mb-2 text-gray-800">{{ $paket->name }}</h4>
-                                @if(!empty($paket->original_price))
-                                    <div class="text-sm font-semibold text-gray-600 line-through">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
-                                @endif
-                                <div class="text-3xl font-bold text-red-600 mb-2">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</div>
-                                <div class="text-gray-700 mb-4 text-sm whitespace-pre-line flex-grow">{{ $paket->description }}</div>
-                                <div class="text-sm text-gray-700 mb-6">Porsi: {{ $paket->portion }}</div>
-                                <div class="flex gap-3 mt-auto">
-                                    <button onclick="addPaketToCart({{ (int) $paket->id }})" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition">
-                                        <i class="fas fa-cart-plus mr-2"></i>Tambah ke Keranjang
-                                    </button>
+            <div class="mb-6 flex flex-wrap justify-center gap-2.5 sm:gap-3">
+                <span class="package-trust-chip"><i class="fas fa-shield-alt text-[#b42318]"></i>Jaminan selesai sebelum acara</span>
+                <span class="package-trust-chip"><i class="fas fa-headset text-[#b42318]"></i>Bantuan 24/7</span>
+                <span class="package-trust-chip"><i class="fas fa-calendar-check text-[#b42318]"></i>Bisa reschedule jadwal</span>
+            </div>
+
+            @if(isset($pakets) && $pakets->count() > 0)
+                <div class="relative">
+                    <div id="packageNavControls" class="flex justify-center sm:justify-end gap-2 mb-3">
+                        <button id="packagePrevBtn" type="button" class="package-nav-btn" aria-label="Geser paket ke kiri">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button id="packageNextBtn" type="button" class="package-nav-btn" aria-label="Geser paket ke kanan">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <div id="packageCarousel" class="package-carousel">
+                        <div id="packageGrid" class="package-track">
+                            @foreach($pakets as $paket)
+                                <div class="package-card package-slide bg-[#EFE1D1] rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 fade-up flex flex-col">
+                                    <div class="h-48 overflow-hidden bg-[#EFE1D1]">
+                                        <img src="{{ $paket->image ? asset($paket->image) : 'https://placehold.co/800x600/efe1d1/3a2a1a?text=Paket' }}"
+                                             alt="{{ $paket->name }}"
+                                             class="w-full h-full object-cover hover:scale-105 transition duration-300">
+                                    </div>
+                                    <div class="p-4 flex flex-col flex-grow">
+                                        <h4 class="text-lg font-bold mb-2 text-gray-800">{{ $paket->name }}</h4>
+                                        @if(!empty($paket->original_price))
+                                            <div class="text-xs font-semibold text-gray-600 line-through">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
+                                        @endif
+                                        <div class="text-[1.85rem] leading-none font-bold text-red-600 mb-2">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</div>
+                                        <div class="text-gray-700 mb-3 text-sm leading-relaxed whitespace-pre-line flex-grow">{{ $paket->description }}</div>
+                                        <div class="text-sm text-gray-700 mb-4">Porsi: {{ $paket->portion }}</div>
+                                        <div class="flex gap-3 mt-auto">
+                                            <button onclick="addPaketToCart({{ (int) $paket->id }})" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition">
+                                                <i class="fas fa-cart-plus mr-2"></i>Tambah ke Keranjang
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="col-span-full text-center text-gray-700">
-                        <div class="bg-[#F9EDDE] rounded-2xl p-10 shadow">
-                            <h4 class="text-2xl font-bold mb-2">Paket belum tersedia</h4>
-                            <p class="text-sm">Silakan tambahkan data paket dari halaman admin.</p>
+                            @endforeach
                         </div>
                     </div>
-                @endif
-            </div>
+                </div>
+            @else
+                <div class="text-center text-gray-700">
+                    <div class="bg-[#F9EDDE] rounded-2xl p-10 shadow">
+                        <h4 class="text-2xl font-bold mb-2">Paket belum tersedia</h4>
+                        <p class="text-sm">Silakan tambahkan data paket dari halaman admin.</p>
+                    </div>
+                </div>
+            @endif
+
         </div>
     </section>
 
-    <section class="py-12 bg-[#EFE1D1]">
+    <section id="halal" class="py-12 bg-[#EFE1D1]">
         <div class="max-w-5xl mx-auto px-6">
             <div class="relative bg-[#EFE1D1]">
                 <div class="relative text-center">
-                    <div class="flex justify-center mb-4">
-                        <img src="{{ asset('halal.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/160x80/efe1d1/3a2a1a?text=Halal';" alt="Halal" class="w-24 sm:w-28 h-auto" />
+                    <div class="halal-intro fade-up">
+                        <div class="halal-logo flex justify-center mb-4">
+                            <img src="{{ asset('halal.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/160x80/efe1d1/3a2a1a?text=Halal';" alt="Halal" class="w-24 sm:w-28 h-auto no-photo-hover" />
+                        </div>
+                        <p class="halal-desc text-sm md:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                            Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen boo
+                        </p>
                     </div>
-                    <p class="text-sm md:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed">
-                        Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen boo
-                    </p>
 
                     <h3 class="text-2xl md:text-3xl font-extrabold mt-8 mb-6 tracking-wide">MENU REKOMENDASI</h3>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 items-start justify-items-center">
-                        @foreach($recommendedItems->take(3) as $item)
-                            <div class="text-center">
-                                <div class="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-[#F9EDDE] shadow mx-auto">
+                    <div id="rekomendasiSlider" class="rekomendasi-slider">
+                        <button id="rekomPrev" type="button" class="rekomendasi-nav prev" aria-label="Geser rekomendasi ke kiri">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div id="rekomendasiTrack" class="rekomendasi-track">
+                        @foreach($recommendedItems->take(12) as $item)
+                            <div class="rekomendasi-item text-center">
+                                <div class="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden bg-[#F9EDDE] shadow-md mx-auto">
                                     <img src="{{ $item->image ? asset($item->image) : 'https://placehold.co/300x300/f9edde/3a2a1a?text=Menu' }}" alt="{{ $item->name }}" class="w-full h-full object-cover" />
                                 </div>
                                 <div class="mt-3 text-sm font-extrabold uppercase">{{ $item->name }}</div>
@@ -460,6 +897,10 @@
                                 </div>
                             </div>
                         @endforeach
+                        </div>
+                        <button id="rekomNext" type="button" class="rekomendasi-nav next" aria-label="Geser rekomendasi ke kanan">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
 
                     <div class="mt-10">
@@ -477,102 +918,46 @@
         <div class="max-w-7xl mx-auto px-6">
             <h3 class="text-4xl font-bold mb-10">REVIEW</h3>
 
-            @php
-                $influencerTestimonials = [
-                    [
-                        'title' => 'BUSET!! Apaan nih??',
-                        'thumb' => 'https://placehold.co/420x240/ffffff/3a2a1a?text=Influencer+1',
-                        'url' => 'https://www.youtube.com',
-                    ],
-                    [
-                        'title' => '',
-                        'thumb' => 'https://placehold.co/420x240/ffffff/3a2a1a?text=Influencer+2',
-                        'url' => 'https://www.youtube.com',
-                    ],
-                    [
-                        'title' => '',
-                        'thumb' => 'https://placehold.co/420x240/ffffff/3a2a1a?text=Influencer+3',
-                        'url' => 'https://www.youtube.com',
-                    ],
-                ];
-
-                $dummyCustomerReviews = [
-                    [
-                        'name' => 'Abdul',
-                        'rating' => 5,
-                        'content' => "saya beli disini rasanya enak banget dan porsinya pas, cocok buat makan bareng keluarga. pelayanan juga ramah.",
-                    ],
-                    [
-                        'name' => 'Abdul',
-                        'rating' => 5,
-                        'content' => "enak gurih dan kuahnya mantap, baksonya berasa daging. recommended buat yang lagi pengen bakso!",
-                    ],
-                    [
-                        'name' => 'Abdul',
-                        'rating' => 5,
-                        'content' => "tempatnya bersih, cepat saji, dan rasanya konsisten. bakal repeat order lagi.",
-                    ],
-                    [
-                        'name' => 'Abdul',
-                        'rating' => 5,
-                        'content' => "bakso tulang dan sumsum favorit! bumbunya pas, gak terlalu asin. mantap.",
-                    ],
-                    [
-                        'name' => 'Abdul',
-                        'rating' => 5,
-                        'content' => "harga sesuai kualitas, porsi oke. cocok buat makan siang.",
-                    ],
-                    [
-                        'name' => 'Abdul',
-                        'rating' => 5,
-                        'content' => "kuahnya gurih, topping lengkap, dan baksonya kenyal. sukses terus!",
-                    ],
-                ];
-            @endphp
-
             <div class="mt-10">
                 <h4 class="text-center font-extrabold tracking-wide text-lg md:text-xl">TESTIMONI INFLUENCER</h4>
 
+                <div class="influencer-meta fade-up">
+                   
+                    <span class="influencer-stat"><i class="fas fa-circle-check"></i>Konten Terverifikasi</span>
+                    <span class="influencer-stat"><i class="fab fa-youtube"></i>Official Channel Highlights</span>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-                    <div class="bg-transparent">
-                        <div class="relative rounded-xl overflow-hidden shadow-md bg-white">
-                            <img src="{{ asset('tanboy.jpeg') }}" alt="Influencer" class="w-full h-52 md:h-56 object-cover" />
-                            <div class="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded">
-                                BUSET!! Apaan nih??
+                    @forelse(($influencerTestimonials ?? collect()) as $idx => $influencer)
+                        <article class="influencer-card fade-up" style="transition-delay: {{ number_format($idx * 0.08, 2) }}s;">
+                            <div class="influencer-media">
+                                <img src="{{ $influencer->thumbnail ? asset($influencer->thumbnail) : 'https://placehold.co/420x240/ffffff/3a2a1a?text=Influencer' }}" alt="Influencer" class="w-full h-52 md:h-56 object-cover" />
+                                <div class="influencer-play"><i class="fas fa-play"></i></div>
+                                <div class="influencer-badge">{{ $influencer->title ?: 'Video Influencer' }}</div>
                             </div>
+                            <div class="mt-4 flex justify-center">
+                                <a href="{{ $influencer->youtube_url }}" target="_blank" rel="noopener" class="influencer-cta">
+                                    <i class="fab fa-youtube"></i>
+                                    <span>See on YouTube</span>
+                                    <i class="fas fa-up-right-from-square external-icon"></i>
+                                </a>
+                            </div>
+                        </article>
+                    @empty
+                        <div class="col-span-full text-center text-sm text-gray-600 bg-[#F9EDDE] border border-[#e6d8c5] rounded-xl py-8">
+                            Testimoni influencer belum tersedia.
                         </div>
-                        <div class="mt-4 flex justify-center">
-                            <a href="https://www.youtube.com" target="_blank" rel="noopener" class="bg-red-600 text-white text-xs font-bold px-6 py-2 rounded-full hover:bg-red-700 transition">See on Youtube</a>
-                        </div>
-                    </div>
-
-                    <div class="bg-transparent">
-                        <div class="relative rounded-xl overflow-hidden shadow-md bg-white">
-                            <img src="{{ asset('testimoni2.jpeg') }}" alt="Influencer" class="w-full h-52 md:h-56 object-cover" />
-                        </div>
-                        <div class="mt-4 flex justify-center">
-                            <a href="https://www.youtube.com" target="_blank" rel="noopener" class="bg-red-600 text-white text-xs font-bold px-6 py-2 rounded-full hover:bg-red-700 transition">See on Youtube</a>
-                        </div>
-                    </div>
-
-                    <div class="bg-transparent">
-                        <div class="relative rounded-xl overflow-hidden shadow-md bg-white">
-                            <img src="{{ asset('testimoni3.jpeg') }}" alt="Influencer" class="w-full h-52 md:h-56 object-cover" />
-                        </div>
-                        <div class="mt-4 flex justify-center">
-                            <a href="https://www.youtube.com" target="_blank" rel="noopener" class="bg-red-600 text-white text-xs font-bold px-6 py-2 rounded-full hover:bg-red-700 transition">See on Youtube</a>
-                        </div>
-                    </div>
+                    @endforelse
                 </div>
             </div>
 
             <div class="mt-14">
                 <h4 class="text-center font-extrabold tracking-wide text-lg md:text-xl">ULASAN</h4>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="daftarTestimoni">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start" id="daftarTestimoni">
                     @if(isset($testimonials) && $testimonials->count() > 0)
                         @foreach($testimonials as $testimonial)
-                            <div class="bg-[#F9EDDE] p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                            <div class="bg-[#F9EDDE] p-6 rounded-xl shadow-md hover:shadow-lg transition self-start">
                                 <div class="flex items-center justify-between">
                                     <div class="font-extrabold text-sm text-[#3a2a1a]">{{ $testimonial->customer_name }}</div>
                                     <div class="text-amber-500 text-sm font-semibold">
@@ -581,29 +966,27 @@
                                         @endfor
                                     </div>
                                 </div>
-                                <p class="mt-3 text-xs text-gray-700 leading-relaxed">{{ $testimonial->content }}</p>
+                                <div class="mt-3" data-review-block>
+                                    <p class="text-xs text-gray-700 leading-relaxed review-clamp" data-review-text style="--review-fade-bg:#F9EDDE;">{{ $testimonial->content }}</p>
+                                    <button type="button" class="mt-2 text-xs font-semibold text-red-600 hover:text-red-700 underline hidden" data-toggle-text>
+                                        Lihat selengkapnya
+                                    </button>
+                                </div>
                                 @if($testimonial->admin_reply)
-                                    <div class="mt-4 p-3 bg-red-50 rounded-lg border-l-4 border-red-600">
+                                    <div class="mt-4 p-3 bg-red-50 rounded-lg border-l-4 border-red-600" data-review-block>
                                         <p class="text-sm font-semibold text-red-600 mb-1">Balasan:</p>
-                                        <p class="text-sm text-gray-700">{{ $testimonial->admin_reply }}</p>
+                                        <p class="text-sm text-gray-700 review-clamp" data-review-text style="--review-fade-bg:#FEF2F2;">{{ $testimonial->admin_reply }}</p>
+                                        <button type="button" class="mt-2 text-xs font-semibold text-red-600 hover:text-red-700 underline hidden" data-toggle-text>
+                                            Lihat selengkapnya
+                                        </button>
                                     </div>
                                 @endif
                             </div>
                         @endforeach
                     @else
-                        @foreach($dummyCustomerReviews as $review)
-                            <div class="bg-[#F9EDDE] p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                                <div class="flex items-center justify-between">
-                                    <div class="font-extrabold text-sm text-[#3a2a1a]">{{ $review['name'] }}</div>
-                                    <div class="text-amber-500 text-sm font-semibold">
-                                        @for($i = 0; $i < 5; $i++)
-                                            @if($i < $review['rating']) ★ @else ☆ @endif
-                                        @endfor
-                                    </div>
-                                </div>
-                                <p class="mt-3 text-xs text-gray-700 leading-relaxed">{{ $review['content'] }}</p>
-                            </div>
-                        @endforeach
+                        <div class="col-span-full text-center text-sm text-gray-600 bg-[#F9EDDE] border border-[#e6d8c5] rounded-xl py-8">
+                            Ulasan pelanggan belum tersedia.
+                        </div>
                     @endif
                 </div>
             </div>
@@ -825,6 +1208,153 @@
             }, 3000);
         }
 
+        function changeBackground(index) {
+            const bg1 = document.getElementById('bg1');
+            const bg2 = document.getElementById('bg2');
+            const dot1 = document.getElementById('dot1');
+            const dot2 = document.getElementById('dot2');
+            if (!bg1 || !bg2 || !dot1 || !dot2) return;
+
+            if (index === 1) {
+                bg1.classList.remove('opacity-0');
+                bg1.classList.add('opacity-100');
+                bg2.classList.remove('opacity-100');
+                bg2.classList.add('opacity-0');
+                dot1.classList.replace('bg-white/40', 'bg-white/80');
+                dot2.classList.replace('bg-white/80', 'bg-white/40');
+            } else {
+                bg2.classList.remove('opacity-0');
+                bg2.classList.add('opacity-100');
+                bg1.classList.remove('opacity-100');
+                bg1.classList.add('opacity-0');
+                dot2.classList.replace('bg-white/40', 'bg-white/80');
+                dot1.classList.replace('bg-white/80', 'bg-white/40');
+            }
+        }
+
+
+        function initHeroTyping() {
+            const typedEl = document.getElementById('typedHeroTitle');
+            if (!typedEl || typedEl.dataset.typed === 'true') return;
+
+            const fullText = typedEl.dataset.text || 'Bakso Bunderan Ciomas';
+            const highlightWord = 'Ciomas';
+            const highlightStart = fullText.indexOf(highlightWord);
+            typedEl.dataset.typed = 'true';
+
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                typedEl.textContent = fullText;
+                return;
+            }
+
+            typedEl.classList.add('typing-caret');
+            typedEl.textContent = '';
+
+            let charIndex = 0;
+            let deleting = false;
+
+            const typeSpeed = 120;
+            const deleteSpeed = 80;
+            const holdAtEnd = 1700;
+            const holdAtStart = 500;
+
+            function renderTypedText(count) {
+                if (highlightStart < 0) {
+                    typedEl.textContent = fullText.slice(0, count);
+                    return;
+                }
+
+                const before = fullText.slice(0, Math.min(count, highlightStart));
+                const highlighted = count > highlightStart
+                    ? fullText.slice(highlightStart, Math.min(count, fullText.length))
+                    : '';
+
+                typedEl.innerHTML = `${before}<span class="hero-accent-kuah">${highlighted}</span>`;
+            }
+
+            function loopTyping() {
+                if (!deleting) {
+                    charIndex += 1;
+                    renderTypedText(charIndex);
+
+                    if (charIndex >= fullText.length) {
+                        deleting = true;
+                        setTimeout(loopTyping, holdAtEnd);
+                        return;
+                    }
+
+                    setTimeout(loopTyping, typeSpeed);
+                    return;
+                }
+
+                charIndex -= 1;
+                renderTypedText(charIndex);
+
+                if (charIndex <= 0) {
+                    deleting = false;
+                    setTimeout(loopTyping, holdAtStart);
+                    return;
+                }
+
+                setTimeout(loopTyping, deleteSpeed);
+            }
+
+            loopTyping();
+        }
+
+        function initPackageCarousel() {
+            const carousel = document.getElementById('packageCarousel');
+            const navControls = document.getElementById('packageNavControls');
+            const prevBtn = document.getElementById('packagePrevBtn');
+            const nextBtn = document.getElementById('packageNextBtn');
+            const firstSlide = carousel?.querySelector('.package-slide');
+            if (!carousel || !prevBtn || !nextBtn) return;
+
+            function updateButtons() {
+                const maxScroll = Math.max(0, carousel.scrollWidth - carousel.clientWidth);
+                const hasOverflow = maxScroll > 2;
+                if (!hasOverflow) {
+                    prevBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    return;
+                }
+                prevBtn.disabled = carousel.scrollLeft <= 2;
+                nextBtn.disabled = carousel.scrollLeft >= maxScroll - 2;
+            }
+
+            function syncNavVisibility() {
+                const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+                const hasOverflow = (carousel.scrollWidth - carousel.clientWidth) > 2;
+
+                if (navControls) {
+                    // On mobile/tablet: always show controls. On desktop: show only if overflow.
+                    navControls.classList.toggle('hidden', isDesktop && !hasOverflow);
+                }
+
+                updateButtons();
+            }
+
+            function scrollByAmount(direction) {
+                const slideGap = 16;
+                const slideWidth = firstSlide ? firstSlide.getBoundingClientRect().width : 280;
+                const amount = slideWidth + slideGap;
+                carousel.scrollBy({
+                    left: direction * amount,
+                    behavior: 'smooth'
+                });
+            }
+
+            prevBtn.addEventListener('click', () => scrollByAmount(-1));
+            nextBtn.addEventListener('click', () => scrollByAmount(1));
+            carousel.addEventListener('scroll', updateButtons, { passive: true });
+            window.addEventListener('resize', syncNavVisibility);
+            window.addEventListener('load', syncNavVisibility);
+            requestAnimationFrame(syncNavVisibility);
+        }
+
+        initHeroTyping();
+        initPackageCarousel();
+
         function updateCartCount() {
             fetch('/api/cart-count')
                 .then(response => response.json())
@@ -883,24 +1413,83 @@
             });
         }
 
-        // ========== AUTO SLIDER REKOMENDASI ==========
-        let currentSlide = 0;
-        const rekomendasiTrack = document.querySelector('.rekomendasi-track') || document.getElementById('rekomendasiTrack');
-        const rekomendasiItems = document.querySelectorAll('.rekomendasi-item');
+        // ========== AUTO GESER REKOMENDASI (LOOP MULUS) ==========
+        function initRecommendedAutoScroll() {
+            const slider = document.getElementById('rekomendasiSlider');
+            const track = document.getElementById('rekomendasiTrack');
+            const prevBtn = document.getElementById('rekomPrev');
+            const nextBtn = document.getElementById('rekomNext');
+            if (!slider || !track || !prevBtn || !nextBtn) return;
 
-        const totalSlides = Math.max(0, rekomendasiItems.length - 3); // Show 3 items at a time
+            const baseItems = Array.from(track.querySelectorAll('.rekomendasi-item'));
+            if (baseItems.length <= 1) return;
 
-        function slideRekomendasi() {
-            if (!rekomendasiTrack || totalSlides <= 0) return;
-            currentSlide = (currentSlide + 1) % totalSlides;
-            const translateX = -currentSlide * (100 / 3); // Move by 1/3 of container width
-            rekomendasiTrack.style.transform = `translateX(${translateX}%)`;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+
+            let position = 0;
+            let loopWidth = 0;
+            let stepWidth = 0;
+            let rafId = null;
+            const speed = 0.45;
+
+            function clearClones() {
+                track.querySelectorAll('[data-reko-clone="1"]').forEach(el => el.remove());
+            }
+
+            function rebuild() {
+                clearClones();
+                baseItems.forEach(item => {
+                    const clone = item.cloneNode(true);
+                    clone.setAttribute('data-reko-clone', '1');
+                    track.appendChild(clone);
+                });
+
+                const first = track.querySelector('.rekomendasi-item');
+                const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '16') || 16;
+                stepWidth = first ? (first.getBoundingClientRect().width + gap) : 220;
+                loopWidth = (stepWidth * baseItems.length);
+                position = ((position % loopWidth) + loopWidth) % loopWidth;
+                track.style.transform = `translateX(${-position}px)`;
+            }
+
+            function tick() {
+                if (loopWidth <= 0) {
+                    rafId = requestAnimationFrame(tick);
+                    return;
+                }
+
+                position += speed;
+                if (position >= loopWidth) {
+                    position -= loopWidth;
+                }
+
+                track.style.transform = `translateX(${-position}px)`;
+                rafId = requestAnimationFrame(tick);
+            }
+
+            prevBtn.addEventListener('click', () => {
+                if (loopWidth <= 0) return;
+                position -= stepWidth;
+                if (position < 0) position += loopWidth;
+                track.style.transform = `translateX(${-position}px)`;
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (loopWidth <= 0) return;
+                position += stepWidth;
+                if (position >= loopWidth) position -= loopWidth;
+                track.style.transform = `translateX(${-position}px)`;
+            });
+
+            window.addEventListener('resize', rebuild);
+
+            rebuild();
+            if (!rafId) rafId = requestAnimationFrame(tick);
         }
 
-        // Auto slide every 3 seconds (1 second pause + 2 seconds slide)
-        if (rekomendasiTrack && totalSlides > 0) {
-            setInterval(slideRekomendasi, 3000);
-        }
+        initRecommendedAutoScroll();
 
         // ========== FADE UP ANIMATION ==========
         const revealEls = document.querySelectorAll('.fade-up, .fade-left, .fade-right');

@@ -245,6 +245,35 @@
             min-height: 100px;
         }
 
+        .recommendation-toggle {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+
+        .recommendation-toggle label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            cursor: pointer;
+            color: #1f2d3d;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .recommendation-toggle input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            padding: 0;
+            accent-color: #e74c3c;
+            flex: 0 0 18px;
+            border: none;
+            box-shadow: none;
+        }
+
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -315,62 +344,27 @@
         }
 
         .image-preview {
-            margin-top: 10px;
-            max-width: 200px;
+            margin-top: 12px;
+            width: min(260px, 100%);
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            background: #f8fafc;
         }
 
         .image-preview img {
             width: 100%;
-            border-radius: 6px;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="{{ asset('logo.jpeg') }}" alt="Logo">
-                <span>ADMIN BBC</span>
-            </div>
-            
-            <nav class="menu">
-                <a href="/admin/dashboard" class="menu-item">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="/admin/menu-management" class="menu-item active">
-                    <i class="fas fa-utensils"></i>
-                    <span>Menu Management</span>
-                </a>
-                <a href="/admin/kelola-pesanan" class="menu-item">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>Pesanan</span>
-                </a>
-                <a href="/laporan" class="menu-item">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Laporan Penjualan</span>
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-comment"></i>
-                    <span>Testimoni</span>
-                </a>
-                <a href="/kelola-admin" class="menu-item">
-                    <i class="fas fa-user-cog"></i>
-                    <span>Kelola Admin</span>
-                </a>
-            </nav>
-            
-            <div class="user-info">
-                <img src="https://via.placeholder.com/44x44?text=👤" alt="User Avatar">
-                <div class="user-details">
-                    <div class="user-name">Admin User</div>
-                    <div class="user-email">admin@bbc.com</div>
-                </div>
-            </div>
-        </aside>
-        
-        <!-- Main Content -->
+        @include('admin.partials.sidebar', ['activeMenu' => 'menu', 'pendingCount' => $pendingCount ?? 0])
+
         <main class="main-content">
             <header class="page-header">
                 <div>
@@ -438,6 +432,13 @@
                                 <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="form-group recommendation-toggle">
+                        <label>
+                            <input type="checkbox" name="is_recommended" value="1" {{ old('is_recommended') ? 'checked' : '' }}>
+                            Jadikan menu rekomendasi (ditampilkan di section Menu Rekomendasi)
+                        </label>
                     </div>
 
                     <div class="form-group">

@@ -9,6 +9,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\AdminTestimonialController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\AdminManagementController;
 use Illuminate\Http\Request;
@@ -45,12 +46,7 @@ Route::get('/', function () {
 // Home page for normal users (after register/login)
 Route::get('/home', [MenuController::class, 'home'])->name('home');
 
-Route::get('/tentang-bbc', function () {
-    $testimonials = \App\Models\Testimonial::orderByDesc('created_at')->take(12)->get();
-    return view('pages.tentang-halal', [
-        'testimonials' => $testimonials,
-    ]);
-})->name('pages.tentang');
+Route::get('/tentang-bbc', [MenuController::class, 'about'])->name('pages.tentang');
 
 Route::get('/lokasi-dan-kontak', function () {
     return view('pages.lokasi-kontak');
@@ -160,6 +156,17 @@ Route::middleware(['auth:admin', 'admin'])->group(function () {
             // Redirect ke delete
             return redirect()->route('admin.menu.index');
         })->name('admin.menu.delete.get');
+
+        // Testimoni Management Routes (Admin)
+        Route::get('/testimoni', [AdminTestimonialController::class, 'index'])->name('admin.testimoni.index');
+        Route::get('/testimoni/influencer/create', [AdminTestimonialController::class, 'createInfluencer'])->name('admin.testimoni.influencer.create');
+        Route::post('/testimoni/influencer', [AdminTestimonialController::class, 'storeInfluencer'])->name('admin.testimoni.influencer.store');
+        Route::get('/testimoni/influencer/{id}/edit', [AdminTestimonialController::class, 'editInfluencer'])->name('admin.testimoni.influencer.edit');
+        Route::put('/testimoni/influencer/{id}', [AdminTestimonialController::class, 'updateInfluencer'])->name('admin.testimoni.influencer.update');
+        Route::delete('/testimoni/influencer/{id}', [AdminTestimonialController::class, 'destroyInfluencer'])->name('admin.testimoni.influencer.destroy');
+
+        Route::post('/testimoni/customer/{id}/reply', [AdminTestimonialController::class, 'replyCustomer'])->name('admin.testimoni.customer.reply');
+        Route::delete('/testimoni/customer/{id}', [AdminTestimonialController::class, 'destroyCustomer'])->name('admin.testimoni.customer.destroy');
     });
 
     // Paket CRUD Routes

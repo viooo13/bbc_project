@@ -16,9 +16,11 @@ class Menu extends Model
         'category',
         'image',
         'status',
+        'is_recommended',
     ];
 
     protected $casts = [
         'price' => 'decimal:2',
+        'is_recommended' => 'boolean',
     ];
 }

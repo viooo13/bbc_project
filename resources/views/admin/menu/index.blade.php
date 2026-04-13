@@ -217,7 +217,7 @@
 
         .menus-table th {
             background-color: #f8f9fa;
-            padding: 12px;
+            padding: 12px 14px;
             text-align: left;
             font-weight: 600;
             color: #2c3e50;
@@ -226,9 +226,10 @@
         }
 
         .menus-table td {
-            padding: 12px;
+            padding: 12px 14px;
             border-bottom: 1px solid #e9ecef;
             font-size: 14px;
+            vertical-align: middle;
         }
 
         .menus-table tr:hover {
@@ -240,10 +241,11 @@
         }
 
         .menu-image {
-            width: 50px;
-            height: 50px;
+            width: 64px;
+            height: 64px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
         }
 
         .status-badge {
@@ -394,7 +396,7 @@
 
         .pakets-table th {
             background-color: #f8f9fa;
-            padding: 12px;
+            padding: 12px 14px;
             text-align: left;
             font-weight: 600;
             color: #2c3e50;
@@ -403,9 +405,10 @@
         }
 
         .pakets-table td {
-            padding: 12px;
+            padding: 12px 14px;
             border-bottom: 1px solid #e9ecef;
             font-size: 14px;
+            vertical-align: middle;
         }
 
         .pakets-table tr:hover {
@@ -417,10 +420,11 @@
         }
 
         .paket-image {
-            width: 50px;
-            height: 50px;
+            width: 64px;
+            height: 64px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
         }
 
         .portion-badge {
@@ -436,48 +440,7 @@
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="{{ asset('logo.jpeg') }}" alt="Logo">
-                <span>ADMIN BBC</span>
-            </div>
-            
-            <nav class="menu">
-                <a href="/admin/dashboard" class="menu-item">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="/admin/menu-management" class="menu-item active">
-                    <i class="fas fa-utensils"></i>
-                    <span>Menu Management</span>
-                </a>
-                <a href="/admin/kelola-pesanan" class="menu-item">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>Pesanan</span>
-                </a>
-                <a href="/laporan" class="menu-item">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Laporan Penjualan</span>
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-comment"></i>
-                    <span>Testimoni</span>
-                </a>
-                <a href="/kelola-admin" class="menu-item">
-                    <i class="fas fa-user-cog"></i>
-                    <span>Kelola Admin</span>
-                </a>
-            </nav>
-            
-            <div class="user-info">
-                <img src="https://via.placeholder.com/44x44?text=👤" alt="User Avatar">
-                <div class="user-details">
-                    <div class="user-name">Admin User</div>
-                    <div class="user-email">admin@bbc.com</div>
-                </div>
-            </div>
-        </aside>
+        @include('admin.partials.sidebar', ['activeMenu' => 'menu', 'pendingCount' => $pendingCount ?? 0])
         
         <!-- Main Content -->
         <main class="main-content">
@@ -511,11 +474,12 @@
                     <table class="menus-table">
                         <thead>
                             <tr>
-                                <th style="width: 50px;">Gambar</th>
+                                <th style="width: 84px;">Gambar</th>
                                 <th>Nama Menu</th>
                                 <th>Deskripsi</th>
                                 <th>Kategori</th>
                                 <th>Harga</th>
+                                <th>Rekomendasi</th>
                                 <th>Status</th>
                                 <th style="width: 120px;">Aksi</th>
                             </tr>
@@ -539,6 +503,11 @@
                                         <span class="price">Rp {{ number_format($menu->price, 0, ',', '.') }}</span>
                                     </td>
                                     <td>
+                                        <span class="status-badge {{ $menu->is_recommended ? 'active' : 'inactive' }}">
+                                            {{ $menu->is_recommended ? 'Ya' : 'Tidak' }}
+                                        </span>
+                                    </td>
+                                    <td>
                                         <span class="status-badge {{ $menu->status }}">
                                             {{ $menu->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}
                                         </span>
@@ -556,7 +525,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="8">
                                         <div class="empty-state">
                                             <i class="fas fa-inbox"></i>
                                             <p>Tidak ada menu</p>
@@ -582,7 +551,7 @@
                     <table class="pakets-table">
                         <thead>
                             <tr>
-                                <th style="width: 50px;">Gambar</th>
+                                <th style="width: 84px;">Gambar</th>
                                 <th>Nama Paket</th>
                                 <th>Deskripsi</th>
                                 <th>Porsi</th>

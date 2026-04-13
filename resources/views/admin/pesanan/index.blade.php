@@ -545,47 +545,7 @@
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="logo.jpeg" alt="Logo">
-                <span>ADMIN BBC</span>
-            </div>
-            
-            <nav class="menu">
-                <a href="/menu" class="menu-item">
-                    <i class="fas fa-utensils"></i>
-                    <span>Menu Management</span>
-                </a>
-                <a href="/pesanan" class="menu-item active">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>Pesanan</span>
-                    @if(isset($stats['pending']) && $stats['pending'] > 0)
-                        <span style="margin-left:auto;background:#e74c3c;color:#fff;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;">{{ $stats['pending'] }}</span>
-                    @endif
-                </a>
-                <a href="/laporan" class="menu-item">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Laporan Penjualan</span>
-                </a>
-                <a href="/testimoni" class="menu-item">
-                    <i class="fas fa-comment"></i>
-                    <span>Testimoni</span>
-                </a>
-                <a href="kelola-admin" class="menu-item">
-                    <i class="fas fa-user-cog"></i>
-                    <span>Kelola Admin</span>
-                </a>
-            </nav>
-            
-            <div class="user-info">
-                <img src="https://via.placeholder.com/44x44?text=👤" alt="User Avatar">
-                <div class="user-details">
-                    <div class="user-name">Admin User</div>
-                    <div class="user-email">admin@bbc.com</div>
-                </div>
-            </div>
-        </aside>
+        @include('admin.partials.sidebar', ['activeMenu' => 'pesanan', 'pendingCount' => $stats['pending'] ?? 0])
         
         <!-- Main Content -->
         <main class="main-content">

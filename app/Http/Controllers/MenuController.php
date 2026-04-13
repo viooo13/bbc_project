@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Paket;
+use App\Models\InfluencerTestimonial;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -114,13 +115,43 @@ class MenuController extends Controller
             ->latest()
             ->get();
         $pakets = Paket::where('status', 'active')->get();
-        $recommendedItems = Menu::where('status', 'active')->latest()->take(3)->get();
+        $recommendedItems = Menu::where('status', 'active')
+            ->where('is_recommended', true)
+            ->latest()
+            ->take(12)
+            ->get();
+
+        if ($recommendedItems->isEmpty()) {
+            $recommendedItems = Menu::where('status', 'active')->latest()->take(12)->get();
+        }
+        $influencerTestimonials = InfluencerTestimonial::where('is_active', true)
+            ->orderBy('display_order')
+            ->latest('id')
+            ->take(12)
+            ->get();
         $testimonials = Testimonial::orderByDesc('created_at')->take(12)->get();
 
         return view('home', [
             'menus' => $menus,
             'pakets' => $pakets,
             'recommendedItems' => $recommendedItems,
+            'influencerTestimonials' => $influencerTestimonials,
+            'testimonials' => $testimonials,
+        ]);
+    }
+
+    public function about()
+    {
+        $influencerTestimonials = InfluencerTestimonial::where('is_active', true)
+            ->orderBy('display_order')
+            ->latest('id')
+            ->take(12)
+            ->get();
+
+        $testimonials = Testimonial::orderByDesc('created_at')->take(12)->get();
+
+        return view('pages.tentang-halal', [
+            'influencerTestimonials' => $influencerTestimonials,
             'testimonials' => $testimonials,
         ]);
     }
@@ -189,8 +220,11 @@ class MenuController extends Controller
             'price' => 'required|numeric',
             'category' => 'required|in:bakso,mie,paket,minuman',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required|in:active,inactive'
+            'status' => 'required|in:active,inactive',
+            'is_recommended' => 'nullable|boolean',
         ]);
+
+        $validated['is_recommended'] = $request->boolean('is_recommended');
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -227,8 +261,11 @@ class MenuController extends Controller
             'price' => 'required|numeric',
             'category' => 'required|in:bakso,mie,paket,minuman',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required|in:active,inactive'
+            'status' => 'required|in:active,inactive',
+            'is_recommended' => 'nullable|boolean',
         ]);
+
+        $validated['is_recommended'] = $request->boolean('is_recommended');
 
         // Handle image upload
         if ($request->hasFile('image')) {
