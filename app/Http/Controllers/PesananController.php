@@ -14,8 +14,24 @@ class PesananController extends Controller
 
         $query = Pesanan::query();
 
-        if ($user && !empty($user->email)) {
-            $query->where('customer_email', $user->email);
+        if ($user) {
+            $query->where(function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+
+                if (!empty($user->email)) {
+                    $q->orWhere(function ($legacy) use ($user) {
+                        $legacy->whereNull('user_id')
+                            ->where('customer_email', $user->email);
+                    });
+                }
+
+                if (!empty($user->phone)) {
+                    $q->orWhere(function ($legacy) use ($user) {
+                        $legacy->whereNull('user_id')
+                            ->where('customer_phone', $user->phone);
+                    });
+                }
+            });
         }
 
         if ($tab === 'diproses') {

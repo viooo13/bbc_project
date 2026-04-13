@@ -22,6 +22,102 @@
             }
         }
     </script>
+    <style>
+        .checkout-shell {
+            position: relative;
+        }
+
+        .checkout-shell::before,
+        .checkout-shell::after {
+            content: '';
+            position: absolute;
+            border-radius: 999px;
+            pointer-events: none;
+            filter: blur(2px);
+            opacity: 0.75;
+        }
+
+        .checkout-shell::before {
+            width: 210px;
+            height: 210px;
+            top: -60px;
+            left: -40px;
+            background: radial-gradient(circle at 35% 35%, rgba(239, 47, 36, 0.2), rgba(239, 47, 36, 0));
+        }
+
+        .checkout-shell::after {
+            width: 180px;
+            height: 180px;
+            right: -35px;
+            bottom: -40px;
+            background: radial-gradient(circle at 35% 35%, rgba(139, 0, 0, 0.15), rgba(139, 0, 0, 0));
+        }
+
+        .checkout-card {
+            border: 1px solid rgba(139, 0, 0, 0.08);
+            box-shadow: 0 16px 34px rgba(58, 32, 24, 0.1);
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            border-radius: 999px;
+            background: rgba(239, 47, 36, 0.1);
+            color: #8b0000;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.7rem;
+        }
+
+        .field-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #4a2d21;
+            margin-bottom: 0.35rem;
+            display: block;
+        }
+
+        .checkout-input {
+            width: 100%;
+            border-radius: 0.8rem;
+            border: 1px solid rgba(139, 0, 0, 0.12);
+            background: rgba(255, 255, 255, 0.88);
+            padding: 0.72rem 0.9rem;
+            font-size: 0.92rem;
+            color: #3a2a1a;
+            outline: none;
+            transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+        }
+
+        .checkout-input:focus {
+            border-color: rgba(239, 47, 36, 0.55);
+            box-shadow: 0 0 0 4px rgba(239, 47, 36, 0.1);
+            background: #fff;
+        }
+
+        .order-summary-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(139, 0, 0, 0.1);
+            box-shadow: 0 14px 26px rgba(58, 32, 24, 0.1);
+        }
+
+        .checkout-cta {
+            background: linear-gradient(135deg, #ef2f24 0%, #c91f17 100%);
+            box-shadow: 0 14px 24px rgba(239, 47, 36, 0.28);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+
+        .checkout-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 18px 30px rgba(239, 47, 36, 0.34);
+            filter: brightness(1.02);
+        }
+    </style>
 </head>
 <body class="bg-[#EFE1D1] text-[#2D3748] font-poppins">
     @include('partials.navbar')
@@ -31,46 +127,84 @@
         $subtotal = $subtotal ?? 0;
     @endphp
 
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-        <div class="text-center mb-8">
-            <h1 class="text-2xl sm:text-3xl font-extrabold text-[#3a2a1a] tracking-wide">CHECKOUT</h1>
+    <main class="checkout-shell max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
+        <div class="text-center mb-8 sm:mb-10">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-[#3a2a1a] tracking-tight">Checkout Pesanan</h1>
+            <p class="text-sm sm:text-base text-[#644b3c] mt-2">Lengkapi detail pemesanan agar proses konfirmasi lebih cepat.</p>
         </div>
 
-        <div class="bg-[#F9EDDE] rounded-2xl shadow p-5 sm:p-8">
-            <form action="{{ route('checkout.store') }}" method="POST" class="grid grid-cols-1 gap-8">
+        <div class="checkout-card bg-[#F9EDDE] rounded-[1.8rem] p-4 sm:p-6 md:p-8 lg:p-10 relative z-10">
+            <form action="{{ route('checkout.store') }}" method="POST" class="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8 items-start">
                 @csrf
 
-                <section class="space-y-4">
-                    <input name="customer_name" required placeholder="Nama Lengkap" class="w-full bg-white rounded-md px-4 py-3 border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600" />
-                    <input name="customer_phone" required placeholder="Nomor HP" class="w-full bg-white rounded-md px-4 py-3 border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600" />
-                    <input name="customer_email" required type="email" placeholder="Email" class="w-full bg-white rounded-md px-4 py-3 border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600" />
-                    <input name="event_name" placeholder="Nama Acara" class="w-full bg-white rounded-md px-4 py-3 border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600" />
-                    <input name="event_date" type="date" placeholder="Tanggal Acara" class="w-full bg-white rounded-md px-4 py-3 border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600" />
-                    <input name="delivery_time" type="time" placeholder="Jam Pengiriman" class="w-full bg-white rounded-md px-4 py-3 border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600" />
-                    <textarea name="delivery_address" rows="3" placeholder="Alamat Lengkap Pengiriman" class="w-full bg-white rounded-md px-4 py-3 border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 resize-none"></textarea>
+                <section class="lg:col-span-3">
+                    <div class="section-tag mb-4">
+                        <i class="fas fa-user-pen"></i>
+                        Informasi Pemesan
+                    </div>
 
-                    <select name="delivery_method" class="w-full bg-white rounded-md px-4 py-3 border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600">
-                        <option value="">Metode Pengiriman</option>
-                        <option value="antar">Antar</option>
-                        <option value="pickup">Ambil di Tempat</option>
-                    </select>
-
-                    <select name="payment_method" class="w-full bg-white rounded-md px-4 py-3 border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600">
-                        <option value="">Metode Pembayaran</option>
-                        <option value="cash">Cash</option>
-                        <option value="transfer">Transfer</option>
-                    </select>
-
-                    <textarea name="notes" rows="3" placeholder="Catatan Tambahan" class="w-full bg-white rounded-md px-4 py-3 border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 resize-none"></textarea>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="field-label">Nama Lengkap</label>
+                            <input name="customer_name" required placeholder="Masukkan Nama Lengkap" class="checkout-input" />
+                        </div>
+                        <div>
+                            <label class="field-label">Nomor HP</label>
+                            <input name="customer_phone" required inputmode="numeric" pattern="[0-9]*" placeholder="Contoh: 08xxxxxxxxxx" class="checkout-input" oninput="this.value=this.value.replace(/\D/g,'')" />
+                        </div>
+                        <div>
+                            <label class="field-label">Email</label>
+                            <input name="customer_email" required type="email" placeholder="nama@email.com" class="checkout-input" />
+                        </div>
+                        <div>
+                            <label class="field-label">Nama Acara</label>
+                            <input name="event_name" required placeholder="Contoh: Arisan Keluarga" class="checkout-input" />
+                        </div>
+                        <div>
+                            <label class="field-label">Tanggal Acara</label>
+                            <input name="event_date" required type="date" class="checkout-input" />
+                        </div>
+                        <div>
+                            <label class="field-label">Jam Pengiriman</label>
+                            <input name="delivery_time" required type="time" class="checkout-input" />
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="field-label">Alamat Lengkap Pengiriman</label>
+                            <textarea name="delivery_address" required rows="3" placeholder="Isi alamat lengkap agar pesanan mudah ditemukan" class="checkout-input resize-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="field-label">Metode Pengiriman</label>
+                            <select name="delivery_method" required class="checkout-input">
+                                <option value="">Pilih Metode Pengiriman</option>
+                                <option value="antar">Antar</option>
+                                <option value="pickup">Ambil di Tempat</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="field-label">Metode Pembayaran</label>
+                            <select name="payment_method" required class="checkout-input">
+                                <option value="">Pilih Metode Pembayaran</option>
+                                <option value="cash">Cash</option>
+                                <option value="transfer">Transfer</option>
+                            </select>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="field-label">Catatan Tambahan</label>
+                            <textarea name="notes" rows="3" placeholder="Contoh: Tolong dikirim sebelum pukul 11.00" class="checkout-input resize-none"></textarea>
+                        </div>
+                    </div>
                 </section>
 
-                <section>
-                    <div class="text-center font-extrabold text-[#3a2a1a] mb-4">Orderan Kamu</div>
+                <section class="lg:col-span-2 lg:sticky lg:top-28">
+                    <div class="section-tag mb-4">
+                        <i class="fas fa-receipt"></i>
+                        Ringkasan Pesanan
+                    </div>
 
-                    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                        <div class="px-4 py-3 border-b border-[#EFE1D1]">
-                            <div class="grid grid-cols-3 text-xs font-extrabold text-[#3a2a1a]">
-                                <div class="col-span-2">Product</div>
+                    <div class="order-summary-card rounded-2xl overflow-hidden">
+                        <div class="px-4 sm:px-5 py-3 border-b border-[#f0dfcb]">
+                            <div class="grid grid-cols-3 text-[11px] sm:text-xs font-extrabold text-[#3a2a1a] uppercase tracking-wide">
+                                <div class="col-span-2">Produk</div>
                                 <div class="text-right">Subtotal</div>
                             </div>
                         </div>
@@ -80,11 +214,11 @@
                                 @php
                                     $lineTotal = ((float) ($item['price'] ?? 0)) * ((int) ($item['quantity'] ?? 0));
                                 @endphp
-                                <div class="px-4 py-3">
+                                <div class="px-4 sm:px-5 py-3.5">
                                     <div class="grid grid-cols-3 gap-3 items-start">
                                         <div class="col-span-2">
-                                            <div class="text-sm font-extrabold text-[#3a2a1a]">{{ $item['name'] }}</div>
-                                            <div class="text-xs text-gray-600">x{{ (int) ($item['quantity'] ?? 0) }}</div>
+                                            <div class="text-sm font-extrabold text-[#3a2a1a] leading-tight">{{ $item['name'] }}</div>
+                                            <div class="text-xs text-gray-600 mt-1">Jumlah: x{{ (int) ($item['quantity'] ?? 0) }}</div>
                                         </div>
                                         <div class="text-right">
                                             <div class="text-sm font-extrabold text-red-700">Rp {{ number_format((float) $lineTotal, 0, ',', '.') }}</div>
@@ -98,28 +232,76 @@
                             @endforelse
                         </div>
 
-                        <div class="px-4 py-4 border-t border-[#EFE1D1]">
+                        <div class="px-4 sm:px-5 py-4 border-t border-[#EFE1D1] bg-[#fff9f2]">
                             <div class="flex items-center justify-between text-sm">
                                 <span class="font-extrabold text-[#3a2a1a]">Subtotal</span>
                                 <span class="font-extrabold text-[#3a2a1a]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                             </div>
-                            <div class="flex items-center justify-between text-sm mt-2">
-                                <span class="font-extrabold text-[#3a2a1a]">Total</span>
-                                <span class="font-extrabold text-[#3a2a1a]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
+                            <div class="flex items-center justify-between mt-2 pt-2 border-t border-[#efd7c2]">
+                                <span class="font-extrabold text-[#3a2a1a]">Total Pembayaran</span>
+                                <span class="text-base font-black text-[#b42318]">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-6 flex justify-center">
-                        <button type="submit" class="bg-red-600 text-white px-10 py-2.5 rounded-md font-extrabold shadow hover:bg-red-700 transition">Order Now</button>
+                    <div class="mt-5 grid grid-cols-1 gap-3">
+                        <button type="submit" class="checkout-cta text-white px-10 py-3 rounded-xl font-extrabold tracking-wide">Order Now</button>
+                        <a href="{{ route('cart.index') }}" class="text-center text-sm font-semibold text-red-700 hover:underline">Kembali ke Keranjang</a>
                     </div>
                 </section>
             </form>
         </div>
-
-        <div class="text-center mt-6">
-            <a href="{{ route('cart.index') }}" class="text-sm font-semibold text-red-700 hover:underline">Kembali ke Keranjang</a>
-        </div>
     </main>
+
+    <script>
+        (function () {
+            const form = document.querySelector('form[action="{{ route('checkout.store') }}"]');
+            if (!form) return;
+
+            const labels = {
+                customer_name: 'Nama Lengkap',
+                customer_phone: 'Nomor HP',
+                customer_email: 'Email',
+                event_name: 'Nama Acara',
+                event_date: 'Tanggal Acara',
+                delivery_time: 'Jam Pengiriman',
+                delivery_address: 'Alamat Lengkap Pengiriman',
+                delivery_method: 'Metode Pengiriman',
+                payment_method: 'Metode Pembayaran'
+            };
+
+            const requiredFieldNames = Object.keys(labels);
+
+            form.addEventListener('submit', function (event) {
+                for (const fieldName of requiredFieldNames) {
+                    const field = form.elements[fieldName];
+                    if (!field) continue;
+
+                    const value = String(field.value || '').trim();
+                    if (value === '') {
+                        event.preventDefault();
+                        alert(`Mohon Isi ${labels[fieldName]} Terlebih Dahulu.`);
+                        field.focus();
+                        return;
+                    }
+                }
+
+                const emailField = form.elements['customer_email'];
+                if (emailField && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(emailField.value || '').trim())) {
+                    event.preventDefault();
+                    alert('Format Email Belum Valid. Mohon Periksa Kembali.');
+                    emailField.focus();
+                    return;
+                }
+
+                const phoneField = form.elements['customer_phone'];
+                if (phoneField && !/^\d+$/.test(String(phoneField.value || '').trim())) {
+                    event.preventDefault();
+                    alert('Nomor HP Hanya Boleh Diisi Angka.');
+                    phoneField.focus();
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

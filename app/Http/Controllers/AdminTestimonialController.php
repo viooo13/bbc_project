@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InfluencerTestimonial;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AdminTestimonialController extends Controller
 {
@@ -26,17 +27,12 @@ class AdminTestimonialController extends Controller
         $validated = $request->validate([
             'title' => 'nullable|string|max:255',
             'youtube_url' => 'required|url|max:255',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
             'display_order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
         ]);
 
-        if ($request->hasFile('thumbnail')) {
-            $file = $request->file('thumbnail');
-            $fileName = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
-            $file->move(public_path('images/testimoni'), $fileName);
-            $validated['thumbnail'] = 'images/testimoni/' . $fileName;
-        }
+        $validated['thumbnail'] = InfluencerTestimonial::makeYoutubeThumbnailUrl($validated['youtube_url']);
+        $validated['title'] = $this->normalizeInfluencerName($validated['title'] ?? null);
 
         $validated['is_active'] = $request->boolean('is_active');
         $validated['display_order'] = (int) ($validated['display_order'] ?? 0);
@@ -60,21 +56,12 @@ class AdminTestimonialController extends Controller
         $validated = $request->validate([
             'title' => 'nullable|string|max:255',
             'youtube_url' => 'required|url|max:255',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
             'display_order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
         ]);
 
-        if ($request->hasFile('thumbnail')) {
-            if ($influencerTestimonial->thumbnail && file_exists(public_path($influencerTestimonial->thumbnail))) {
-                unlink(public_path($influencerTestimonial->thumbnail));
-            }
-
-            $file = $request->file('thumbnail');
-            $fileName = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
-            $file->move(public_path('images/testimoni'), $fileName);
-            $validated['thumbnail'] = 'images/testimoni/' . $fileName;
-        }
+        $validated['thumbnail'] = InfluencerTestimonial::makeYoutubeThumbnailUrl($validated['youtube_url']);
+        $validated['title'] = $this->normalizeInfluencerName($validated['title'] ?? null);
 
         $validated['is_active'] = $request->boolean('is_active');
         $validated['display_order'] = (int) ($validated['display_order'] ?? 0);
@@ -87,10 +74,6 @@ class AdminTestimonialController extends Controller
     public function destroyInfluencer($id)
     {
         $influencerTestimonial = InfluencerTestimonial::findOrFail($id);
-
-        if ($influencerTestimonial->thumbnail && file_exists(public_path($influencerTestimonial->thumbnail))) {
-            unlink(public_path($influencerTestimonial->thumbnail));
-        }
 
         $influencerTestimonial->delete();
 
@@ -117,5 +100,42 @@ class AdminTestimonialController extends Controller
         $testimonial->delete();
 
         return redirect()->route('admin.testimoni.index')->with('success', 'Ulasan pelanggan berhasil dihapus.');
+    }
+
+    private function normalizeInfluencerName(?string $name): ?string
+    {
+        $name = trim((string) $name);
+
+        if ($name === '') {
+            return null;
+        }
+
+        $acronyms = [
+            'tv' => 'TV',
+            'tvri' => 'TVRI',
+            'bbc' => 'BBC',
+            'rcti' => 'RCTI',
+            'sctv' => 'SCTV',
+            'mnc' => 'MNC',
+            'net' => 'NET',
+            'cnn' => 'CNN',
+            'id' => 'ID',
+        ];
+
+        return collect(preg_split('/\s+/', $name) ?: [])
+            ->map(function (string $part) use ($acronyms) {
+                return collect(explode('-', $part))
+                    ->map(function (string $segment) use ($acronyms) {
+                        $cleanSegment = strtolower($segment);
+
+                        if (isset($acronyms[$cleanSegment])) {
+                            return $acronyms[$cleanSegment];
+                        }
+
+                        return Str::of($cleanSegment)->headline()->toString();
+                    })
+                    ->implode('-');
+            })
+            ->implode(' ');
     }
 }
