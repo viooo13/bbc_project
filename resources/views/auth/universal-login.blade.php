@@ -49,9 +49,7 @@
     <div class="w-full max-w-md">
         <!-- Logo Section -->
         <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl shadow-xl mb-4">
-                <i class="fas fa-utensils text-3xl text-primary"></i>
-            </div>
+            <img src="{{ asset('logo.jpeg') }}" alt="Logo BBC" class="mx-auto w-20 h-20 object-contain mb-4" onerror="this.onerror=null;this.style.display='none';" />
             <h1 class="text-3xl font-bold text-white mb-2">Bakso Bunderan</h1>
             <p class="text-white/80">Ciomas</p>
         </div>
