@@ -7,192 +7,319 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'poppins': ['Poppins', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': '#8B0000',
-                        'secondary': '#DAA520',
-                        'accent': '#FF6B6B',
-                        'neutral': '#2D3748',
-                        'cream': '#F5E9D8',
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        .register-bg {
-            background: linear-gradient(135deg, #FF6B6B 0%, #8B0000 100%);
+        :root {
+            --bg-main: #e9decf;
+            --bg-card: #f6f4f1;
+            --text-main: #1f1f1f;
+            --text-soft: #666;
+            --line: #7f7f7f;
+            --line-focus: #e5382d;
+            --brand: #ef1f1f;
+            --brand-dark: #d91515;
         }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at 10% 15%, rgba(255, 255, 255, 0.32), transparent 28%),
+                radial-gradient(circle at 88% 82%, rgba(229, 56, 45, 0.14), transparent 34%),
+                var(--bg-main);
+            display: grid;
+            place-items: center;
+            padding: 30px 20px;
+            color: var(--text-main);
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 392px;
+            background: var(--bg-card);
+            border: 1px solid #ece7e2;
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(101, 67, 33, 0.13), 8px 10px 0 rgba(227, 92, 78, 0.25);
+            padding: 20px 24px 22px;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .brand img {
+            width: 74px;
+            height: 74px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.14));
+        }
+
+        .title {
+            text-align: center;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: 0.2px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin: 4px 0 16px;
+            font-size: 12px;
+            color: var(--text-soft);
+        }
+
+        .alert {
+            border-radius: 10px;
+            padding: 9px 11px;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .alert.error { background: #fee2e2; color: #991b1b; }
+
+        .field {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #2d2d2d;
+        }
+
+        .field input {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid var(--line);
+            background: transparent;
+            padding: 8px 32px 8px 30px;
+            font-size: 12px;
+            color: #111;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .field input::placeholder { color: #9d9d9d; }
+
+        .field input:focus {
+            border-bottom-color: var(--line-focus);
+        }
+
+        .icon {
+            position: absolute;
+            left: 5px;
+            bottom: 11px;
+            font-size: 13px;
+            color: #111;
+        }
+
+        .toggle {
+            position: absolute;
+            right: 2px;
+            bottom: 6px;
+            border: none;
+            background: transparent;
+            font-size: 13px;
+            color: #383838;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+        }
+
+        .terms {
+            margin: 8px 0 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+            font-size: 11px;
+            color: #444;
+        }
+
+        .terms a {
+            color: var(--brand);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(180deg, var(--brand), var(--brand-dark));
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: 0.3px;
+            padding: 9px 20px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(217, 21, 21, 0.3);
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 9px 16px rgba(217, 21, 21, 0.34);
+        }
+
+        .switch-link {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: #111;
+        }
+
+        .switch-link a {
+            color: var(--brand);
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        @media (max-width: 420px) {
+            body {
+                padding: 18px 14px;
+            }
+
+            .auth-card {
+                border-radius: 14px;
+                padding: 16px 16px 18px;
+            }
+
+            .title {
+                font-size: 21px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen register-bg flex items-center justify-center p-4">
-    <div class="w-full max-w-md">
-        <!-- Logo Section -->
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl shadow-xl mb-4">
-                <i class="fas fa-utensils text-3xl text-primary"></i>
-            </div>
-            <h1 class="text-3xl font-bold text-white mb-2">BBC User</h1>
-            <p class="text-white/80">Bakso Bunderan Ciomas</p>
+<body>
+    <section class="auth-card">
+        <div class="brand">
+            <img src="{{ asset('logo.jpeg') }}" alt="Logo BBC" onerror="this.onerror=null;this.style.display='none';" />
         </div>
 
-        <!-- Register Form -->
-        <div class="glass-effect rounded-2xl shadow-2xl p-8">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Daftar Akun Baru</h2>
-                <p class="text-gray-600">Bergabung dan nikmati menu favorit Anda</p>
-            </div>
+        <h1 class="title">Daftar Akun Baru</h1>
+        <p class="subtitle">Bergabung dan nikmati menu favorit Anda</p>
 
             @if(session('error'))
-            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-                <div class="flex items-center">
-                    <i class="fas fa-exclamation-circle mr-2"></i>
-                    {{ session('error') }}
-                </div>
-            </div>
+            <div class="alert error">{{ session('error') }}</div>
             @endif
 
             @if($errors->any())
-            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-                <div class="flex items-center">
-                    <i class="fas fa-exclamation-circle mr-2"></i>
-                    <ul class="list-disc list-inside">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
+            <div class="alert error">{{ $errors->first() }}</div>
             @endif
 
             <form action="{{ route('user.register.submit') }}" method="POST">
                 @csrf
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-medium mb-2">
-                        <i class="fas fa-user mr-2"></i>Nama Lengkap
-                    </label>
+
+                <div class="field">
+                    <label>Nama Lengkap</label>
+                    <i class="fas fa-user icon"></i>
                     <input type="text" 
                            name="name" 
                            required
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                           class=""
                            placeholder="John Doe">
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-medium mb-2">
-                        <i class="fas fa-envelope mr-2"></i>Email
-                    </label>
+                <div class="field">
+                    <label>Email</label>
+                    <i class="fas fa-envelope icon"></i>
                     <input type="email" 
                            name="email" 
                            required
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                           class=""
                            placeholder="nama@email.com">
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-medium mb-2">
-                        <i class="fas fa-phone mr-2"></i>No. Telepon
-                    </label>
+                <div class="field">
+                    <label>No. Telepon</label>
+                    <i class="fas fa-phone icon"></i>
                     <input type="tel" 
                            name="phone" 
                            required
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                           class=""
                            placeholder="08123456789">
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-medium mb-2">
-                        <i class="fas fa-lock mr-2"></i>Password
-                    </label>
-                    <div class="relative">
+                <div class="field">
+                    <label>Password</label>
+                    <i class="fas fa-lock icon"></i>
                         <input type="password" 
                                name="password" 
                                required
                                minlength="6"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                               class=""
                                placeholder="Minimal 6 karakter">
                         <button type="button" 
-                                onclick="togglePassword('password')"
-                                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                                onclick="togglePassword('password', this)"
+                                class="toggle">
+                            <i class="far fa-eye-slash"></i>
                         </button>
-                    </div>
                 </div>
 
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-medium mb-2">
-                        <i class="fas fa-lock mr-2"></i>Konfirmasi Password
-                    </label>
-                    <div class="relative">
+                <div class="field">
+                    <label>Konfirmasi Password</label>
+                    <i class="fas fa-lock icon"></i>
                         <input type="password" 
                                name="password_confirmation" 
                                required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                               class=""
                                placeholder="Ulangi password">
                         <button type="button" 
-                                onclick="togglePassword('password_confirmation')"
-                                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-eye" id="toggleConfirmIcon"></i>
+                                onclick="togglePassword('password_confirmation', this)"
+                                class="toggle">
+                            <i class="far fa-eye-slash"></i>
                         </button>
-                    </div>
                 </div>
 
-                <div class="mb-6">
-                    <label class="flex items-start">
-                        <input type="checkbox" name="agree" value="1" required class="mr-2 mt-1 rounded border-gray-300 text-primary focus:ring-primary">
-                        <span class="text-sm text-gray-700">Saya setuju dengan <a href="#" class="text-primary hover:underline">syarat dan ketentuan</a> yang berlaku</span>
-                    </label>
-                </div>
+                <label class="terms">
+                    <input type="checkbox" name="agree" value="1" required>
+                    <span>Saya setuju dengan <a href="#">syarat dan ketentuan</a> yang berlaku</span>
+                </label>
 
-                <button type="submit" 
-                        class="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-dark transition duration-300 flex items-center justify-center">
-                    <i class="fas fa-user-plus mr-2"></i>
-                    Daftar Sekarang
-                </button>
+                <div class="actions">
+                    <button type="submit" class="btn">DAFTAR</button>
+                </div>
             </form>
 
-            <div class="mt-6 text-center">
-                <a href="{{ route('user.login') }}" class="text-primary hover:text-primary-dark text-sm">
-                    <i class="fas fa-sign-in-alt mr-1"></i>
-                    Sudah punya akun? Login disini
-                </a>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="text-center mt-8">
-            <p class="text-white/60 text-sm">© 2024 Bakso Bunderan Ciomas. All rights reserved.</p>
-        </div>
-    </div>
+            <p class="switch-link">Sudah punya akun? <a href="{{ route('user.login') }}">Login disini</a></p>
+    </section>
 
     <script>
-        function togglePassword(fieldId) {
+        function togglePassword(fieldId, button) {
             const passwordInput = document.querySelector(`input[name="${fieldId}"]`);
-            const toggleIcon = fieldId === 'password' ? 'togglePasswordIcon' : 'toggleConfirmIcon';
-            const icon = document.getElementById(toggleIcon);
+            if (!passwordInput) return;
+
+            const icon = button.querySelector('i');
             
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
+                icon.className = 'far fa-eye';
+                return;
             }
+
+            passwordInput.type = 'password';
+            icon.className = 'far fa-eye-slash';
         }
     </script>
 </body>

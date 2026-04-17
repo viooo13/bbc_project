@@ -74,6 +74,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
     Route::get('/transaksi/{orderId}', [TransaksiController::class, 'show'])->name('transaksi.show');
+    Route::post('/transaksi/{orderId}/pay', [TransaksiController::class, 'pay'])->name('transaksi.pay');
+    
+    Route::get('/my-orders', [TransaksiController::class, 'index'])->name('my-orders');
 });
 
 // Public menu page (user/customer) - separate from admin CRUD

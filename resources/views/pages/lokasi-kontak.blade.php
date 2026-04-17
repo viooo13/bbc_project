@@ -152,53 +152,74 @@
 
     <section class="py-14 md:py-20 bg-[#EFE1D1]">
         <div class="max-w-7xl mx-auto px-5 sm:px-6">
-            <div class="hero-panel fade-up rounded-[2rem] p-6 sm:p-8 md:p-10 lg:p-12 mb-8 md:mb-10">
-                <div class="grid lg:grid-cols-2 gap-8 lg:gap-10 items-center relative z-10">
-                    <div class="fade-up">
-                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/75 border border-[#f0d3c3] text-[#8b0000] text-xs font-extrabold tracking-[0.14em] uppercase mb-4">
-                            <i class="fas fa-location-dot"></i>
-                            Lokasi & Kontak
-                        </div>
-                        <h3 class="text-3xl md:text-5xl font-extrabold leading-tight text-[#3a2a1a] mb-4">
-                            Temukan kami di Ciomas dan hubungi kapan saja.
-                        </h3>
-                        <p class="text-sm md:text-base text-[#5a4133] leading-relaxed max-w-xl">
-                            Kami siap melayani pesanan, pertanyaan, dan kerja sama. Silakan lihat lokasi kami, kirim pesan, atau hubungi langsung lewat kontak yang tersedia.
-                        </p>
+            <div class="text-center mb-10 fade-up">
+                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Kunjungi Kami</span>
+                <h2 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                    Lokasi & <span class="text-red-700 italic">Kontak</span>
+                </h2>
+                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4 mb-6"></div>
+                <p class="text-gray-700 max-w-2xl mx-auto font-medium font-poppins">Kami siap melayani pesanan, pertanyaan, dan memberikan pengalaman kuliner terbaik untuk Anda.</p>
+            </div>
 
-                        <div class="grid sm:grid-cols-3 gap-3 mt-6">
-                            <div class="info-card rounded-2xl p-4">
-                                <div class="info-icon mb-3"><i class="fas fa-map-marker-alt"></i></div>
-                                <div class="text-sm font-bold text-[#3a2a1a]">Lokasi</div>
-                                <div class="text-xs text-[#6e5547] mt-1">Bakso Bunderan Ciomas</div>
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 fade-up">
+                
+                <!-- Main Map Card -->
+                <div class="lg:col-span-8 bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden relative group">
+                    <div class="absolute top-6 left-6 z-10 bg-white/90 backdrop-blur-md rounded-2xl px-5 py-3 shadow-[0_8px_16px_rgba(0,0,0,0.06)] border border-white/20">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-red-50 text-red-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-lg"></i>
                             </div>
-                            <div class="info-card rounded-2xl p-4">
-                                <div class="info-icon mb-3"><i class="fas fa-phone-alt"></i></div>
-                                <div class="text-sm font-bold text-[#3a2a1a]">Telepon</div>
-                                <div class="text-xs text-[#6e5547] mt-1">Hubungi via WhatsApp</div>
+                            <div>
+                                <div class="text-xs font-bold text-gray-500 uppercase tracking-wider">Lokasi Utama</div>
+                                <div class="text-sm font-extrabold text-gray-800">Bakso Bunderan Ciomas</div>
                             </div>
-                            <div class="info-card rounded-2xl p-4">
-                                <div class="info-icon mb-3"><i class="fas fa-clock"></i></div>
-                                <div class="text-sm font-bold text-[#3a2a1a]">Jam Buka</div>
-                                <div class="text-xs text-[#6e5547] mt-1">Setiap hari</div>
+                        </div>
+                    </div>
+                    <div class="h-[400px] lg:h-[500px] w-full">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.1234567890!2d106.7890123!3d-6.5678901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5f2e5f2e5f2%3A0x1234567890abcdef!2sBakso+Bunderan+Ciomas!5e0!3m2!1sen!2sid!4v1234567890"
+                            class="w-full h-full border-0 transition-transform duration-700 group-hover:scale-[1.02]"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Quick Info Cards Stack -->
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    <!-- Info Card 1 -->
+                    <div class="bg-gradient-to-br from-red-700 to-red-900 rounded-[2rem] p-8 text-white shadow-[0_8px_20px_rgba(185,28,28,0.25)] relative overflow-hidden flex-1 group">
+                        <div class="absolute -right-6 -top-6 text-red-500/20 group-hover:rotate-12 transition-transform duration-500">
+                            <i class="fas fa-clock text-9xl"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white mb-6">
+                                <i class="fas fa-store-alt text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-extrabold mb-2">Jam Operasional</h3>
+                            <p class="text-red-100 font-medium mb-4">Nikmati porsi bakso hangat setiap hari tanpa libur.</p>
+                            <div class="bg-black/20 rounded-xl p-4 backdrop-blur-sm border border-white/10">
+                                <div class="flex justify-between items-center font-bold">
+                                    <span>Senin - Minggu</span>
+                                    <span>10:00 - 21:00</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="relative fade-up">
-                        <div class="floating-badge absolute -top-3 -left-3 z-20 rounded-2xl px-4 py-3">
-                            <div class="text-xs font-bold text-[#8b0000] uppercase tracking-[0.12em]">Lokasi Utama</div>
-                            <div class="text-sm font-extrabold text-[#3a2a1a]">Bakso Bunderan Ciomas</div>
+                    <!-- Info Card 2 -->
+                    <div class="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex-1">
+                        <div class="w-12 h-12 bg-green-50 text-green-600 rounded-full flex items-center justify-center mb-6">
+                            <i class="fab fa-whatsapp text-xl"></i>
                         </div>
-                        <div class="map-frame h-[330px] sm:h-[380px] lg:h-[420px]">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.1234567890!2d106.7890123!3d-6.5678901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5f2e5f2e5f2%3A0x1234567890abcdef!2sBakso+Bunderan+Ciomas!5e0!3m2!1sen!2sid!4v1234567890"
-                                class="w-full h-full border-0"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
-                        </div>
+                        <h3 class="text-xl font-extrabold text-gray-800 mb-2">Hubungi Kami</h3>
+                        <p class="text-sm text-gray-500 mb-6">Butuh pesanan partai besar atau ada pertanyaan? Langsung chat admin kami.</p>
+                        <a href="https://wa.me/6281234567890" target="_blank" class="flex w-full items-center justify-center gap-2 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition">
+                            <i class="fab fa-whatsapp"></i> Chat WhatsApp
+                        </a>
                     </div>
                 </div>
             </div>
@@ -207,8 +228,13 @@
 
     <section class="py-6 md:py-10 bg-[#EFE1D1]">
         <div class="max-w-4xl mx-auto px-5 sm:px-6">
-            <h3 class="section-title text-center text-xs sm:text-sm font-extrabold mb-3">Kontak Kami</h3>
-            <h4 class="text-3xl md:text-4xl font-bold text-center mb-8 text-[#3a2a1a]">Kirim pesan langsung</h4>
+            <div class="text-center mb-12">
+                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Kontak Kami</span>
+                <h4 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                    Kirim Pesan <span class="text-red-700 italic">Langsung</span>
+                </h4>
+                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4"></div>
+            </div>
 
             @if(session('contact_success'))
             <div class="info-card border-green-200 text-green-700 px-6 py-4 rounded-2xl mb-6">
@@ -228,32 +254,35 @@
             </div>
             @endif
 
-            <form action="{{ route('contact.submit') }}" method="POST" class="contact-form-card rounded-[2rem] p-5 sm:p-6 md:p-8">
+            <form action="{{ route('contact.submit') }}" method="POST" class="bg-white border text-left border-gray-100 shadow-sm rounded-[2rem] p-6 sm:p-8 md:p-10 fade-up hover:shadow-md transition-shadow duration-300 relative overflow-hidden">
+                <!-- Decorative element -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-bl-full z-0 opacity-50"></div>
+                
                 @csrf
-                <div class="grid md:grid-cols-2 gap-5">
-                    <div>
-                        <label class="block text-[#3a2a1a] font-extrabold tracking-wide text-xs mb-2 uppercase">Nama</label>
-                        <input type="text" name="name" required class="contact-input">
+                <div class="grid md:grid-cols-2 gap-6 relative z-10">
+                    <div class="space-y-2">
+                        <label class="block text-gray-700 font-extrabold tracking-wide text-xs mb-1 uppercase">Nama Lengkap</label>
+                        <input type="text" name="name" required class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-800 outline-none focus:bg-white focus:border-red-400 focus:ring-4 focus:ring-red-50 transition-all">
                     </div>
 
-                    <div>
-                        <label class="block text-[#3a2a1a] font-extrabold tracking-wide text-xs mb-2 uppercase">Email</label>
-                        <input type="email" name="email" required class="contact-input">
+                    <div class="space-y-2">
+                        <label class="block text-gray-700 font-extrabold tracking-wide text-xs mb-1 uppercase">Alamat Email</label>
+                        <input type="email" name="email" required class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-800 outline-none focus:bg-white focus:border-red-400 focus:ring-4 focus:ring-red-50 transition-all">
                     </div>
 
-                    <div>
-                        <label class="block text-[#3a2a1a] font-extrabold tracking-wide text-xs mb-2 uppercase">Nomor WA</label>
-                        <input type="tel" name="phone" required class="contact-input">
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="block text-gray-700 font-extrabold tracking-wide text-xs mb-1 uppercase">Nomor WhatsApp</label>
+                        <input type="tel" name="phone" required class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-800 outline-none focus:bg-white focus:border-red-400 focus:ring-4 focus:ring-red-50 transition-all">
                     </div>
 
-                    <div class="md:col-span-2">
-                        <label class="block text-[#3a2a1a] font-extrabold tracking-wide text-xs mb-2 uppercase">Pesan</label>
-                        <textarea name="message" rows="6" required class="contact-input resize-none"></textarea>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="block text-gray-700 font-extrabold tracking-wide text-xs mb-1 uppercase">Tulis Pesan Anda</label>
+                        <textarea name="message" rows="5" required class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-800 outline-none focus:bg-white focus:border-red-400 focus:ring-4 focus:ring-red-50 transition-all resize-none"></textarea>
                     </div>
 
-                    <div class="md:col-span-2 text-center pt-2">
-                        <button type="submit" class="contact-btn text-white px-10 py-3 rounded-full font-semibold">
-                            Kirim
+                    <div class="md:col-span-2 mt-2">
+                        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-red-700 hover:bg-red-800 text-white px-8 py-3.5 rounded-xl font-bold shadow-[0_8px_20px_rgba(185,28,28,0.2)] hover:-translate-y-1 transition-all duration-300">
+                            <i class="fas fa-paper-plane"></i> Kirim Pesan Sekarang
                         </button>
                     </div>
                 </div>

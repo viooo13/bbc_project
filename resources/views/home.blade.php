@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -193,33 +193,59 @@
         }
         .rekomendasi-slider {
             position: relative;
-            overflow: hidden;
-            max-width: 1020px;
             margin: 0 auto;
-            padding: 0.35rem 2.6rem;
+            padding: 1rem 0;
+            width: 100%;
+        }
+
+        .rekomendasi-viewport {
+            overflow: hidden;
+            margin: 0 auto;
+            border-radius: 1.5rem;
+            padding: 0.5rem 0; /* Memberi ruang untuk efek shadow card saat hover */
+            width: max-content;
+            max-width: 100%;
+        }
+
+        @media (max-width: 639px) {
+            .rekomendasi-viewport { max-width: 256px; } /* 1 card */
+        }
+        @media (min-width: 640px) and (max-width: 1023px) {
+            .rekomendasi-viewport { max-width: 536px; } /* 2 cards */
+        }
+        @media (min-width: 1024px) {
+            .rekomendasi-viewport { max-width: 872px; } /* 3 cards */
         }
 
         .rekomendasi-track {
             display: flex;
+            align-items: stretch;
             gap: 1rem;
+            width: max-content;
             transition: none;
             will-change: transform;
+            padding: 0 0 1rem 0;
         }
 
         .rekomendasi-item {
-            flex: 0 0 175px;
+            flex: 0 0 240px;
             padding: 0;
+            display: flex;
+        }
+        
+        .rekomendasi-item > div {
+            width: 100%;
         }
 
         @media (min-width: 640px) {
             .rekomendasi-item {
-                flex-basis: 195px;
+                flex-basis: 260px;
             }
         }
 
         @media (min-width: 1024px) {
             .rekomendasi-item {
-                flex-basis: 220px;
+                flex-basis: 280px;
             }
         }
 
@@ -646,6 +672,9 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
             padding-bottom: 0.25rem;
+            width: max-content;
+            max-width: 100%;
+            margin: 0 auto;
         }
 
         .package-carousel::-webkit-scrollbar {
@@ -654,9 +683,10 @@
 
         .package-track {
             display: flex;
+            align-items: stretch;
             gap: 1rem;
-            width: max-content;
             padding-right: 0.25rem;
+            width: max-content;
         }
 
         .package-slide {
@@ -749,9 +779,37 @@
             font-family: 'Poppins', sans-serif !important;
         }
         .font-playfair { font-family: 'Poppins', sans-serif !important; }
+
+        .bg-body-image {
+            position: relative;
+            background-image: url('{{ asset('bg_body.png') }}');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+        }
+
+        .bg-body-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(239, 225, 209, 0.72);
+            pointer-events: none;
+        }
+
+        .bg-body-image > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .bg-body-image {
+                background-position: center top;
+            }
+        }
     </style>
 </head>
-<body class="font-poppins bg-transparent text-[#3a2a1a] overflow-x-hidden">
+<body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden">
     @include('partials.navbar')
     @include('partials.review-readmore')
 
@@ -806,10 +864,16 @@
     <!-- PAKET ACARA -->
     <section id="paket" class="py-16 bg-[#EFE1D1]">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <h3 class="text-4xl font-bold text-center mb-4">PAKET ACARA</h3>
-            <p class="text-center mb-5 text-lg text-gray-700">Pilihan paket terbaik untuk acara spesial Anda</p>
+            <div class="text-center mb-10">
+                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Layanan Katering</span>
+                <h3 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                    Paket <span class="text-red-700 italic">Acara</span>
+                </h3>
+                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4"></div>
+            </div>
+            <p class="text-center mb-5 text-base md:text-lg text-gray-700 font-poppins font-medium">Bawa cita rasa legendaris Bakso Bunderan Ciomas ke momen spesial Anda</p>
 
-            <div class="mb-6 flex flex-wrap justify-center gap-2.5 sm:gap-3">
+            <div class="mb-10 flex flex-wrap justify-center gap-2.5 sm:gap-4 md:gap-6">
                 <span class="package-trust-chip"><i class="fas fa-shield-alt text-[#b42318]"></i>Jaminan selesai sebelum acara</span>
                 <span class="package-trust-chip"><i class="fas fa-headset text-[#b42318]"></i>Bantuan 24/7</span>
                 <span class="package-trust-chip"><i class="fas fa-calendar-check text-[#b42318]"></i>Bisa reschedule jadwal</span>
@@ -829,20 +893,22 @@
                     <div id="packageCarousel" class="package-carousel">
                         <div id="packageGrid" class="package-track">
                             @foreach($pakets as $paket)
-                                <div class="package-card package-slide bg-[#EFE1D1] rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 fade-up flex flex-col">
+                                <div class="package-card package-slide bg-[#EFE1D1] rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 fade-up flex flex-col h-full">
                                     <div class="h-48 overflow-hidden bg-[#EFE1D1]">
                                         <img src="{{ $paket->image ? asset($paket->image) : 'https://placehold.co/800x600/efe1d1/3a2a1a?text=Paket' }}"
                                              alt="{{ $paket->name }}"
                                              class="w-full h-full object-cover hover:scale-105 transition duration-300">
                                     </div>
                                     <div class="p-4 flex flex-col flex-grow">
-                                        <h4 class="text-lg font-bold mb-2 text-gray-800">{{ $paket->name }}</h4>
-                                        @if(!empty($paket->original_price))
-                                            <div class="text-xs font-semibold text-gray-600 line-through">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
-                                        @endif
-                                        <div class="text-[1.85rem] leading-none font-bold text-red-600 mb-2">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</div>
-                                        <div class="text-gray-700 mb-3 text-sm leading-relaxed whitespace-pre-line flex-grow">{{ $paket->description }}</div>
-                                        <div class="text-sm text-gray-700 mb-4">Porsi: {{ $paket->portion }}</div>
+                                        <h4 class="text-lg font-bold mb-1 text-gray-800 line-clamp-2 min-h-[3.5rem]">{{ $paket->name }}</h4>
+                                        <div class="h-5 mb-1 flex items-end">
+                                            @if(!empty($paket->original_price))
+                                                <div class="text-xs font-semibold text-gray-500 line-through">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="text-[1.85rem] leading-none font-bold text-red-600 mb-4">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</div>
+                                        <div class="text-gray-700 mb-3 text-sm leading-relaxed whitespace-pre-line flex-grow line-clamp-3 min-h-[4.5rem]">{{ $paket->description }}</div>
+                                        <div class="text-sm font-semibold text-gray-700 mb-5 bg-gray-50 px-3 py-1.5 rounded-lg inline-block w-max">Porsi: {{ $paket->portion }}</div>
                                         <div class="flex gap-3 mt-auto">
                                             <button onclick="addPaketToCart({{ (int) $paket->id }})" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition">
                                                 <i class="fas fa-cart-plus mr-2"></i>Tambah ke Keranjang
@@ -866,60 +932,113 @@
         </div>
     </section>
 
-    <section id="halal" class="py-12 bg-[#EFE1D1]">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="relative bg-[#EFE1D1]">
+    <section id="halal" class="py-12 bg-body-image overflow-x-hidden relative">
+        <!-- Hiasan Kiri (Setengah, Sejajarkan Logo, Agak Kebawah) -->
+        <div class="hidden md:block absolute left-0 top-[15%] -translate-x-1/2 translate-y-12 select-none pointer-events-none" style="z-index:11;">
+            <img src="{{ asset('hiasan.png') }}" alt="Hiasan" class="w-56 lg:w-64 xl:w-72 h-auto opacity-80" loading="lazy" />
+        </div>
+        <!-- Hiasan Kanan (Setengah, Sejajarkan Logo) -->
+        <div class="hidden md:block absolute right-0 top-[15%] translate-x-1/2 select-none pointer-events-none" style="z-index:11;">
+            <img src="{{ asset('hiasan.png') }}" alt="Hiasan" class="w-56 lg:w-64 xl:w-72 h-auto opacity-80" loading="lazy" />
+        </div>
+
+        <div class="max-w-5xl mx-auto px-6 relative flex flex-col md:flex-row items-center md:items-stretch">
+            <div class="flex-1">
                 <div class="relative text-center">
-                    <div class="halal-intro fade-up">
-                        <div class="halal-logo flex justify-center mb-4">
-                            <img src="{{ asset('halal.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/160x80/efe1d1/3a2a1a?text=Halal';" alt="Halal" class="w-24 sm:w-28 h-auto no-photo-hover" />
+                    <div class="halal-intro fade-up mb-24 md:mb-32">
+                        <div class="text-center mb-10">
+                            <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Kualitas Terjamin</span>
+                            <h3 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                                Bersertifikasi <span class="text-red-700 italic">Halal</span>
+                            </h3>
+                            <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4"></div>
                         </div>
-                        <p class="halal-desc text-sm md:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed">
+
+                        <div class="halal-logo flex justify-center mb-10">
+                            <img src="{{ asset('halal.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/160x80/efe1d1/3a2a1a?text=Halal';" alt="Halal" class="w-24 md:w-32 h-auto no-photo-hover drop-shadow-md" />
+                        </div>
+                        <p class="halal-desc text-sm md:text-base text-gray-700 max-w-4xl mx-auto leading-relaxed mb-24 md:mb-32 font-poppins font-medium text-center px-4 rounded-xl">
                             Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen boo
                         </p>
                     </div>
 
-                    <h3 class="text-2xl md:text-3xl font-extrabold mt-8 mb-6 tracking-wide">MENU REKOMENDASI</h3>
+                    <div class="text-center mt-16 md:mt-24 mb-12">
+                        <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Pilihan Terbaik</span>
+                        <h3 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                            Menu <span class="text-red-700 italic">Rekomendasi</span>
+                        </h3>
+                        <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4"></div>
+                    </div>
 
                     <div id="rekomendasiSlider" class="rekomendasi-slider">
                         <button id="rekomPrev" type="button" class="rekomendasi-nav prev" aria-label="Geser rekomendasi ke kiri">
                             <i class="fas fa-chevron-left"></i>
                         </button>
-                        <div id="rekomendasiTrack" class="rekomendasi-track">
-                        @foreach($recommendedItems->take(12) as $item)
-                            <div class="rekomendasi-item text-center">
-                                <div class="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden bg-[#F9EDDE] shadow-md mx-auto">
-                                    <img src="{{ $item->image ? asset($item->image) : 'https://placehold.co/300x300/f9edde/3a2a1a?text=Menu' }}" alt="{{ $item->name }}" class="w-full h-full object-cover" />
-                                </div>
-                                <div class="mt-3 text-sm font-extrabold uppercase">{{ $item->name }}</div>
-                                <div class="mt-1 text-[11px] text-gray-700 leading-relaxed max-h-8 overflow-hidden">
-                                    {{ $item->description }}
+                        <div class="rekomendasi-viewport">
+                            <div id="rekomendasiTrack" class="rekomendasi-track">
+                            @foreach($recommendedItems->take(12) as $item)
+                            <div class="rekomendasi-item h-full">
+                                <div class="bg-white rounded-[2rem] p-4 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 flex flex-col h-full relative group">
+                                    <!-- Badge -->
+                                    <div class="absolute top-6 left-6 z-10 bg-red-600/90 backdrop-blur-md text-white text-[9px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest border border-red-500/50">
+                                        Rekomendasi
+                                    </div>
+                                    
+                                    <!-- Image Container -->
+                                    <div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-orange-50 mb-4 shadow-inner">
+                                        <img src="{{ $item->image ? asset($item->image) : 'https://placehold.co/300x300/efe1d1/3a2a1a?text=Menu' }}" alt="{{ $item->name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                        
+                                        <!-- Quick Add Overlay Icon -->
+                                        <div class="absolute bottom-3 right-3 text-white opacity-0 group-hover:opacity-100 transform translate-y-3 group-hover:translate-y-0 transition-all duration-300 pointer-events-none">
+                                            <i class="fas fa-eye text-lg"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Text Content -->
+                                    <div class="flex-grow flex flex-col text-left px-1">
+                                        <h4 class="font-extrabold text-[#26180f] text-base md:text-lg mb-1 leading-tight group-hover:text-red-700 transition-colors font-poppins line-clamp-2 min-h-[2.75rem] md:min-h-[3rem]">{{ $item->name }}</h4>
+                                        <p class="text-xs text-gray-500 leading-relaxed mb-4 line-clamp-2 font-medium flex-grow min-h-[2.5rem]">{{ $item->description }}</p>
+                                        
+                                        <!-- Footer (Price & View Action) -->
+                                        <div class="mt-auto flex items-center justify-between pt-3 border-t border-gray-50">
+                                            <div class="font-black text-red-600 text-lg md:text-xl font-poppins">
+                                                Rp {{ number_format((float)($item->price ?? 0), 0, ',', '.') }}
+                                            </div>
+                                            <!-- Removed the Add to Cart button since individual menus cannot be ordered online -->
+                                            <a href="{{ route('menu.public') }}" class="w-10 h-10 bg-orange-100 text-orange-800 rounded-full flex items-center justify-center hover:bg-orange-200 transition-all duration-300 shadow-sm shrink-0" title="Lihat Daftar Menu">
+                                                <i class="fas fa-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
+                            </div>
                         </div>
                         <button id="rekomNext" type="button" class="rekomendasi-nav next" aria-label="Geser rekomendasi ke kanan">
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
 
-                    <div class="mt-10">
-                        <a href="{{ route('menu.public') }}" class="inline-flex items-center justify-center bg-red-400 text-black px-10 py-3 rounded-lg font-semibold hover:bg-red-500 transition">
-                            lihat menu
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
     <!-- TESTIMONI -->
-    <section id="testimoni" class="py-24 md:py-32 bg-[#EFE1D1]">
+    <section id="testimoni" class="pt-20 pb-0 md:pt-24 md:pb-0 bg-[#EFE1D1]">
         <div class="max-w-7xl mx-auto px-6">
-            <h3 class="text-4xl font-bold mb-10">REVIEW</h3>
+            <h3 class="text-center md:text-left text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Ulasan Video</h3>
+            <h3 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-10 text-center md:text-left">
+                Review <span class="text-red-700 italic">Sosial Media</span>
+            </h3>
 
             <div class="mt-10">
-                <h4 class="text-center font-extrabold tracking-wide text-lg md:text-xl">TESTIMONI INFLUENCER</h4>
+                <div class="text-center mb-8">
+                    <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Video Review</span>
+                    <h3 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                        Testimoni <span class="text-red-700 italic">Influencer</span>
+                    </h3>
+                    <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-6"></div>
+                </div>
 
                 <div class="influencer-meta fade-up">
                    
@@ -927,56 +1046,88 @@
                     <span class="influencer-stat"><i class="fab fa-youtube"></i>Official Channel Highlights</span>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8">
                     @forelse(($influencerTestimonials ?? collect()) as $idx => $influencer)
-                        <article class="influencer-card fade-up" style="transition-delay: {{ number_format($idx * 0.08, 2) }}s;">
-                            <div class="influencer-media">
-                                <img src="{{ $influencer->thumbnail_url }}" alt="Influencer" class="w-full h-52 md:h-56 object-cover" />
-                                <div class="influencer-play"><i class="fas fa-play"></i></div>
-                                <div class="influencer-badge">{{ $influencer->title ?: 'Video Influencer' }}</div>
-                            </div>
-                            <div class="mt-4 flex justify-center">
-                                <a href="{{ $influencer->youtube_url }}" target="_blank" rel="noopener" class="influencer-cta">
-                                    <i class="fab fa-youtube"></i>
-                                    <span>See on YouTube</span>
-                                    <i class="fas fa-up-right-from-square external-icon"></i>
-                                </a>
-                            </div>
-                        </article>
+                        <a href="{{ $influencer->youtube_url }}" target="_blank" rel="noopener" class="group block fade-up" style="transition-delay: {{ number_format($idx * 0.08, 2) }}s;">
+                            <article class="relative bg-white rounded-[1.25rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-black/5 hover:border-red-900/20 hover:-translate-y-1.5 h-full flex flex-col">
+                                <div class="relative overflow-hidden aspect-video">
+                                    <img src="{{ $influencer->thumbnail_url }}" alt="Influencer" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100"></div>
+                                    
+                                    <div class="absolute top-4 left-4">
+                                        <span class="bg-red-600/90 backdrop-blur-sm text-white text-[0.65rem] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">
+                                            YouTube
+                                        </span>
+                                    </div>
+
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-12 h-12 md:w-14 md:h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white text-lg md:text-xl shadow-lg border border-white/30 transform transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 group-hover:border-red-600 group-hover:text-white">
+                                            <i class="fas fa-play ml-1"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="absolute bottom-0 left-0 right-0 p-4">
+                                        <h5 class="text-white font-bold text-sm md:text-base leading-snug line-clamp-2 drop-shadow-md">
+                                            {{ $influencer->title ?: 'Tonton keseruan review BBC di YouTube!' }}
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="p-4 flex items-center justify-between mt-auto bg-white">
+                                    <div class="text-[#5c4637] text-xs font-semibold flex items-center gap-2">
+                                        <i class="fab fa-youtube text-red-600 text-sm"></i>
+                                        Tonton Video
+                                    </div>
+                                    <div class="text-red-600 transform transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </article>
+                        </a>
                     @empty
-                        <div class="col-span-full text-center text-sm text-gray-600 bg-[#F9EDDE] border border-[#e6d8c5] rounded-xl py-8">
-                            Testimoni influencer belum tersedia.
+                        <div class="col-span-full text-center text-sm text-[#5c4637] bg-white border border-black/5 shadow-sm rounded-[1.25rem] py-12">
+                            <i class="fab fa-youtube text-4xl text-gray-300 mb-3 block"></i>
+                            Video ulasan belum tersedia.
                         </div>
                     @endforelse
                 </div>
             </div>
 
-            <div class="mt-14">
-                <h4 class="text-center font-extrabold tracking-wide text-lg md:text-xl">ULASAN</h4>
+        </div>
+    </section>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start" id="daftarTestimoni">
+    <section id="ulasan" class="pt-20 pb-20 md:pt-24 md:pb-32 bg-body-image">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Ulasan Pelanggan</span>
+                <h4 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                    Apa Kata <span class="text-red-700 italic">Mereka?</span>
+                </h4>
+                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-6"></div>
+            </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-start" id="daftarTestimoni">
                     @if(isset($testimonials) && $testimonials->count() > 0)
                         @foreach($testimonials as $idx => $testimonial)
-                            <div class="bg-[#F9EDDE] p-6 rounded-xl shadow-md hover:shadow-lg transition self-start fade-up" style="transition-delay: {{ number_format($idx * 0.07, 2) }}s;">
+                            <div class="bg-[#F9EDDE] p-6 rounded-xl shadow-md hover:shadow-lg transition self-start fade-up border hover:border-red-900/10" style="transition-delay: {{ number_format($idx * 0.07, 2) }}s;">
                                 <div class="flex items-center justify-between">
-                                    <div class="font-extrabold text-sm text-[#3a2a1a]">{{ $testimonial->customer_name }}</div>
-                                    <div class="text-amber-500 text-sm font-semibold">
+                                    <div class="font-extrabold text-base md:text-lg text-[#3a2a1a] font-poppins">{{ $testimonial->customer_name }}</div>
+                                    <div class="text-amber-500 text-base md:text-lg font-semibold">
                                         @for($i = 0; $i < 5; $i++)
-                                            @if($i < $testimonial->rating) ★ @else ☆ @endif
+                                            @if($i < $testimonial->rating) <i class="fas fa-star"></i> @else <i class="far fa-star text-gray-400"></i> @endif
                                         @endfor
                                     </div>
                                 </div>
-                                <div class="mt-3" data-review-block>
-                                    <p class="text-xs text-gray-700 leading-relaxed review-clamp" data-review-text style="--review-fade-bg:#F9EDDE;">{{ $testimonial->content }}</p>
-                                    <button type="button" class="mt-2 text-xs font-semibold text-red-600 hover:text-red-700 underline hidden" data-toggle-text>
+                                <div class="mt-4" data-review-block>
+                                    <p class="text-sm md:text-base font-medium text-gray-700 leading-relaxed font-poppins review-clamp" data-review-text style="--review-fade-bg:#F9EDDE;">"{{ $testimonial->content }}"</p>
+                                    <button type="button" class="mt-2 text-xs md:text-sm font-semibold text-red-600 hover:text-red-800 underline hidden transition-colors" data-toggle-text>
                                         Lihat selengkapnya
                                     </button>
                                 </div>
                                 @if($testimonial->admin_reply)
-                                    <div class="mt-4 p-3 bg-red-50 rounded-lg border-l-4 border-red-600" data-review-block>
-                                        <p class="text-sm font-semibold text-red-600 mb-1">Balasan:</p>
-                                        <p class="text-sm text-gray-700 review-clamp" data-review-text style="--review-fade-bg:#FEF2F2;">{{ $testimonial->admin_reply }}</p>
-                                        <button type="button" class="mt-2 text-xs font-semibold text-red-600 hover:text-red-700 underline hidden" data-toggle-text>
+                                    <div class="mt-5 p-4 bg-red-50/80 rounded-xl border-l-4 border-red-600" data-review-block>
+                                        <p class="text-sm md:text-base font-bold text-red-700 mb-1 font-poppins"><i class="fas fa-check-circle mr-1"></i> Balasan Admin:</p>
+                                        <p class="text-sm md:text-base font-medium text-gray-700 leading-relaxed review-clamp font-poppins italic" data-review-text style="--review-fade-bg:#FEF2F2;">{{ $testimonial->admin_reply }}</p>
+                                        <button type="button" class="mt-2 text-xs md:text-sm font-semibold text-red-600 hover:text-red-800 underline hidden transition-colors" data-toggle-text>
                                             Lihat selengkapnya
                                         </button>
                                     </div>
@@ -984,12 +1135,12 @@
                             </div>
                         @endforeach
                     @else
-                        <div class="col-span-full text-center text-sm text-gray-600 bg-[#F9EDDE] border border-[#e6d8c5] rounded-xl py-8">
+                        <div class="col-span-full text-center text-base md:text-lg font-medium text-gray-600 font-poppins bg-[#F9EDDE] border border-[#e6d8c5] rounded-xl py-12 shadow-sm">
+                            <i class="far fa-comment-dots text-3xl md:text-4xl text-red-600/50 mb-3 block"></i>
                             Ulasan pelanggan belum tersedia.
                         </div>
                     @endif
                 </div>
-            </div>
         </div>
     </section>
 

@@ -17,6 +17,9 @@
 
         <div class="md:hidden inline-flex items-center gap-2">
             @auth
+            <a href="{{ route('my-orders') }}" aria-label="Pesanan Saya" class="mobile-cart-btn mr-1 {{ request()->routeIs('my-orders') ? 'text-red-700' : 'text-[#3a2a1a]' }} hover:text-red-700 transition">
+                <i class="fas fa-clipboard-list text-lg"></i>
+            </a>
             <a href="{{ route('cart.index') }}" aria-label="Keranjang" class="mobile-cart-btn">
                 <i class="fas fa-shopping-cart text-lg"></i>
                 <span id="cartCountMobile" class="mobile-cart-count">0</span>
@@ -31,16 +34,22 @@
 
         <div class="hidden md:flex items-center justify-end gap-2 md:min-w-[112px]">
             @auth
-            <button type="button" class="nav-action-btn relative bg-white/10 text-[#3a2a1a] px-4 py-0.5 rounded-full text-[13px] font-semibold hover:bg-white/20 transition-all duration-300" onclick="window.location.href='{{ route('cart.index') }}'">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="hidden sm:inline ml-2">Keranjang</span>
-                <span id="cartCount" class="absolute -top-2 -right-2 bg-yellow-400 text-red-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-            </button>
+            <div class="action-items-group relative inline-flex items-center gap-3 px-1 py-1">
+                <button type="button" class="nav-action-btn relative px-2.5 py-0.5 text-[13px] font-semibold text-[#3a2a1a] hover:text-[#1f1410]" onclick="window.location.href='{{ route('my-orders') }}'">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span class="hidden sm:inline ml-2 action-text">Pesanan<span class="action-underline {{ request()->routeIs('my-orders') ? 'action-underline-active' : '' }}"></span></span>
+                </button>
+                <button type="button" class="nav-action-btn relative px-2.5 py-0.5 text-[13px] font-semibold text-[#3a2a1a] hover:text-[#1f1410]" onclick="window.location.href='{{ route('cart.index') }}'">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="hidden sm:inline ml-2 action-text">Keranjang<span class="action-underline {{ request()->routeIs('cart.index') ? 'action-underline-active' : '' }}"></span></span>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-yellow-400 text-red-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+            </div>
             @else
             <button type="button" class="nav-action-btn bg-red-600 text-white px-[18px] py-0.5 rounded-full text-[13px] font-semibold hover:bg-red-700 transition-all duration-300" onclick="window.location.href='{{ route('login') }}'">MASUK</button>
             @endauth
 
-            <a href="https://wa.me/6282123368495?text=Halo%20BBC%2C%20saya%20ingin%20tanya%20menu." target="_blank" rel="noopener" class="wa-top-chat" aria-label="Chat WhatsApp">
+            <a href="https://wa.me/6281947260782?text=Halo%20BBC%2C%20saya%20ingin%20tanya%20menu." target="_blank" rel="noopener" class="wa-top-chat" aria-label="Chat WhatsApp">
                 <span class="wa-top-chat-orbit" aria-hidden="true"></span>
                 <span class="wa-top-chat-core">
                     <i class="fab fa-whatsapp"></i>
@@ -77,6 +86,11 @@
         transform-origin: center top;
     }
 
+    #mainNavbar.nav-transitioning .navbar-shell,
+    #mainNavbar.nav-transitioning .navbar-logo {
+        transition: none;
+    }
+
     #mainNavbar .navbar-logo {
         transition: transform 0.35s ease;
         transform-origin: left center;
@@ -93,6 +107,29 @@
 
     #mainNavbar .nav-active-bg {
         pointer-events: none;
+    }
+
+    #mainNavbar .action-text {
+        position: relative;
+        display: inline-block;
+    }
+
+    #mainNavbar .action-underline {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -4px;
+        height: 2px;
+        background: #dc2626;
+        border-radius: 999px;
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.25s ease;
+    }
+
+    #mainNavbar .action-underline-active,
+    #mainNavbar .nav-action-btn:hover .action-underline {
+        transform: scaleX(1);
     }
 
     #mobileNavbarMenu .mobile-nav-link {
@@ -357,7 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function syncNavbarOnScroll() {
-        if (!navbar) return;
+        if (!navbar || navbar.classList.contains('nav-transitioning')) return;
         if (window.scrollY > 24) {
             navbar.classList.add('navbar-scrolled');
         } else {
@@ -367,40 +404,52 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function moveActiveBtn(button) {
         if (!navGroup || !activeBg || !button) return;
-        const btnRect = button.getBoundingClientRect();
-        const groupRect = navGroup.getBoundingClientRect();
-        activeBg.style.width = `${btnRect.width}px`;
-        activeBg.style.height = `${btnRect.height}px`;
-        activeBg.style.transform = `translate(${btnRect.left - groupRect.left}px, ${btnRect.top - groupRect.top}px)`;
+        const btnLeft = button.offsetLeft;
+        const btnTop = button.offsetTop;
+        const btnWidth = button.offsetWidth;
+        const btnHeight = button.offsetHeight;
+        activeBg.style.width = `${btnWidth}px`;
+        activeBg.style.height = `${btnHeight}px`;
+        activeBg.style.transform = `translate(${btnLeft}px, ${btnTop}px)`;
     }
+
 
     if (navGroup && activeBg && navBtns.length > 0) {
         activeBtn = Array.from(navBtns).find(btn => btn.dataset.active === 'true');
-        if (!activeBtn) activeBtn = navBtns[0];
 
         navBtns.forEach(btn => {
             btn.style.transition = 'none';
             btn.classList.remove('text-white');
         });
         activeBg.style.transition = 'none';
-        moveActiveBtn(activeBtn);
-        activeBtn.classList.add('text-white');
 
-        requestAnimationFrame(() => {
+        if (activeBtn) {
+            activeBg.style.opacity = '1';
+            moveActiveBtn(activeBtn);
+            activeBtn.classList.add('text-white');
+
             requestAnimationFrame(() => {
-                navBtns.forEach(btn => {
-                    btn.style.transition = '';
+                requestAnimationFrame(() => {
+                    navBtns.forEach(btn => {
+                        btn.style.transition = '';
+                    });
+                    activeBg.style.transition = 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1), width 500ms cubic-bezier(0.22, 1, 0.36, 1), height 500ms cubic-bezier(0.22, 1, 0.36, 1)';
                 });
-                activeBg.style.transition = 'all 500ms ease';
             });
-        });
+        } else {
+            activeBg.style.opacity = '0';
+            activeBg.style.width = '0px';
+            activeBg.style.height = '0px';
+        }
 
         navBtns.forEach(btn => {
             btn.addEventListener('click', function(event) {
                 const url = this.dataset.url;
                 if (!url || this === activeBtn) return;
                 event.preventDefault();
+                navbar.classList.add('nav-transitioning');
                 activeBtn = this;
+                activeBg.style.opacity = '1';
                 moveActiveBtn(this);
                 navBtns.forEach(b => b.classList.remove('text-white'));
                 this.classList.add('text-white');
@@ -408,6 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
 
     function setMobileMenu(open) {
         if (!mobileMenu || !mobileToggle) return;
@@ -445,6 +495,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setMobileMenu(false);
         }
         if (activeBtn) {
+            activeBg.style.transition = 'none';
             moveActiveBtn(activeBtn);
         }
     });

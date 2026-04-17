@@ -127,10 +127,21 @@
         $subtotal = $subtotal ?? 0;
     @endphp
 
-    <main class="checkout-shell max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
-        <div class="text-center mb-8 sm:mb-10">
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-[#3a2a1a] tracking-tight">Checkout Pesanan</h1>
-            <p class="text-sm sm:text-base text-[#644b3c] mt-2">Lengkapi detail pemesanan agar proses konfirmasi lebih cepat.</p>
+<main class="checkout-shell max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12 mt-16 md:mt-20"> 
+        <div class="mb-12 mt-4 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div class="text-left">
+                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Penyelesaian</span>
+                <h1 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                    Checkout <span class="text-red-700 italic">Pesanan</span>       
+                </h1>
+                <div class="w-16 md:w-24 h-1 bg-red-600 rounded-full mt-4 mb-6"></div>
+                <p class="text-sm sm:text-base text-[#644b3c] mt-2 font-poppins font-medium">Lengkapi detail pemesanan agar proses konfirmasi lebih cepat.</p>      
+            </div>
+            <div class="flex items-center">
+                <a href="{{ route('cart.index') }}" class="px-5 py-2.5 rounded-xl border border-[#3a2a1a] text-[#3a2a1a] font-bold hover:bg-[#3a2a1a] hover:text-[#EFE1D1] transition flex items-center gap-2 text-sm shadow-sm mt-3 md:mt-0">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Keranjang
+                </a>
+            </div>
         </div>
 
         <div class="checkout-card bg-[#F9EDDE] rounded-[1.8rem] p-4 sm:p-6 md:p-8 lg:p-10 relative z-10">
@@ -169,8 +180,15 @@
                             <input name="delivery_time" required type="time" class="checkout-input" />
                         </div>
                         <div class="sm:col-span-2">
-                            <label class="field-label">Alamat Lengkap Pengiriman</label>
-                            <textarea name="delivery_address" required rows="3" placeholder="Isi alamat lengkap agar pesanan mudah ditemukan" class="checkout-input resize-none"></textarea>
+                            <div class="flex items-center justify-between mb-0.35rem">
+                                <label class="field-label mb-0">Alamat Lengkap Pengiriman</label>
+                                <button type="button" onclick="getLocation()" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded hover:bg-red-200 transition font-bold" id="btn-location">
+                                    <i class="fas fa-location-crosshairs mr-1"></i> Gunakan Lokasi Saat Ini
+                                </button>
+                            </div>
+                            <textarea id="delivery_address" name="delivery_address" required rows="3" placeholder="Isi alamat lengkap agar pesanan mudah ditemukan" class="checkout-input resize-none mt-1"></textarea>
+                            <input type="hidden" id="latitude" name="latitude">
+                            <input type="hidden" id="longitude" name="longitude">
                         </div>
                         <div>
                             <label class="field-label">Metode Pengiriman</label>
@@ -254,6 +272,55 @@
     </main>
 
     <script>
+        function getLocation() {
+            const btn = document.getElementById('btn-location');
+            const addressInput = document.getElementById('delivery_address');
+            const latInput = document.getElementById('latitude');
+            const lngInput = document.getElementById('longitude');
+
+            if (!navigator.geolocation) {
+                alert("Geolocation tidak didukung oleh browser Anda.");
+                return;
+            }
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Mencari...';
+            btn.disabled = true;
+
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    latInput.value = lat;
+                    lngInput.value = lng;
+
+                    try {
+                        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`);
+                        const data = await response.json();
+                        if (data && data.display_name) {
+                            addressInput.value = data.display_name;
+                        } else {
+                            addressInput.value = `Latitude: ${lat}, Longitude: ${lng}`;
+                        }
+                    } catch (error) {
+                        addressInput.value = `Latitude: ${lat}, Longitude: ${lng}`;
+                    }
+
+                    btn.innerHTML = '<i class="fas fa-check mr-1"></i> Lokasi Ditemukan';
+                    setTimeout(() => {
+                        btn.innerHTML = '<i class="fas fa-location-crosshairs mr-1"></i> Gunakan Lokasi Saat Ini';
+                        btn.disabled = false;
+                    }, 2000);
+                },
+                (error) => {
+                    alert("Gagal mendapatkan lokasi. Pastikan izin lokasi diberikan.");
+                    btn.innerHTML = '<i class="fas fa-location-crosshairs mr-1"></i> Gunakan Lokasi Saat Ini';
+                    btn.disabled = false;
+                },
+                { enableHighAccuracy: true }
+            );
+        }
+
         (function () {
             const form = document.querySelector('form[action="{{ route('checkout.store') }}"]');
             if (!form) return;
