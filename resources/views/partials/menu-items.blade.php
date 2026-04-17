@@ -1,38 +1,48 @@
 @if(isset($menus) && $menus->count() > 0)
          @foreach($menus as $menu)
-         <article class="menu-item group h-full overflow-hidden rounded-[22px] border border-[#f3c0bd] bg-[#fff4f3] shadow-[0_10px_24px_rgba(139,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_32px_rgba(139,0,0,0.16)]">
-             <div class="relative bg-gradient-to-br from-[#a10f14] via-[#d91f26] to-[#ef4444] px-4 pt-4 pb-0">
-                 <div class="absolute left-4 top-4 z-10 rounded-full bg-white/92 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wide text-[#a10f14] shadow-sm">
-                     {{ ucfirst($menu->category) }}
-                 </div>
-                 <div class="absolute right-4 top-4 z-10 rounded-full bg-white/95 px-3 py-1 text-[11px] font-extrabold text-[#a10f14] shadow-sm">
-                     Rp {{ number_format((float) $menu->price, 0, ',', '.') }}
-                 </div>
+         <article class="menu-item group h-full flex flex-col relative overflow-hidden rounded-[1.5rem] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-500 hover:shadow-[0_12px_30px_rgba(139,0,0,0.12)] border border-transparent hover:border-red-100 hover:-translate-y-2">
+             <!-- Image Container -->
+             <div class="relative w-full pt-[75%] overflow-hidden bg-gray-50">
+                 <img src="{{ $menu->image ? asset($menu->image) : 'https://placehold.co/400x300/fdf5e6/3a2a1a?text=Menu' }}"
+                      alt="{{ $menu->name }}"
+                      class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105">
+                 
+                 <!-- Subtle top overlay just for the badge -->
+                 <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent opacity-60"></div>
 
-                 <div class="relative aspect-[4/3] overflow-hidden rounded-t-[18px] bg-[#ffe7e6]">
-                     <img src="{{ $menu->image ? asset($menu->image) : 'https://placehold.co/300x300/f9edde/3a2a1a?text=Menu' }}"
-                          alt="{{ $menu->name }}"
-                          class="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-105">
-                     <div class="absolute inset-0 bg-gradient-to-t from-[#8b0000]/10 via-transparent to-transparent"></div>
+                 <!-- Category Badge -->
+                 <div class="absolute top-4 left-4 z-10">
+                     <span class="inline-block rounded-lg bg-orange-500/90 backdrop-blur text-white px-3 py-1 text-[11px] font-bold uppercase tracking-widest shadow-sm">
+                         {{ ucfirst($menu->category) }}
+                     </span>
                  </div>
              </div>
 
-             <div class="flex h-full flex-col gap-2 p-4 md:p-4.5 bg-[#fff7f7]">
-                 <div>
-                     <h4 class="bg-transparent p-0 m-0 text-base sm:text-lg font-extrabold text-[#5e0f13] uppercase leading-tight tracking-[0.01em] truncate">{{ $menu->name }}</h4>
-                     <p class="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-[#6d2a2a] overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">
-                         {{ $menu->description ?: 'Menu spesial dengan cita rasa gurih dan lezat.' }}
-                     </p>
+             <!-- Content Area -->
+             <div class="flex-1 flex flex-col p-5 sm:p-6 bg-white z-10 relative">
+                 <!-- Price Tag -> moved out of image for cleanliness -->
+                 <div class="flex justify-between items-start mb-2">
+                     <h4 class="text-xl font-extrabold text-[#2a1a10] leading-tight group-hover:text-red-800 transition-colors line-clamp-2 pr-2">
+                         {{ $menu->name }}
+                     </h4>
+                     <span class="text-lg font-black text-red-700 whitespace-nowrap">
+                         Rp {{ number_format((float) $menu->price, 0, ',', '.') }}
+                     </span>
                  </div>
 
-                 <div class="mt-auto flex items-center justify-between pt-2">
-                     <span class="rounded-full bg-[#ffe3e5] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#a10f14]">
-                         Best taste
+                 <!-- Divider -->
+                 <div class="w-10 h-1 bg-red-600 rounded-full mb-3 origin-left transform transition-transform duration-300 group-hover:scale-x-150"></div>
+
+                 <p class="text-sm leading-relaxed text-gray-500 mb-6 line-clamp-2">
+                     {{ $menu->description ?: 'Pilihan menu terbaik dengan racikan bumbu khas cita rasa bunderan ciomas yang lezat dan otentik.' }}
+                 </p>
+
+                 <!-- Action Button Removed since Menus are only for showcase / dine-in -->
+                 <div class="mt-auto">
+                     <span class="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-orange-200 bg-orange-50 px-5 py-2.5 text-sm font-bold text-orange-800">
+                         <i class="fas fa-store"></i>
+                         Tersedia di Outlet
                      </span>
-                     <a href="https://gofood.co.id" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full bg-[#ffe3e5] px-3 py-1.5 text-[11px] font-extrabold text-[#a10f14] transition hover:bg-[#ffd3d6]">
-                         <i class="fas fa-motorcycle text-[10px]"></i>
-                         GoFood
-                     </a>
                  </div>
              </div>
          </article>

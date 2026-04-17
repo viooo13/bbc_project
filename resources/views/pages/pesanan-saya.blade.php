@@ -16,8 +16,12 @@
 
     <section class="py-24 bg-[#EFE1D1]">
         <div class="max-w-4xl mx-auto px-6">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl sm:text-3xl font-extrabold">PEMBELIAN SAYA</h2>
+            <div class="text-center mb-10">
+                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Riwayat</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                    Pesanan <span class="text-red-700 italic">Saya</span>
+                </h2>
+                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4"></div>
             </div>
 
             @php

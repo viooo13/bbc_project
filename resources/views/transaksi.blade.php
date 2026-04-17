@@ -40,6 +40,7 @@
         $stepShipped = in_array($status, ['shipped', 'completed'], true);
         $stepCompleted = $status === 'completed';
 
+<<<<<<< HEAD
         $statusTitle = 'Menunggu Pembayaran';
         if ($status === 'confirmed') $statusTitle = 'Menunggu Pembayaran';
         if ($status === 'shipped') $statusTitle = 'Sedang Diproses';
@@ -49,9 +50,26 @@
         $statusDescription = 'Silakan lakukan pembayaran untuk melanjutkan proses pesanan.';
         if ($status === 'confirmed') {
             $statusDescription = 'Silakan lakukan pembayaran untuk melanjutkan proses pesanan.';
+=======
+$statusTitle = 'Belum Dibayar';
+        if ($status === 'confirmed') $statusTitle = 'Pesanan Diproses';      
+        if ($status === 'shipped') $statusTitle = 'Pesanan Dikirim / Siap Diambil';
+        if ($status === 'completed') $statusTitle = 'Transaksi Selesai';        
+        if ($status === 'rejected') $statusTitle = 'Pesanan Ditolak';
+
+        $statusDescription = 'Pesanan sudah diterima. Silakan lakukan pembayaran via QRIS untuk melanjutkan proses pesanan.';
+        if ($status === 'confirmed') {
+            $statusDescription = 'Pembayaran Anda telah berhasil kami terima. Saat ini pesanan Anda sedang kami siapkan dan proses.';
+        }
+        if ($status === 'shipped') {
+            $statusDescription = 'Pesanan Anda sedang dalam pengiriman ke alamat tujuan atau sudah dapat diambil di lokasi.';
+        }
+        if ($status === 'completed') {
+            $statusDescription = 'Hore! Transaksi pesanan telah selesai. Terima kasih banyak telah mempercayai BBC untuk melengkapi acara Anda!';
+>>>>>>> 1d4da393ccd308862bf1757640a00d8b306fdaa8
         }
         if ($status === 'rejected') {
-            $statusDescription = 'Pesanan kamu ditolak oleh admin. Silakan hubungi penjual untuk informasi lebih lanjut.';
+            $statusDescription = 'Mohon maaf, pesanan kamu ditolak oleh admin. Silakan hubungi admin/penjual untuk informasi lebih lanjut.';
         }
 
         $special = [];
@@ -65,9 +83,25 @@
         }
     @endphp
 
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-        <div class="mb-4">
-            <h1 class="text-3xl font-extrabold text-[#3a2a1a]">TRANSAKSI</h1>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 mt-16 md:mt-20">
+        <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div class="text-left">
+                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Status Pesanan</span>
+                <h1 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                    Detail <span class="text-red-700 italic">Transaksi</span>
+                </h1>
+                <div class="w-16 md:w-24 h-1 bg-red-600 rounded-full mt-4"></div>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+                <a href="{{ url()->previous() !== url()->current() ? url()->previous() : route('home') }}" class="px-5 py-2.5 rounded-xl border border-[#3a2a1a] text-[#3a2a1a] font-bold hover:bg-[#3a2a1a] hover:text-[#EFE1D1] transition flex items-center gap-2 text-sm shadow-sm">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali
+                </a>
+                @auth
+                <a href="{{ route('my-orders') }}" class="px-5 py-2.5 rounded-xl bg-red-700 text-white font-bold hover:bg-red-800 transition flex items-center gap-2 text-sm shadow-sm">
+                    <i class="fa-solid fa-list-ul"></i> Lihat Pesanan
+                </a>
+                @endauth
+            </div>
         </div>
 
         <section class="bg-[#F9EDDE] rounded-xl shadow overflow-hidden">
@@ -128,15 +162,15 @@
                                 <input type="hidden" name="order_id" value="{{ $pesanan->order_id }}" />
                                 <input type="hidden" name="customer_name" value="{{ $pesanan->customer_name }}" />
 
-                                <input type="hidden" name="rating" id="ratingValue" value="5" />
+                                <input type="hidden" name="rating" id="ratingValue" value="" />
 
                                 <div>
-                                    <div class="flex items-center gap-1 text-2xl text-amber-500">
-                                        <button type="button" class="leading-none" onclick="setRating(1)" aria-label="1 star">★</button>
-                                        <button type="button" class="leading-none" onclick="setRating(2)" aria-label="2 stars">★</button>
-                                        <button type="button" class="leading-none" onclick="setRating(3)" aria-label="3 stars">★</button>
-                                        <button type="button" class="leading-none" onclick="setRating(4)" aria-label="4 stars">★</button>
-                                        <button type="button" class="leading-none" onclick="setRating(5)" aria-label="5 stars">★</button>
+                                    <div id="ratingStars" class="flex items-center gap-1 text-2xl">
+                                        <button type="button" class="rating-star leading-none text-gray-300" onclick="setRating(1)" aria-label="1 star">★</button>
+                                        <button type="button" class="rating-star leading-none text-gray-300" onclick="setRating(2)" aria-label="2 stars">★</button>
+                                        <button type="button" class="rating-star leading-none text-gray-300" onclick="setRating(3)" aria-label="3 stars">★</button>
+                                        <button type="button" class="rating-star leading-none text-gray-300" onclick="setRating(4)" aria-label="4 stars">★</button>
+                                        <button type="button" class="rating-star leading-none text-gray-300" onclick="setRating(5)" aria-label="5 stars">★</button>
                                     </div>
                                     <div class="text-[11px] text-gray-500 mt-1">Klik bintang untuk memberi rating</div>
                                 </div>
@@ -184,7 +218,11 @@
                             </div>
 
                             <div class="bg-white rounded-xl shadow-sm p-5">
+<<<<<<< HEAD
                                 @if($status === 'pending' || $status === 'confirmed')
+=======
+                                @if($status === 'pending')
+>>>>>>> 1d4da393ccd308862bf1757640a00d8b306fdaa8
                                     <div class="space-y-3 text-sm text-[#3a2a1a]">
                                         <div class="flex items-center justify-between">
                                             <span class="font-semibold">Metode Pembayaran</span>
@@ -196,11 +234,11 @@
                                         </div>
                                         <div class="flex items-center justify-between">
                                             <span class="font-semibold">Status Transaksi</span>
-                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-extrabold bg-yellow-100 text-yellow-800">Pending</span>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-extrabold bg-yellow-100 text-yellow-800">{{ ucfirst($status) }}</span>
                                         </div>
 
                                         <div class="pt-2">
-                                            <button type="button" onclick="openQrisModal()" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-red-700 transition">Klik di sini untuk melakukan pembayaran</button>
+                                            <button type="button" onclick="openQrisModal()" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-red-700 transition"><i class="fas fa-qrcode mr-2"></i> Bayar Sekarang dengan QRIS</button>
                                         </div>
 
                                         <div class="pt-2">
@@ -216,6 +254,64 @@
                                 @else
                                     <div class="font-extrabold text-[#3a2a1a]">{{ $statusTitle }}</div>
                                     <p class="mt-3 text-xs text-gray-700 leading-relaxed">{{ $statusDescription }}</p>
+<<<<<<< HEAD
+=======
+
+                                    <!-- Customer Details Info for Paid/Processed Orders -->
+                                    <div class="mt-4 pt-4 border-t border-gray-200">
+                                        <b class="text-sm text-gray-800">Detail Pembeli & Tujuan:</b>
+                                        <div class="mt-2 space-y-1 text-xs text-gray-600">
+                                            <div class="flex justify-between">
+                                                <span>Nama:</span>
+                                                <span class="font-semibold text-[#3a2a1a]">{{ $pesanan->customer_name }}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span>Telepon:</span>
+                                                <span class="font-semibold text-[#3a2a1a]">{{ $pesanan->customer_phone }}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span>Alamat:</span>
+                                                <span class="font-semibold text-[#3a2a1a] max-w-[65%] text-right">{{ $special['delivery_address'] ?? 'Tidak ada data/Diambil di tempat' }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @if($status === 'completed')
+                                        <div class="mt-5">
+                                            <button type="button" onclick="openReviewModal()" class="inline-flex items-center justify-center bg-green-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-green-700 transition shadow-md">
+                                                <i class="fas fa-star mr-2"></i> Berikan Ulasan
+                                            </button>
+                                        </div>
+                                    @endif
+
+                                    <div class="{{ $status === 'completed' ? 'mt-3' : 'mt-5' }}">
+                                        @php
+                                            $waPhone = '6281947260782';
+                                            $waItems = collect($items ?? [])->map(function ($it) {
+                                                $name = $it['name'] ?? '-';
+                                                $qty = $it['qty'] ?? 1;
+                                                $price = (float) ($it['price'] ?? 0);
+                                                return $name.' x'.$qty.' (Rp '.number_format($price, 0, ',', '.').')';
+                                            })->implode("\n");
+
+                                            $waTextLines = [
+                                                'Halo BBC Project, saya ingin konfirmasi pesanan.',
+                                                '',
+                                                'Order ID: '.($pesanan->order_id ?? '-'),
+                                                'Nama: '.($pesanan->customer_name ?? '-'),
+                                                '',
+                                                'Pesanan:',
+                                                ($waItems !== '' ? $waItems : '-'),
+                                                '',
+                                                'Total: Rp '.number_format((float) ($subtotal ?? 0), 0, ',', '.'),
+                                            ];
+
+                                            $waText = implode("\n", $waTextLines);
+                                            $waUrl = 'https://wa.me/'.$waPhone.'?text='.rawurlencode($waText);
+                                        @endphp
+                                        <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-red-700 transition">Hubungi Penjual</a>
+                                    </div>
+>>>>>>> 1d4da393ccd308862bf1757640a00d8b306fdaa8
                                 @endif
                             </div>
                         </div>
@@ -226,93 +322,236 @@
 
         <div id="qrisModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 px-4">
             <div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
-                <div class="px-5 py-4 flex items-center justify-between border-b border-gray-100">
-                    <div class="font-extrabold text-[#3a2a1a]">QRIS Pembayaran</div>
-                    <button type="button" onclick="closeQrisModal()" class="text-gray-500 hover:text-gray-800 text-xl leading-none">&times;</button>
+                <div class="px-5 py-4 flex items-center justify-between border-b border-gray-100 bg-gradient-to-r from-red-600 to-red-800 text-white">
+                    <div class="font-extrabold flex items-center"><i class="fas fa-qrcode mr-2"></i> QRIS Pembayaran</div>
+                    <button type="button" onclick="closeQrisModal()" class="text-white/70 hover:text-white text-xl leading-none">&times;</button>
                 </div>
-                <div class="p-5">
-                    <img src="/qriss.jpeg" alt="QRIS" class="w-full h-auto rounded-xl border" />
-                    <div class="mt-4 text-xs text-gray-600">Scan QRIS di atas untuk pembayaran (dummy).</div>
+                <div class="p-5 flex flex-col items-center">
+                    <div class="text-2xl font-black text-red-700 mb-4">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</div>
+                    <img src="/qriss.jpeg" alt="QRIS" class="w-48 h-auto rounded-xl border mb-4" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg'" />
+                    <div class="mt-2 text-xs text-center text-gray-600">Scan QRIS di atas untuk menyelesaikan pesanan Anda.</div>
                 </div>
-                <div class="px-5 pb-5">
-                    <button type="button" onclick="closeQrisModal()" class="w-full bg-[#3a2a1a] text-[#EFE1D1] py-2.5 rounded-lg font-extrabold hover:opacity-95 transition">Tutup</button>
+                <div class="px-5 pb-5 grid grid-cols-2 gap-3">
+                    <button type="button" onclick="closeQrisModal()" class="w-full bg-[#F9EDDE] text-[#3a2a1a] py-2.5 rounded-lg border border-[#EFE1D1] font-extrabold hover:bg-gray-100 transition">Batal</button>
+                    <button id="btnConfirmQris" onclick="confirmPayment()" class="w-full bg-green-600 text-white py-2.5 rounded-lg font-extrabold shadow-lg hover:bg-green-700 transition flex items-center justify-center"><i class="fas fa-check-circle mr-2"></i> Sudah Bayar</button>
                 </div>
             </div>
         </div>
 
-        <footer class="bg-[#3a2a1a] text-[#EFE1D1] mt-4 border-t border-white/10">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5 items-start">
-                    <div class="flex items-center gap-3">
-                        <img src="/logo.jpeg" alt="Bakso Bunderan Ciomas" class="w-9 h-9 rounded-full object-contain bg-[#EFE1D1] p-1" />
-                        <div class="leading-tight">
-                            <div class="text-[11px] font-extrabold tracking-wide">BAKSO BUNDERAN</div>
-                            <div class="text-[11px] font-extrabold tracking-wide">CIOMAS BBC</div>
-                        </div>
-                    </div>
-
-                    <div class="text-[9.5px] leading-relaxed">
-                        <div class="text-[10.5px] font-extrabold mb-1">Alamat</div>
-                        <div>Jl. Vihara Ciomas, Ciomas</div>
-                        <div>Rahayu, Kec. Ciomas,</div>
-                        <div>Kabupaten Bogor, Jawa Barat</div>
-                        <div>16610</div>
-                    </div>
-
-                    <div class="text-[9.5px]">
-                        <div class="text-[10.5px] font-extrabold mb-1">Media Sosial</div>
-                        <div class="flex items-center gap-2.5">
-                            <a href="#" class="inline-flex w-7.5 h-7.5 items-center justify-center rounded-lg bg-white/10 hover:bg-white/15 transition" aria-label="Instagram">
-                                <i class="fab fa-instagram text-[13px]"></i>
-                            </a>
-                            <a href="#" class="inline-flex w-7.5 h-7.5 items-center justify-center rounded-lg bg-white/10 hover:bg-white/15 transition" aria-label="Facebook">
-                                <i class="fab fa-facebook text-[13px]"></i>
-                            </a>
-                            <a href="#" class="inline-flex w-7.5 h-7.5 items-center justify-center rounded-lg bg-white/10 hover:bg-white/15 transition" aria-label="TikTok">
-                                <i class="fab fa-tiktok text-[13px]"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="text-[9.5px] leading-relaxed">
-                        <div class="text-[10.5px] font-extrabold mb-1">Kontak</div>
-                        <a href="https://wa.me/6282123368495" target="_blank" rel="noopener noreferrer" class="block font-semibold hover:text-white transition">0812123368495</a>
-                        <div>baksobunderan</div>
-                        <div>baksobunderan@gmail.com</div>
-                    </div>
+        <audio id="successSound" src="data:audio/mp3;base64,//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" preload="auto"></audio>
+        <!-- Modals for completed order Review -->
+        @if($status === 'completed')
+        <div id="reviewModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 px-4">
+            <div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
+                <div class="px-5 py-4 flex items-center justify-between border-b border-gray-100 bg-gradient-to-r from-green-600 to-green-800 text-white">
+                    <div class="font-extrabold flex items-center"><i class="fas fa-star mr-2"></i> Berikan Ulasan Anda</div>
+                    <button type="button" onclick="closeReviewModal()" class="text-white/70 hover:text-white text-xl leading-none">&times;</button>
                 </div>
+                <form onsubmit="submitReview(event)" class="p-5 flex flex-col items-center">
+                    <input type="hidden" id="revOrderId" value="{{ $pesanan->order_id }}">
+                    <input type="hidden" id="revCustomerName" value="{{ $pesanan->customer_name }}">
+                    
+                    <div class="mb-4 w-full">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Berapa bintang untuk pesanan ini?</label>
+                        <select id="revRating" required class="w-full border-gray-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-green-600 bg-gray-50">
+                            <option value="5" selected>⭐⭐⭐⭐⭐ - Sangat Baik</option>
+                            <option value="4">⭐⭐⭐⭐ - Baik</option>
+                            <option value="3">⭐⭐⭐ - Cukup</option>
+                            <option value="2">⭐⭐ - Kurang</option>
+                            <option value="1">⭐ - Buruk</option>
+                        </select>
+                    </div>
+                    <div class="mb-4 w-full">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Ulasan / Kritik & Saran</label>
+                        <textarea id="revContent" required rows="3" class="w-full border-gray-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-green-600 bg-gray-50 border whitespace-pre-wrap leading-relaxed" placeholder="Ceritakan pengalaman atau bagikan kesan Anda..."></textarea>
+                    </div>
+
+                    <div class="w-full grid grid-cols-2 gap-3 mt-2">
+                        <button type="button" onclick="closeReviewModal()" class="w-full bg-[#F9EDDE] text-[#3a2a1a] py-2.5 rounded-lg border border-[#EFE1D1] font-extrabold hover:bg-gray-200 transition">Batal</button>
+                        <button type="submit" id="btnSubmitReview" class="w-full bg-green-600 text-white py-2.5 rounded-lg font-extrabold shadow-md hover:bg-green-700 transition flex items-center justify-center">
+                            <i class="fas fa-paper-plane mr-2"></i> Kirim
+                        </button>
+                    </div>
+                </form>
             </div>
-        </footer>
-    </main>
+        </div>
+        @endif
+        <script>
+            function openReviewModal() {
+                const modal = document.getElementById('reviewModal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+            }
 
-    <script>
-        function openQrisModal() {
-            const modal = document.getElementById('qrisModal');
-            if (!modal) return;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
+            function closeReviewModal() {
+                const modal = document.getElementById('reviewModal');
+                if (modal) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            }
 
-        function closeQrisModal() {
-            const modal = document.getElementById('qrisModal');
-            if (!modal) return;
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
+            async function submitReview(e) {
+                e.preventDefault();
+                const btn = document.getElementById('btnSubmitReview');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('qrisModal');
-            if (!modal) return;
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeQrisModal();
+                const orderId = document.getElementById('revOrderId')?.value || '';
+                const customerName = document.getElementById('revCustomerName')?.value || 'Guest';
+                const rating = document.getElementById('revRating')?.value || 5;
+                const content = document.getElementById('revContent')?.value || '';
+
+                try {
+                    const response = await fetch('{{ route('testimonial.store') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            order_id: orderId,
+                            customer_name: customerName,
+                            rating: rating,
+                            content: content
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        btn.innerHTML = '<i class="fas fa-check mr-2"></i> Berhasil!';
+                        btn.classList.replace('bg-green-600', 'bg-blue-600');
+                        btn.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
+                        setTimeout(() => {
+                            closeReviewModal();
+                            alert(data.message || 'Testimoni Anda berhasil dikirim, terima kasih!');
+                        }, 1000);
+                    } else {
+                        alert('Terjadi kesalahan. Silakan coba lagi.');
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Kirim';
+                    }
+                } catch(error) {
+                    alert('Gagal mengirim: ' + error.message);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Kirim';
+                }
+            }
+
+            function openQrisModal() {
+                const modal = document.getElementById('qrisModal');
+                if (!modal) return;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            function closeQrisModal() {
+                const modal = document.getElementById('qrisModal');
+                if (!modal) return;
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = document.getElementById('qrisModal');
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) closeQrisModal();
+                    });
+                }
+
+                const input = document.getElementById('ratingValue');
+                if (input) {
+                    const initialRating = parseInt(input.value || '0', 10);
+                    if (!Number.isNaN(initialRating) && initialRating > 0) {
+                        setRating(initialRating);
+                    } else {
+                        updateRatingStars(0);
+                    }
+                }
             });
-        });
 
-        function setRating(value) {
-            const input = document.getElementById('ratingValue');
-            if (!input) return;
-            input.value = String(value);
-        }
-    </script>
+            function updateRatingStars(value) {
+                const stars = document.querySelectorAll('#ratingStars .rating-star');
+                if (!stars.length) return;
+                stars.forEach((star, index) => {
+                    if (index < value) {
+                        star.classList.remove('text-gray-300');
+                        star.classList.add('text-amber-500');
+                        star.setAttribute('aria-pressed', 'true');
+                    } else {
+                        star.classList.remove('text-amber-500');
+                        star.classList.add('text-gray-300');
+                        star.setAttribute('aria-pressed', 'false');
+                    }
+                });
+            }
+
+            function setRating(value) {
+                const input = document.getElementById('ratingValue');
+                if (!input) return;
+                input.value = String(value);
+                updateRatingStars(value);
+            }
+
+            async function confirmPayment() {
+                const btn = document.getElementById('btnConfirmQris');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
+
+                try {
+                    const response = await fetch('{{ route('transaksi.pay', $pesanan->order_id) }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({})
+                    });
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        btn.innerHTML = '<i class="fas fa-check mr-2"></i> Berhasil!';
+                        btn.classList.replace('bg-green-600', 'bg-blue-600');
+                        btn.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
+                        
+                        try {
+                            const audio = document.getElementById('successSound');
+                            audio.src = 'https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3';
+                            await audio.play();
+                        } catch(e) {}
+
+                        setTimeout(() => {
+                              alert('Pembayaran berhasil diproses. Notifikasi telah terkirim otomatis ke Admin.');
+                            window.location.href = "{{ route('my-orders', ['tab' => 'diproses']) }}";
+                        }, 1000);
+                    } else {
+                        alert('Terjadi kesalahan, silakan coba lagi.');
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Sudah Bayar';
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert('Gagal menghubungi server.');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Sudah Bayar';
+                }
+            }
+            @if($status === 'completed')
+                // Tampilkan popup ulasan secara otomatis ketika status Selesai untuk pertama kalinya
+                setTimeout(() => {
+                    if (!localStorage.getItem('review_prompted_' + '{{ $pesanan->order_id }}')) {
+                        openReviewModal();
+                        localStorage.setItem('review_prompted_' + '{{ $pesanan->order_id }}', 'true');
+                    }
+                }, 1500);
+            @endif
+        </script>
+    </main>
 </body>
 </html>

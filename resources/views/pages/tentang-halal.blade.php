@@ -446,142 +446,148 @@
     @include('partials.navbar')
     @include('partials.review-readmore')
 
-    <section class="py-12 md:py-20 bg-[#EFE1D1]">
-        <div class="max-w-6xl mx-auto px-6 space-y-8 md:space-y-10">
-            <div class="rounded-[1.5rem] overflow-hidden fade-up about-panel">
-                <div class="grid lg:grid-cols-2 gap-0 items-stretch">
-                    <div class="relative p-5 sm:p-6 md:p-7 lg:p-8 about-copy order-2 lg:order-1">
-                        <div class="about-kicker mb-3">
-                            <i class="fas fa-store"></i>
-                            Tentang Kami
-                        </div>
-                        <h3 class="about-title font-extrabold text-[#3a2a1a] mb-3">
-                            Bakso Bunderan Ciomas
-                        </h3>
-                        <p class="about-lead text-justify mb-4">
-                            Berdiri sejak 12 Februari 2025, kami melayani pelanggan setia dengan sajian bakso tulang dan sumsum yang diracik dari bahan pilihan. Cita rasa dibuat konsisten, tampil lebih bersih, dan tetap mempertahankan karakter rumahan yang hangat.
-                        </p>
-
-                        <div class="about-metrics mb-4">
-                            <div class="about-metric">
-                                <div class="about-metric-value">2025</div>
-                                <div class="about-metric-label">Tahun berdiri dan mulai melayani pelanggan.</div>
-                            </div>
-                            <div class="about-metric">
-                                <div class="about-metric-value">100%</div>
-                                <div class="about-metric-label">Dimasak fresh dengan standar kebersihan yang dijaga.</div>
-                            </div>
-                            <div class="about-metric">
-                                <div class="about-metric-value">Rasa</div>
-                                <div class="about-metric-label">Fokus pada kuah gurih dan tekstur bakso yang konsisten.</div>
-                            </div>
-                        </div>
-
-                        <div class="about-points">
-                            <div class="about-point">
-                                <div class="about-point-icon"><i class="fas fa-bowl-food"></i></div>
-                                <div>
-                                    <div class="about-point-title">Menu Andalan Yang Jelas</div>
-                                    <div class="about-point-text">Bakso tulang, sumsum, dan varian favorit lain disiapkan untuk pengalaman makan yang lebih fokus dan mudah diingat.</div>
-                                </div>
-                            </div>
-                            <div class="about-point">
-                                <div class="about-point-icon"><i class="fas fa-shield-heart"></i></div>
-                                <div>
-                                    <div class="about-point-title">Proses Yang Terjaga</div>
-                                    <div class="about-point-text">Mulai dari pemilihan bahan, pengolahan, sampai penyajian, semuanya dibuat rapi agar kualitas tetap stabil.</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="about-quote">
-                            Kami ingin setiap porsi terasa familiar, hangat, dan layak direkomendasikan, baik untuk pelanggan baru maupun pelanggan yang sudah kembali berulang kali.
+    <section class="py-10 md:py-16 bg-[#EFE1D1]">
+        <div class="max-w-6xl mx-auto px-6">
+            <!-- Section 1: Bakso Bunderan Ciomas -->
+            <div class="fade-up mb-14 md:mb-20">
+                <!-- Title & Text Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 items-start mb-10">
+                    <div class="md:col-span-5 lg:col-span-4">
+                        <div class="mb-4">
+                            <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins"><i class="fas fa-store mr-1"></i> Tentang Kami</span>
+                            <h3 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                                Bakso Bunderan <span class="text-red-700 italic">Ciomas</span>
+                            </h3>
+                            <div class="w-16 md:w-24 h-1 bg-red-600 rounded-full mt-4"></div>
                         </div>
                     </div>
+                    <div class="md:col-span-7 lg:col-span-8 flex flex-col justify-center">
+                        <p class="text-[0.95rem] md:text-[1.05rem] text-[#5c4637] leading-relaxed text-justify md:text-left mb-6">
+                            Berdiri sejak 12 Februari 2025, kami melayani pelanggan setia dengan sajian bakso tulang dan sumsum yang diracik dari bahan pilihan. Cita rasa dibuat konsisten, tampil lebih bersih, dan tetap mempertahankan karakter rumahan yang hangat.
+                        </p>
+                        <!-- Metrics Grid - Clean -->
+                        <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 border-t border-[#d8c3ae] pt-5">
+                            <div>
+                                <div class="text-xl md:text-2xl font-extrabold text-red-800 leading-none mb-1">2025</div>
+                                <div class="text-xs md:text-sm text-[#6a5244] font-medium leading-relaxed">Berdiri melayani pelanggan.</div>
+                            </div>
+                            <div>
+                                <div class="text-xl md:text-2xl font-extrabold text-red-800 leading-none mb-1">100%</div>
+                                <div class="text-xs md:text-sm text-[#6a5244] font-medium leading-relaxed">Dimasak fresh dan bersih.</div>
+                            </div>
+                            <div class="col-span-2 lg:col-span-1">
+                                <div class="text-xl md:text-2xl font-extrabold text-red-800 leading-none mb-1">Rasa</div>
+                                <div class="text-xs md:text-sm text-[#6a5244] font-medium leading-relaxed">Gurih & tekstur konsisten.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    <div class="relative p-5 sm:p-6 md:p-7 lg:p-8 flex items-center justify-center order-1 lg:order-2">
-                        <div class="relative w-full max-w-xl about-image-shell">
-                            <div class="about-image-frame relative rounded-[1.2rem] shadow-xl">
-                                <img src="about.jpeg" alt="Bakso Bunderan Ciomas" class="about-image w-full h-[250px] sm:h-[300px] lg:h-[340px] object-cover rounded-[1.1rem]">
+                <!-- Visuals & Points -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    <div class="lg:col-span-5 relative w-full h-[280px] md:h-[340px]">
+                        <img src="about.jpeg" alt="Bakso Bunderan Ciomas" class="w-full h-full object-cover rounded-2xl">
+                    </div>
+                    <div class="lg:col-span-7 flex flex-col gap-6 md:gap-8 justify-center">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 text-red-700 text-2xl mt-1"><i class="fas fa-bowl-food"></i></div>
+                            <div>
+                                <div class="font-bold text-[#3a2a1a] text-base md:text-lg">Menu Andalan Yang Jelas</div>
+                                <div class="text-[#5c4637] text-[0.9rem] md:text-[0.95rem] mt-1.5 leading-relaxed">Bakso tulang, sumsum, dan varian favorit lain disiapkan untuk pengalaman makan yang lebih fokus dan mudah diingat.</div>
                             </div>
-                            <div class="about-hero-note hidden sm:block">
-                                <strong>Fresh Every Day</strong>
-                                <span>Disajikan hangat dengan presentasi yang bersih dan rapi.</span>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 text-red-700 text-2xl mt-1"><i class="fas fa-shield-heart"></i></div>
+                            <div>
+                                <div class="font-bold text-[#3a2a1a] text-base md:text-lg">Proses Yang Terjaga</div>
+                                <div class="text-[#5c4637] text-[0.9rem] md:text-[0.95rem] mt-1.5 leading-relaxed">Mulai dari pemilihan bahan, pengolahan, sampai penyajian, semuanya dibuat rapi agar kualitas tetap stabil.</div>
                             </div>
+                        </div>
+                        <div class="pl-5 border-l-2 border-red-700 text-[#5d4638] text-[0.9rem] md:text-[0.95rem] font-medium leading-relaxed italic mt-2">
+                            "Kami ingin setiap porsi terasa familiar, hangat, dan layak direkomendasikan, baik untuk pelanggan baru maupun pelanggan yang sudah kembali berulang kali."
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="rounded-[1.5rem] overflow-hidden fade-up about-panel reverse">
-                <div class="grid lg:grid-cols-2 gap-0 items-stretch">
-                    <div class="relative p-5 sm:p-6 md:p-7 lg:p-8 order-2 lg:order-1 about-copy">
-                        <div class="about-kicker mb-3">
-                            <i class="fas fa-award"></i>
-                            Kenapa BBC
-                        </div>
-                        <h3 class="about-title font-extrabold text-[#3a2a1a] mb-3">
-                            Konsisten, Bersih, dan Layak Direkomendasikan
-                        </h3>
-                        <p class="about-lead text-justify mb-4">
-                            Setiap porsi dibuat dengan dedikasi penuh menggunakan bahan berkualitas tinggi. Kami menjaga kebersihan, tekstur, dan rasa agar pengalaman makan tetap terasa premium tanpa kehilangan identitas bakso khas rumahan.
-                        </p>
+            <hr class="border-[#d8c3ae] border-t mb-14 md:mb-20">
 
-                        <div class="about-points">
-                            <div class="about-point">
-                                <div class="about-point-icon"><i class="fas fa-seedling"></i></div>
-                                <div>
-                                    <div class="about-point-title">Bahan Pilihan</div>
-                                    <div class="about-point-text">Fokus pada bahan yang segar agar rasa kuah dan isian tetap kuat saat disajikan.</div>
-                                </div>
-                            </div>
-                            <div class="about-point">
-                                <div class="about-point-icon"><i class="fas fa-star"></i></div>
-                                <div>
-                                    <div class="about-point-title">Cita Rasa Konsisten</div>
-                                    <div class="about-point-text">Setiap mangkuk dijaga agar rasanya stabil dari hari ke hari, bukan hanya enak sesaat.</div>
-                                </div>
-                            </div>
-                            <div class="about-point">
-                                <div class="about-point-icon"><i class="fas fa-clipboard-check"></i></div>
-                                <div>
-                                    <div class="about-point-title">Sajian Lebih Rapi</div>
-                                    <div class="about-point-text">Penyajian dibuat lebih bersih dan terstruktur agar terlihat meyakinkan di mata pelanggan.</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="about-quote">
-                            Itulah kenapa Bakso Bunderan Ciomas mulai dikenal dari pelanggan biasa hingga influencer dan pelaku usaha kuliner.
+            <!-- Section 2: Kenapa BBC -->
+            <div class="fade-up">
+                <!-- Title & Text Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 items-start mb-10">
+                    <div class="md:col-span-5 lg:col-span-4 lg:order-2">
+                        <div class="mb-4">
+                            <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins"><i class="fas fa-award mr-1"></i> Kenapa BBC</span>
+                            <h3 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                                Layak <span class="text-red-700 italic">Direkomendasikan</span>
+                            </h3>
+                            <div class="w-16 md:w-24 h-1 bg-red-600 rounded-full mt-4"></div>
                         </div>
                     </div>
+                    <div class="md:col-span-7 lg:col-span-8 lg:order-1 flex flex-col justify-center">
+                        <p class="text-[0.95rem] md:text-[1.05rem] text-[#5c4637] leading-relaxed text-justify md:text-left lg:pr-8">
+                            Setiap porsi dibuat dengan dedikasi penuh menggunakan bahan berkualitas tinggi. Kami menjaga kebersihan, tekstur, dan rasa agar pengalaman makan tetap terasa premium tanpa kehilangan identitas bakso khas rumahan.
+                        </p>
+                    </div>
+                </div>
 
-                    <div class="relative p-5 sm:p-6 md:p-7 lg:p-8 flex items-center justify-center order-1 lg:order-2 about-image-shell">
-                        <div class="relative w-full max-w-xl">
-                            <div class="about-image-frame relative rounded-[1.2rem] shadow-xl">
-                                <img src="https://placehold.co/720x560/efe1d1/3a2a1a?text=About+Image" alt="Bakso Bunderan Ciomas" class="about-image w-full h-[250px] sm:h-[300px] lg:h-[340px] object-cover rounded-[1.1rem]">
+                <!-- Visuals & Points -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    <div class="lg:col-span-7 flex flex-col gap-6 md:gap-8 justify-center order-2 lg:order-1">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 text-red-700 text-xl md:text-2xl mt-1"><i class="fas fa-seedling"></i></div>
+                                <div>
+                                    <div class="font-bold text-[#3a2a1a] text-base md:text-lg mb-1.5">Bahan Pilihan</div>
+                                    <div class="text-[#5c4637] text-[0.9rem] md:text-[0.95rem] leading-relaxed">Fokus pada bahan segar agar kuah & isian tetap kuat.</div>
+                                </div>
                             </div>
-                            <div class="about-hero-note hidden sm:block left-4 right-auto">
-                                <strong>Quality First</strong>
-                                <span>Disiapkan dengan perhatian pada detail dan kebersihan.</span>
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 text-[#3a2a1a] text-xl md:text-2xl mt-1"><i class="fas fa-clipboard-check"></i></div>
+                                <div>
+                                    <div class="font-bold text-[#3a2a1a] text-base md:text-lg mb-1.5">Sajian Rapi</div>
+                                    <div class="text-[#5c4637] text-[0.9rem] md:text-[0.95rem] leading-relaxed">Penyajian terstruktur, meyakinkan pelanggan di tempat.</div>
+                                </div>
                             </div>
                         </div>
+                        <div class="flex items-start gap-4 mt-2 md:mt-0">
+                            <div class="flex-shrink-0 text-red-700 text-xl md:text-2xl mt-1"><i class="fas fa-star"></i></div>
+                            <div>
+                                <div class="font-bold text-[#3a2a1a] text-base md:text-lg">Cita Rasa Konsisten</div>
+                                <div class="text-[#5c4637] text-[0.9rem] md:text-[0.95rem] mt-1.5 leading-relaxed">Setiap mangkuk dijaga agar rasanya stabil dari hari ke hari, bukan hanya enak sesaat, tapi kualitas jangka panjang.</div>
+                            </div>
+                        </div>
+                        <div class="pl-5 border-l-2 border-red-700 text-[#5d4638] text-[0.9rem] md:text-[0.95rem] font-medium leading-relaxed italic mt-2">
+                            "Itulah mengapa BBC mulai dikenal luas, dari pelanggan terdekat hingga food vlogger terkemuka."
+                        </div>
+                    </div>
+                    <div class="lg:col-span-5 relative w-full h-[280px] md:h-[340px] order-1 lg:order-2">
+                        <img src="https://placehold.co/720x560/efe1d1/3a2a1a?text=About+Image" alt="Kenapa BBC" class="w-full h-full object-cover rounded-2xl">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-12 bg-[#EFE1D1]">
+    <section class="py-12 bg-[#EFE1D1] overflow-hidden relative">
+        <div class="hidden md:block absolute left-0 top-[22%] -translate-x-1/2 translate-y-6 select-none pointer-events-none" style="z-index: 1;">
+            <img src="{{ asset('hiasan.png') }}" alt="Hiasan" class="w-56 lg:w-64 xl:w-72 h-auto opacity-80" loading="lazy" />
+        </div>
+        <div class="hidden md:block absolute right-0 top-[22%] translate-x-1/2 select-none pointer-events-none" style="z-index: 1;">
+            <img src="{{ asset('hiasan.png') }}" alt="Hiasan" class="w-56 lg:w-64 xl:w-72 h-auto opacity-80" loading="lazy" />
+        </div>
+
         <div class="max-w-5xl mx-auto px-6">
             <div class="relative bg-[#EFE1D1]">
-                <div class="relative text-center halal-intro fade-up">
+                <div class="relative text-center halal-intro fade-up" style="z-index: 2;">
                     <div class="flex justify-center mb-4 halal-logo">
                         <img src="{{ asset('halal.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/160x80/efe1d1/3a2a1a?text=Halal';" alt="Halal" class="w-24 sm:w-28 h-auto" />
                     </div>
                     <p class="text-sm md:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed halal-desc">
                         Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen boo
                     </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -589,39 +595,74 @@
 
     <section class="py-24 md:py-32 bg-[#EFE1D1]">
         <div class="max-w-7xl mx-auto px-6">
-            <h3 class="text-4xl font-bold mb-10">REVIEW</h3>
+            <h3 class="text-center md:text-left text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Ulasan Video</h3>
+            <h3 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-10 text-center md:text-left">
+                Review <span class="text-red-700 italic">Sosial Media</span>
+            </h3>
 
             <div class="mt-10">
-                <h4 class="text-center font-extrabold tracking-wide text-lg md:text-xl">TESTIMONI INFLUENCER</h4>
+                <div class="text-center mb-8">
+                    <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Video Review</span>
+                    <h3 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                        Testimoni <span class="text-red-700 italic">Influencer</span>
+                    </h3>
+                    <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-6"></div>
+                </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8">
                     @forelse(($influencerTestimonials ?? collect()) as $idx => $influencer)
-                        <article class="influencer-card fade-up" style="transition-delay: {{ number_format($idx * 0.08, 2) }}s;">
-                            <div class="influencer-media">
-                                <img src="{{ $influencer->thumbnail_url }}" alt="Influencer" class="w-full h-52 md:h-56 object-cover" />
-                                <div class="influencer-play"><i class="fas fa-play"></i></div>
-                                <div class="influencer-badge">
-                                    {{ $influencer->title ?: 'Video Influencer' }}
+                        <a href="{{ $influencer->youtube_url }}" target="_blank" rel="noopener" class="group block fade-up" style="transition-delay: {{ number_format($idx * 0.08, 2) }}s;">
+                            <article class="relative bg-white rounded-[1.25rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-black/5 hover:border-red-900/20 hover:-translate-y-1.5 h-full flex flex-col">
+                                <div class="relative overflow-hidden aspect-video">
+                                    <img src="{{ $influencer->thumbnail_url }}" alt="Influencer" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100"></div>
+                                    
+                                    <div class="absolute top-4 left-4">
+                                        <span class="bg-red-600/90 backdrop-blur-sm text-white text-[0.65rem] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">
+                                            YouTube
+                                        </span>
+                                    </div>
+
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-12 h-12 md:w-14 md:h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white text-lg md:text-xl shadow-lg border border-white/30 transform transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 group-hover:border-red-600 group-hover:text-white">
+                                            <i class="fas fa-play ml-1"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="absolute bottom-0 left-0 right-0 p-4">
+                                        <h5 class="text-white font-bold text-sm md:text-base leading-snug line-clamp-2 drop-shadow-md">
+                                            {{ $influencer->title ?: 'Tonton keseruan review BBC di YouTube!' }}
+                                        </h5>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mt-4 flex justify-center">
-                                <a href="{{ $influencer->youtube_url }}" target="_blank" rel="noopener" class="influencer-cta">
-                                    <i class="fab fa-youtube"></i>
-                                    <span>See on YouTube</span>
-                                    <i class="fas fa-up-right-from-square external-icon"></i>
-                                </a>
-                            </div>
-                        </article>
+                                <div class="p-4 flex items-center justify-between mt-auto bg-white">
+                                    <div class="text-[#5c4637] text-xs font-semibold flex items-center gap-2">
+                                        <i class="fab fa-youtube text-red-600 text-sm"></i>
+                                        Tonton Video
+                                    </div>
+                                    <div class="text-red-600 transform transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </article>
+                        </a>
                     @empty
-                        <div class="col-span-full text-center text-sm text-gray-600 bg-[#F9EDDE] border border-[#e6d8c5] rounded-xl py-8">
-                            Testimoni influencer belum tersedia.
+                        <div class="col-span-full text-center text-sm text-[#5c4637] bg-white border border-black/5 shadow-sm rounded-[1.25rem] py-12">
+                            <i class="fab fa-youtube text-4xl text-gray-300 mb-3 block"></i>
+                            Video ulasan belum tersedia.
                         </div>
                     @endforelse
                 </div>
             </div>
 
             <div class="mt-14">
-                <h4 class="text-center font-extrabold tracking-wide text-lg md:text-xl">ULASAN</h4>
+                <div class="text-center mb-12">
+                    <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Ulasan Pelanggan</span>
+                    <h4 class="text-3xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                        Apa Kata <span class="text-red-700 italic">Mereka?</span>
+                    </h4>
+                    <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-6"></div>
+                </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start" id="daftarTestimoni">
                     @if(isset($testimonials) && $testimonials->count() > 0)

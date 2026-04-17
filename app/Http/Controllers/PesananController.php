@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pesanan;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -35,10 +36,18 @@ class PesananController extends Controller
             });
         }
 
+        $orderIds = (clone $query)->pluck('order_id')->filter();
+        $reviewedOrderIds = $orderIds->isEmpty()
+            ? []
+            : Testimonial::whereIn('order_id', $orderIds)->pluck('order_id')->filter()->all();
+
         if ($tab === 'diproses') {
             $query->whereIn('status', ['confirmed', 'shipped']);
         } elseif ($tab === 'beri-penilaian') {
             $query->where('status', 'completed');
+            if (!empty($reviewedOrderIds)) {
+                $query->whereNotIn('order_id', $reviewedOrderIds);
+            }
         } else {
             $tab = 'belum-bayar';
             $query->where('status', 'pending');
@@ -49,6 +58,7 @@ class PesananController extends Controller
         return view('pages.pesanan-saya', [
             'orders' => $orders,
             'tab' => $tab,
+            'reviewedOrderIds' => $reviewedOrderIds,
         ]);
     }
 

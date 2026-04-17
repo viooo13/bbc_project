@@ -11,74 +11,75 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+        .page-bg-image {
+            position: relative;
+            background-image: url('{{ asset('bg_body.png') }}');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+        }
+
+        .page-bg-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(239, 225, 209, 0.72);
+            pointer-events: none;
+        }
+
+        .page-bg-image > * {
+            position: relative;
+            z-index: 1;
+        }
+
         .menu-shell {
-            max-width: 980px;
+            max-width: 1080px;
             margin: 0 auto;
             position: relative;
         }
 
-        .menu-shell::before,
-        .menu-shell::after {
-            content: '';
-            position: absolute;
-            top: -26px;
-            width: 150px;
-            height: 92px;
-            opacity: 0.17;
-            background-repeat: no-repeat;
-            background-size: contain;
-            pointer-events: none;
-        }
-
-        .menu-shell::before {
-            left: -120px;
-            background-image: radial-gradient(circle at 38% 52%, #6a4a34 5px, transparent 6px), radial-gradient(circle at 58% 46%, #6a4a34 5px, transparent 6px), radial-gradient(circle at 50% 60%, #6a4a34 5px, transparent 6px), linear-gradient(140deg, transparent 26%, #6a4a34 27%, #6a4a34 29%, transparent 30%), linear-gradient(30deg, transparent 42%, #6a4a34 43%, #6a4a34 45%, transparent 46%);
-        }
-
-        .menu-shell::after {
-            right: -120px;
-            transform: scaleX(-1);
-            background-image: radial-gradient(circle at 38% 52%, #6a4a34 5px, transparent 6px), radial-gradient(circle at 58% 46%, #6a4a34 5px, transparent 6px), radial-gradient(circle at 50% 60%, #6a4a34 5px, transparent 6px), linear-gradient(140deg, transparent 26%, #6a4a34 27%, #6a4a34 29%, transparent 30%), linear-gradient(30deg, transparent 42%, #6a4a34 43%, #6a4a34 45%, transparent 46%);
-        }
-
         .filter-btn {
-            border-radius: 0.55rem;
-            padding: 0.44rem 0.92rem;
-            font-size: 0.84rem;
-            font-weight: 700;
+            border-radius: 9999px;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
             line-height: 1;
-            background: transparent;
-            border: 1px solid rgba(58, 32, 24, 0.35);
-            color: #3a2018;
-            transition: transform 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+            background: #fff;
+            border: 1px solid rgba(58, 32, 24, 0.1);
+            color: #6a4a34;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .filter-btn.filter-active {
-            background: #ef2f24;
+            background: #8b0000;
             color: #ffffff;
-            border-color: #ef2f24;
-            box-shadow: 0 8px 16px rgba(239, 47, 36, 0.3);
+            border-color: #8b0000;
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.25);
+            font-weight: 700;
+            transform: translateY(-2px);
         }
 
         .filter-btn.filter-inactive {
-            background: transparent;
-            color: #3a2018;
-            border-color: rgba(58, 32, 24, 0.35);
+            background: #ffffff;
+            color: #6a4a34;
+            border-color: rgba(58, 32, 24, 0.1);
         }
 
         .filter-btn:hover {
-            transform: translateY(-1px);
-            background: rgba(239, 47, 36, 0.12);
-            color: #c7221a;
-            border-color: rgba(239, 47, 36, 0.5);
-            box-shadow: 0 6px 14px rgba(239, 47, 36, 0.14);
+            transform: translateY(-2px);
+            background: #fdf5e6;
+            color: #8b0000;
+            border-color: #8b0000;
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.1);
         }
 
         .filter-btn.filter-active:hover {
-            background: #e0261d;
+            background: #6b0000;
             color: #ffffff;
-            border-color: #e0261d;
-            box-shadow: 0 8px 16px rgba(224, 38, 29, 0.32);
+            border-color: #6b0000;
+            box-shadow: 0 6px 14px rgba(107, 0, 0, 0.3);
         }
 
         .pager-wrap {
@@ -192,24 +193,23 @@
                 margin-bottom: 1.2rem;
             }
         }
-
-        @media (max-width: 1280px) {
-            .menu-shell::before,
-            .menu-shell::after {
-                display: none;
-            }
-        }
     </style>
 </head>
 <body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden" style="font-family: 'Poppins', sans-serif;">
     @include('partials.navbar')
 
-    <section class="py-24 bg-[#EFE1D1]">
+    <section class="py-20 page-bg-image">
         <div class="menu-shell px-4 sm:px-6">
-            <h3 class="text-3xl md:text-4xl font-bold text-center mb-3">Menu Bakso Bunderan Ciomas</h3>
-            <p class="text-center mb-8 text-base md:text-lg text-gray-700 max-w-2xl mx-auto">Nikmati berbagai menu bakso kami yang gurih dan lezat</p>
+            <div class="text-center mb-10">
+                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Kelezatan Tiada Tara</span>
+                <h2 class="text-4xl md:text-5xl font-black text-[#26180f] tracking-tight font-playfair mb-4">
+                    Menu <span class="text-red-700 italic">Spesial</span>
+                </h2>
+                <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-4 mb-6"></div>
+                <p class="text-base md:text-lg text-gray-700 max-w-2xl mx-auto font-medium font-poppins">Temukan hidangan favorit Anda dari berbagai varian bakso dan mie ayam autentik yang diolah dengan bahan-bahan pilihan terbaik.</p>
+            </div>
 
-            <div class="flex flex-wrap justify-center gap-3 mb-8">
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
                 <button class="filter-btn filter-active" data-filter="all">Semua</button>
                 @foreach(['bakso', 'mie', 'paket', 'minuman'] as $category)
                 <button class="filter-btn filter-inactive" data-filter="{{ $category }}">{{ $category == 'mie' ? 'Mie Ayam' : ucfirst($category) }}</button>

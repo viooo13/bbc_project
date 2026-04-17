@@ -25,6 +25,19 @@ class CheckoutController extends Controller
         return $request->session()->get('cart', []);
     }
 
+    private function clearCart(Request $request): void
+    {
+        $user = $request->user();
+        if ($user) {
+            UserCart::updateOrCreate(
+                ['user_id' => $user->id],
+                ['items' => []]
+            );
+        }
+
+        $request->session()->put('cart', []);
+    }
+
     private function cartItems(array $cart): array
     {
         return array_values($cart);
@@ -66,6 +79,8 @@ class CheckoutController extends Controller
             'event_date' => 'required|date',
             'delivery_time' => 'required|string|max:50',
             'delivery_address' => 'required|string|max:1000',
+            'latitude' => 'nullable|string',
+            'longitude' => 'nullable|string',
             'delivery_method' => 'required|string|max:100',
             'payment_method' => 'required|string|max:100',
             'notes' => 'nullable|string|max:2000',
@@ -88,6 +103,8 @@ class CheckoutController extends Controller
                 'event_date' => $data['event_date'] ?? null,
                 'delivery_time' => $data['delivery_time'] ?? null,
                 'delivery_address' => $data['delivery_address'] ?? null,
+                'latitude' => $data['latitude'] ?? null,
+                'longitude' => $data['longitude'] ?? null,
                 'delivery_method' => $data['delivery_method'] ?? null,
                 'payment_method' => $data['payment_method'] ?? null,
                 'buyer_bank_account' => $data['buyer_bank_account'] ?? null,
@@ -96,6 +113,7 @@ class CheckoutController extends Controller
             'status' => 'pending',
         ]);
 
+<<<<<<< HEAD
         $token = (string) config('services.fonnte.token');
         $adminTarget = (string) env('FONNTE_ADMIN_TARGET', '082123368495');
 
@@ -127,6 +145,9 @@ class CheckoutController extends Controller
                 // ignore wa failures
             }
         }
+=======
+        $this->clearCart($request);
+>>>>>>> 1d4da393ccd308862bf1757640a00d8b306fdaa8
 
         return redirect()->route('transaksi.show', ['orderId' => $orderId]);
     }
