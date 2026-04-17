@@ -36,19 +36,19 @@
         $status = (string) ($pesanan->status ?? 'pending');
 
         $stepPending = true;
-        $stepConfirmed = in_array($status, ['confirmed', 'shipped', 'completed'], true);
+        $stepConfirmed = in_array($status, ['pending', 'confirmed', 'shipped', 'completed'], true);
         $stepShipped = in_array($status, ['shipped', 'completed'], true);
         $stepCompleted = $status === 'completed';
 
-        $statusTitle = 'Menunggu Konfirmasi';
+        $statusTitle = 'Menunggu Pembayaran';
         if ($status === 'confirmed') $statusTitle = 'Menunggu Pembayaran';
         if ($status === 'shipped') $statusTitle = 'Sedang Diproses';
         if ($status === 'completed') $statusTitle = 'Transaksi Selesai';
         if ($status === 'rejected') $statusTitle = 'Pesanan Ditolak';
 
-        $statusDescription = 'Terima kasih atas pesanan Anda. Saat ini pesanan sedang kami data dan diproses. Mohon menunggu informasi lanjutan, tim kami akan segera menghubungi Anda.';
+        $statusDescription = 'Silakan lakukan pembayaran untuk melanjutkan proses pesanan.';
         if ($status === 'confirmed') {
-            $statusDescription = 'Pesanan sudah dikonfirmasi. Silakan lakukan pembayaran untuk melanjutkan proses pesanan.';
+            $statusDescription = 'Silakan lakukan pembayaran untuk melanjutkan proses pesanan.';
         }
         if ($status === 'rejected') {
             $statusDescription = 'Pesanan kamu ditolak oleh admin. Silakan hubungi penjual untuk informasi lebih lanjut.';
@@ -75,7 +75,7 @@
                 <div class="flex flex-col items-center justify-center">
                     @if($status === 'completed')
                         <img src="/selesai.jpeg" class="w-full max-w-md h-auto" />
-                    @elseif($status === 'confirmed')
+                    @elseif($status === 'confirmed' || $status === 'pending')
                         <img src="/pembayaran.jpeg" class="w-full max-w-md h-auto" />
                     @else
                         <img src="/konfirmasi.jpeg" class="w-full max-w-md h-auto" />
@@ -184,7 +184,7 @@
                             </div>
 
                             <div class="bg-white rounded-xl shadow-sm p-5">
-                                @if($status === 'confirmed')
+                                @if($status === 'pending' || $status === 'confirmed')
                                     <div class="space-y-3 text-sm text-[#3a2a1a]">
                                         <div class="flex items-center justify-between">
                                             <span class="font-semibold">Metode Pembayaran</span>
@@ -202,37 +202,20 @@
                                         <div class="pt-2">
                                             <button type="button" onclick="openQrisModal()" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-red-700 transition">Klik di sini untuk melakukan pembayaran</button>
                                         </div>
+
+                                        <div class="pt-2">
+                                            <form method="POST" action="{{ route('transaksi.transfer.notify', ['orderId' => $pesanan->order_id]) }}">
+                                                @csrf
+                                                <button type="submit" class="inline-flex items-center justify-center bg-[#3a2a1a] text-[#EFE1D1] w-full py-2.5 rounded-lg font-extrabold hover:opacity-95 transition">
+                                                    Saya sudah transfer
+                                                </button>
+                                            </form>
+                                            <div class="mt-2 text-[11px] text-gray-600">Setelah transfer, klik tombol ini agar admin mendapat notifikasi WhatsApp otomatis.</div>
+                                        </div>
                                     </div>
                                 @else
                                     <div class="font-extrabold text-[#3a2a1a]">{{ $statusTitle }}</div>
                                     <p class="mt-3 text-xs text-gray-700 leading-relaxed">{{ $statusDescription }}</p>
-                                    <div class="mt-5">
-                                        @php
-                                            $waPhone = '6282123368495';
-                                            $waItems = collect($items ?? [])->map(function ($it) {
-                                                $name = $it['name'] ?? '-';
-                                                $qty = $it['qty'] ?? 1;
-                                                $price = (float) ($it['price'] ?? 0);
-                                                return $name.' x'.$qty.' (Rp '.number_format($price, 0, ',', '.').')';
-                                            })->implode("\n");
-
-                                            $waTextLines = [
-                                                'Halo BBC Project, saya ingin konfirmasi pesanan.',
-                                                '',
-                                                'Order ID: '.($pesanan->order_id ?? '-'),
-                                                'Nama: '.($pesanan->customer_name ?? '-'),
-                                                '',
-                                                'Pesanan:',
-                                                ($waItems !== '' ? $waItems : '-'),
-                                                '',
-                                                'Total: Rp '.number_format((float) ($subtotal ?? 0), 0, ',', '.'),
-                                            ];
-
-                                            $waText = implode("\n", $waTextLines);
-                                            $waUrl = 'https://wa.me/'.$waPhone.'?text='.rawurlencode($waText);
-                                        @endphp
-                                        <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-red-700 transition">Hubungi Penjual</a>
-                                    </div>
                                 @endif
                             </div>
                         </div>

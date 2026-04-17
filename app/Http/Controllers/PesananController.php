@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class PesananController extends Controller
 {
@@ -132,6 +133,36 @@ class PesananController extends Controller
         }
 
         $pesanan->update(['status' => 'completed']);
+
+        $token = (string) config('services.fonnte.token');
+        $target = trim((string) ($pesanan->customer_phone ?? ''));
+
+        if ($token !== '' && $target !== '') {
+            try {
+                $targetDigits = preg_replace('/[^0-9]/', '', $target);
+                if ($targetDigits !== '') {
+                    if (str_starts_with($targetDigits, '0')) {
+                        $targetDigits = '62' . substr($targetDigits, 1);
+                    }
+
+                    $orderLabel = (string) ($pesanan->order_id ?? $pesanan->id);
+                    $total = number_format((float) ($pesanan->total_price ?? 0), 0, ',', '.');
+                    $customerName = (string) ($pesanan->customer_name ?? 'Pelanggan');
+
+                    $message = "Halo {$customerName},\n\nPembayaran kamu untuk pesanan #{$orderLabel} sudah dikonfirmasi.\nTotal: Rp {$total}\nStatus: Selesai\n\nTerima kasih sudah order di BBC.";
+
+                    Http::withHeaders([
+                        'Authorization' => $token,
+                    ])->asForm()->post('https://api.fonnte.com/send', [
+                        'target' => $targetDigits,
+                        'message' => $message,
+                        'countryCode' => '62',
+                    ]);
+                }
+            } catch (\Throwable $e) {
+                // ignore wa failures
+            }
+        }
 
         return redirect()->route('pesanan.index')->with('success', 'Pembayaran dikonfirmasi. Pesanan ditandai selesai.');
     }

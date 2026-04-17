@@ -6,6 +6,7 @@ use App\Models\Pesanan;
 use App\Models\UserCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class CheckoutController extends Controller
 {
@@ -59,6 +60,7 @@ class CheckoutController extends Controller
         $data = $request->validate([
             'customer_name' => 'required|string|max:255',
             'customer_phone' => ['required', 'string', 'max:50', 'regex:/^[0-9]+$/'],
+            'buyer_bank_account' => ['required', 'string', 'max:50', 'regex:/^[0-9]+$/'],
             'customer_email' => 'required|email|max:255',
             'event_name' => 'required|string|max:255',
             'event_date' => 'required|date',
@@ -73,7 +75,7 @@ class CheckoutController extends Controller
 
         $orderId = 'ORD-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(5));
 
-        Pesanan::create([
+        $pesanan = Pesanan::create([
             'user_id' => optional($request->user())->id,
             'order_id' => $orderId,
             'customer_name' => $data['customer_name'],
@@ -88,10 +90,43 @@ class CheckoutController extends Controller
                 'delivery_address' => $data['delivery_address'] ?? null,
                 'delivery_method' => $data['delivery_method'] ?? null,
                 'payment_method' => $data['payment_method'] ?? null,
+                'buyer_bank_account' => $data['buyer_bank_account'] ?? null,
                 'notes' => $data['notes'] ?? null,
             ]),
             'status' => 'pending',
         ]);
+
+        $token = (string) config('services.fonnte.token');
+        $adminTarget = (string) env('FONNTE_ADMIN_TARGET', '082123368495');
+
+        if ($token !== '' && $adminTarget !== '') {
+            try {
+                $targetDigits = preg_replace('/[^0-9]/', '', $adminTarget);
+                if ($targetDigits !== '') {
+                    if (str_starts_with($targetDigits, '0')) {
+                        $targetDigits = '62' . substr($targetDigits, 1);
+                    }
+
+                    $total = number_format((float) ($pesanan->total_price ?? 0), 0, ',', '.');
+                    $customerName = (string) ($pesanan->customer_name ?? 'Pelanggan');
+                    $customerPhone = (string) ($pesanan->customer_phone ?? '-');
+                    $paymentMethod = (string) ($data['payment_method'] ?? '-');
+                    $buyerBank = (string) ($data['buyer_bank_account'] ?? '-');
+
+                    $message = "Order baru masuk!\n\nOrder: #{$orderId}\nNama: {$customerName}\nNo HP: {$customerPhone}\nRekening Pembeli: {$buyerBank}\nTotal: Rp {$total}\nMetode bayar: {$paymentMethod}\nStatus: Menunggu Pembayaran";
+
+                    Http::withHeaders([
+                        'Authorization' => $token,
+                    ])->asForm()->post('https://api.fonnte.com/send', [
+                        'target' => $targetDigits,
+                        'message' => $message,
+                        'countryCode' => '62',
+                    ]);
+                }
+            } catch (\Throwable $e) {
+                // ignore wa failures
+            }
+        }
 
         return redirect()->route('transaksi.show', ['orderId' => $orderId]);
     }

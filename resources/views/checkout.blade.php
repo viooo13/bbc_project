@@ -153,6 +153,10 @@
                             <input name="customer_phone" required inputmode="numeric" pattern="[0-9]*" placeholder="Contoh: 08xxxxxxxxxx" class="checkout-input" oninput="this.value=this.value.replace(/\D/g,'')" />
                         </div>
                         <div>
+                            <label class="field-label">Nomor Rekening Pembeli</label>
+                            <input name="buyer_bank_account" required inputmode="numeric" pattern="[0-9]*" placeholder="Contoh: 1234567890" class="checkout-input" oninput="this.value=this.value.replace(/\D/g,'')" />
+                        </div>
+                        <div>
                             <label class="field-label">Email</label>
                             <input name="customer_email" required type="email" placeholder="nama@email.com" class="checkout-input" />
                         </div>
@@ -261,6 +265,7 @@
             const labels = {
                 customer_name: 'Nama Lengkap',
                 customer_phone: 'Nomor HP',
+                buyer_bank_account: 'Nomor Rekening Pembeli',
                 customer_email: 'Email',
                 event_name: 'Nama Acara',
                 event_date: 'Tanggal Acara',
