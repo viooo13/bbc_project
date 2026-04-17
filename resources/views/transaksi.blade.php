@@ -40,21 +40,10 @@
         $stepShipped = in_array($status, ['shipped', 'completed'], true);
         $stepCompleted = $status === 'completed';
 
-<<<<<<< HEAD
         $statusTitle = 'Menunggu Pembayaran';
-        if ($status === 'confirmed') $statusTitle = 'Menunggu Pembayaran';
-        if ($status === 'shipped') $statusTitle = 'Sedang Diproses';
-        if ($status === 'completed') $statusTitle = 'Transaksi Selesai';
-        if ($status === 'rejected') $statusTitle = 'Pesanan Ditolak';
-
-        $statusDescription = 'Silakan lakukan pembayaran untuk melanjutkan proses pesanan.';
-        if ($status === 'confirmed') {
-            $statusDescription = 'Silakan lakukan pembayaran untuk melanjutkan proses pesanan.';
-=======
-$statusTitle = 'Belum Dibayar';
-        if ($status === 'confirmed') $statusTitle = 'Pesanan Diproses';      
+        if ($status === 'confirmed') $statusTitle = 'Pesanan Diproses';
         if ($status === 'shipped') $statusTitle = 'Pesanan Dikirim / Siap Diambil';
-        if ($status === 'completed') $statusTitle = 'Transaksi Selesai';        
+        if ($status === 'completed') $statusTitle = 'Transaksi Selesai';
         if ($status === 'rejected') $statusTitle = 'Pesanan Ditolak';
 
         $statusDescription = 'Pesanan sudah diterima. Silakan lakukan pembayaran via QRIS untuk melanjutkan proses pesanan.';
@@ -66,7 +55,6 @@ $statusTitle = 'Belum Dibayar';
         }
         if ($status === 'completed') {
             $statusDescription = 'Hore! Transaksi pesanan telah selesai. Terima kasih banyak telah mempercayai BBC untuk melengkapi acara Anda!';
->>>>>>> 1d4da393ccd308862bf1757640a00d8b306fdaa8
         }
         if ($status === 'rejected') {
             $statusDescription = 'Mohon maaf, pesanan kamu ditolak oleh admin. Silakan hubungi admin/penjual untuk informasi lebih lanjut.';
@@ -218,11 +206,7 @@ $statusTitle = 'Belum Dibayar';
                             </div>
 
                             <div class="bg-white rounded-xl shadow-sm p-5">
-<<<<<<< HEAD
                                 @if($status === 'pending' || $status === 'confirmed')
-=======
-                                @if($status === 'pending')
->>>>>>> 1d4da393ccd308862bf1757640a00d8b306fdaa8
                                     <div class="space-y-3 text-sm text-[#3a2a1a]">
                                         <div class="flex items-center justify-between">
                                             <span class="font-semibold">Metode Pembayaran</span>
@@ -254,8 +238,6 @@ $statusTitle = 'Belum Dibayar';
                                 @else
                                     <div class="font-extrabold text-[#3a2a1a]">{{ $statusTitle }}</div>
                                     <p class="mt-3 text-xs text-gray-700 leading-relaxed">{{ $statusDescription }}</p>
-<<<<<<< HEAD
-=======
 
                                     <!-- Customer Details Info for Paid/Processed Orders -->
                                     <div class="mt-4 pt-4 border-t border-gray-200">
@@ -311,7 +293,6 @@ $statusTitle = 'Belum Dibayar';
                                         @endphp
                                         <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-red-600 text-white w-full py-2.5 rounded-lg font-extrabold hover:bg-red-700 transition">Hubungi Penjual</a>
                                     </div>
->>>>>>> 1d4da393ccd308862bf1757640a00d8b306fdaa8
                                 @endif
                             </div>
                         </div>

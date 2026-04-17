@@ -109,4 +109,37 @@ class TransaksiController extends Controller
             'items_count' => count(is_array($pesanan->items) ? $pesanan->items : []),
         ]);
     }
+
+    public function notifyTransfer(Request $request, string $orderId)
+    {
+        $pesanan = Pesanan::where('order_id', $orderId)->firstOrFail();
+
+        // Assuming this is called when transfer is confirmed
+        if ($pesanan->status === 'pending') {
+            $pesanan->update(['status' => 'confirmed']);
+
+            // Similar notification as pay method
+            $nomorAdmin = '';
+            $tokenFonnte = 'iVYAMrABUfg37ybY3mMp';
+            $pesan = "Halo Admin, transfer untuk pesanan ID *{$pesanan->order_id}* a/n *{$pesanan->customer_name}* senilai Rp " . number_format($pesanan->total_price, 0, ',', '.') . " telah dikonfirmasi.\n\nSilakan cek Dashboard!";
+
+            try {
+                $response = Http::withHeaders([
+                    'Authorization' => $tokenFonnte,
+                ])->post('https://api.fonnte.com/send', [
+                    'target' => $nomorAdmin,
+                    'message' => $pesan,
+                ]);
+
+                Log::info("Notifikasi WA transfer terkirim ke {$nomorAdmin}. Response: " . $response->body());
+            } catch (\Exception $e) {
+                Log::error("Gagal kirim notifikasi WA transfer: " . $e->getMessage());
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Transfer berhasil dikonfirmasi',
+        ]);
+    }
 }

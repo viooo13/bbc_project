@@ -113,7 +113,6 @@ class CheckoutController extends Controller
             'status' => 'pending',
         ]);
 
-<<<<<<< HEAD
         $token = (string) config('services.fonnte.token');
         $adminTarget = (string) env('FONNTE_ADMIN_TARGET', '082123368495');
 
@@ -145,9 +144,8 @@ class CheckoutController extends Controller
                 // ignore wa failures
             }
         }
-=======
+
         $this->clearCart($request);
->>>>>>> 1d4da393ccd308862bf1757640a00d8b306fdaa8
 
         return redirect()->route('transaksi.show', ['orderId' => $orderId]);
     }
