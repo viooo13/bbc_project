@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user (credentials requested)
+        // Create admin user
         User::updateOrCreate(
-            ['email' => 'admin@bbc.com'],
+            ['name' => 'bbcjaya123'],
             [
-                'name' => 'bbcjaya123',
+                'email' => 'admin@bbc.com',
                 'phone' => '08123456789',
                 'password' => bcrypt('bbcjaya123'),
                 'role' => 'admin',
@@ -38,6 +38,5 @@ class DatabaseSeeder extends Seeder
         );
 
         $this->call(MenuSeeder::class);
-        $this->call(PesananSeeder::class);
     }
 }

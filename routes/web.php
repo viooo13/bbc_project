@@ -97,15 +97,58 @@ Route::get('/admin/dashboard', function () {
     $totalMenus = \App\Models\Menu::count();
     $latestOrders = \App\Models\Pesanan::orderByDesc('created_at')->limit(5)->get();
 
-    return view('admin.dashboard', compact('pendingCount', 'totalOrders', 'totalRevenue', 'totalCustomers', 'totalMenus', 'latestOrders'));
+    $monthlySalesRaw = \App\Models\Pesanan::where('status', 'completed')
+        ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as ym, SUM(total_price) as total")
+        ->groupBy('ym')
+        ->pluck('total', 'ym');
+
+    $monthlySalesLabels = [];
+    $monthlySalesData = [];
+
+    for ($i = 5; $i >= 0; $i--) {
+        $month = now()->copy()->subMonths($i);
+        $key = $month->format('Y-%m');
+        $monthlySalesLabels[] = $month->translatedFormat('M Y');
+        $monthlySalesData[] = (float) ($monthlySalesRaw[$key] ?? 0);
+    }
+
+    return view('admin.dashboard', compact(
+        'pendingCount',
+        'totalOrders',
+        'totalRevenue',
+        'totalCustomers',
+        'totalMenus',
+        'latestOrders',
+        'monthlySalesLabels',
+        'monthlySalesData'
+    ));
 })->name('admin.dashboard')->middleware(['auth:admin', 'admin']);
 
 // Admin routes
 Route::middleware(['auth:admin', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {
-        Route::get('/kelola-pesanan', function () {
+        Route::get('/kelola-pesanan', function (Request $request) {
             $recentOrders = \App\Models\Pesanan::orderByDesc('created_at')->limit(5)->get();
-            $orders = \App\Models\Pesanan::orderByDesc('created_at')->get();
+
+            $q = trim((string) $request->query('q', ''));
+            $status = trim((string) $request->query('status', ''));
+
+            $query = \App\Models\Pesanan::query();
+
+            if ($q !== '') {
+                $query->where(function ($sub) use ($q) {
+                    $sub->where('order_id', 'like', "%{$q}%")
+                        ->orWhere('customer_name', 'like', "%{$q}%")
+                        ->orWhere('customer_email', 'like', "%{$q}%")
+                        ->orWhere('customer_phone', 'like', "%{$q}%");
+                });
+            }
+
+            if (in_array($status, ['pending', 'confirmed', 'shipped', 'completed', 'rejected'], true)) {
+                $query->where('status', $status);
+            }
+
+            $orders = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
 
             return view('admin.kelola-pesanan.index', compact('recentOrders', 'orders'));
         })->name('admin.kelola_pesanan.index');

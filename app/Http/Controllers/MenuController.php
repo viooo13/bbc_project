@@ -193,11 +193,59 @@ class MenuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->ensureDummyMenus();
-        $menus = Menu::all();
-        $pakets = Paket::all();
+
+        $q = trim((string) $request->query('q', ''));
+        $category = trim((string) $request->query('category', ''));
+        $status = trim((string) $request->query('status', ''));
+        $recommended = trim((string) $request->query('recommended', ''));
+
+        $menuQuery = Menu::query();
+
+        if ($q !== '') {
+            $menuQuery->where(function ($sub) use ($q) {
+                $sub->where('name', 'like', "%{$q}%")
+                    ->orWhere('description', 'like', "%{$q}%");
+            });
+        }
+
+        if (in_array($category, ['bakso', 'mie', 'paket', 'minuman'], true)) {
+            $menuQuery->where('category', $category);
+        }
+
+        if (in_array($status, ['active', 'inactive'], true)) {
+            $menuQuery->where('status', $status);
+        }
+
+        if ($recommended === '1') {
+            $menuQuery->where('is_recommended', true);
+        } elseif ($recommended === '0') {
+            $menuQuery->where(function ($sub) {
+                $sub->whereNull('is_recommended')->orWhere('is_recommended', false);
+            });
+        }
+
+        $menus = $menuQuery->orderByDesc('created_at')->paginate(10, ['*'], 'menu_page')->withQueryString();
+
+        $paketQ = trim((string) $request->query('paket_q', ''));
+        $paketStatus = trim((string) $request->query('paket_status', ''));
+        $paketQuery = Paket::query();
+
+        if ($paketQ !== '') {
+            $paketQuery->where(function ($sub) use ($paketQ) {
+                $sub->where('name', 'like', "%{$paketQ}%")
+                    ->orWhere('description', 'like', "%{$paketQ}%");
+            });
+        }
+
+        if (in_array($paketStatus, ['active', 'inactive'], true)) {
+            $paketQuery->where('status', $paketStatus);
+        }
+
+        $pakets = $paketQuery->orderByDesc('created_at')->paginate(10, ['*'], 'paket_page')->withQueryString();
+
         return view('admin.menu.index', compact('menus', 'pakets'));
     }
 

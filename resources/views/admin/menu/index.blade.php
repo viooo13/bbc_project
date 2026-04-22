@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Manajemen Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -436,6 +436,80 @@
             font-size: 12px;
             font-weight: 600;
         }
+
+        :root {
+            --primary: #8B0000;
+            --primary-soft: #a70f0f;
+            --secondary: #DAA520;
+            --cream: #EFE1D1;
+            --surface-2: #ffffff;
+            --text-main: #2D3748;
+            --line: #eadcc8;
+            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.28), transparent 26%),
+                radial-gradient(circle at 88% 84%, rgba(139, 0, 0, 0.10), transparent 34%),
+                var(--cream);
+            color: var(--text-main);
+        }
+
+        .main-content {
+            background: transparent;
+        }
+
+        .page-header h1,
+        .paket-section h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .page-header p {
+            color: #8a6a4c;
+        }
+
+        .content-section {
+            background: var(--surface-2);
+            border-radius: 16px;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-card);
+        }
+
+        .content-section h2 {
+            color: var(--primary);
+        }
+
+        .menus-table th,
+        .pakets-table th {
+            background-color: #fff3e4;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .menus-table td,
+        .pakets-table td {
+            border-bottom: 1px solid var(--line);
+        }
+
+        .menus-table tr:hover,
+        .pakets-table tr:hover {
+            background-color: #fffaf2;
+        }
+
+        .logout-btn,
+        .add-btn,
+        .add-paket-btn {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
+            border-radius: 10px;
+        }
+
+        .price {
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -470,6 +544,28 @@
 
             <section class="content-section">
                 <h2>Daftar Menu</h2>
+                <form method="GET" action="{{ route('admin.menu.index') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 0 0 16px;">
+                    <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama / deskripsi..." style="flex:1; min-width: 220px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                    <select name="category" style="min-width: 160px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                        <option value="">Semua Kategori</option>
+                        <option value="bakso" {{ request('category') === 'bakso' ? 'selected' : '' }}>Bakso</option>
+                        <option value="mie" {{ request('category') === 'mie' ? 'selected' : '' }}>Mie</option>
+                        <option value="paket" {{ request('category') === 'paket' ? 'selected' : '' }}>Paket</option>
+                        <option value="minuman" {{ request('category') === 'minuman' ? 'selected' : '' }}>Minuman</option>
+                    </select>
+                    <select name="recommended" style="min-width: 170px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                        <option value="">Semua Rekomendasi</option>
+                        <option value="1" {{ request('recommended') === '1' ? 'selected' : '' }}>Rekomendasi</option>
+                        <option value="0" {{ request('recommended') === '0' ? 'selected' : '' }}>Bukan Rekomendasi</option>
+                    </select>
+                    <select name="status" style="min-width: 160px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                        <option value="">Semua Status</option>
+                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif</option>
+                        <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                    </select>
+                    <button type="submit" style="padding:10px 14px; border:none; border-radius:8px; background:#2c3e50; color:#fff; font-weight:700; cursor:pointer;">Terapkan</button>
+                    <a href="{{ route('admin.menu.index') }}" style="padding:10px 14px; border:1px solid #e9ecef; border-radius:8px; background:#fff; color:#334155; font-weight:700; text-decoration:none;">Reset</a>
+                </form>
                 <div class="table-container">
                     <table class="menus-table">
                         <thead>
@@ -536,6 +632,10 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div style="margin-top: 16px;">
+                    {{ $menus->links() }}
+                </div>
             </section>
 
             <!-- Paket Section -->
@@ -547,6 +647,16 @@
                         Tambah Paket
                     </a>
                 </div>
+                <form method="GET" action="{{ route('admin.menu.index') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 0 0 16px;">
+                    <input type="text" name="paket_q" value="{{ request('paket_q') }}" placeholder="Cari nama / deskripsi paket..." style="flex:1; min-width: 240px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                    <select name="paket_status" style="min-width: 180px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                        <option value="">Semua Status</option>
+                        <option value="active" {{ request('paket_status') === 'active' ? 'selected' : '' }}>Aktif</option>
+                        <option value="inactive" {{ request('paket_status') === 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                    </select>
+                    <button type="submit" style="padding:10px 14px; border:none; border-radius:8px; background:#2c3e50; color:#fff; font-weight:700; cursor:pointer;">Terapkan</button>
+                    <a href="{{ route('admin.menu.index') }}" style="padding:10px 14px; border:1px solid #e9ecef; border-radius:8px; background:#fff; color:#334155; font-weight:700; text-decoration:none;">Reset</a>
+                </form>
                 <div class="table-container">
                     <table class="pakets-table">
                         <thead>
@@ -606,6 +716,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                </div>
+
+                <div style="margin-top: 16px;">
+                    {{ $pakets->links() }}
                 </div>
             </section>
         </main>

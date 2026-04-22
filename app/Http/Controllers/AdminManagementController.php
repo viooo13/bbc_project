@@ -11,14 +11,36 @@ class AdminManagementController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $admins = Admin::all();
+        $q = trim((string) $request->query('q', ''));
+        $role = trim((string) $request->query('role', ''));
+        $status = trim((string) $request->query('status', ''));
+
+        $query = Admin::query();
+
+        if ($q !== '') {
+            $query->where(function ($sub) use ($q) {
+                $sub->where('name', 'like', "%{$q}%")
+                    ->orWhere('username', 'like', "%{$q}%")
+                    ->orWhere('email', 'like', "%{$q}%");
+            });
+        }
+
+        if (in_array($role, ['owner', 'admin'], true)) {
+            $query->where('role', $role);
+        }
+
+        if (in_array($status, ['active', 'inactive'], true)) {
+            $query->where('status', $status);
+        }
+
+        $admins = $query->orderByDesc('id')->paginate(10)->withQueryString();
         
         // Jika belum ada admin, generate dummy data
-        if ($admins->isEmpty()) {
+        if ($admins->total() === 0) {
             $this->seedDummyData();
-            $admins = Admin::all();
+            $admins = Admin::query()->orderByDesc('id')->paginate(10)->withQueryString();
         }
         
         return view('admin.admin-management.index', compact('admins'));

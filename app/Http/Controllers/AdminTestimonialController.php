@@ -9,10 +9,35 @@ use Illuminate\Support\Str;
 
 class AdminTestimonialController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $influencerTestimonials = InfluencerTestimonial::orderBy('display_order')->latest('id')->get();
-        $customerTestimonials = Testimonial::latest()->get();
+        $q = trim((string) $request->query('q', ''));
+        $type = trim((string) $request->query('type', ''));
+
+        $influencerQuery = InfluencerTestimonial::query()->orderBy('display_order')->latest('id');
+        $customerQuery = Testimonial::query()->latest();
+
+        if ($q !== '') {
+            $influencerQuery->where(function ($sub) use ($q) {
+                $sub->where('title', 'like', "%{$q}%")
+                    ->orWhere('youtube_url', 'like', "%{$q}%");
+            });
+
+            $customerQuery->where(function ($sub) use ($q) {
+                $sub->where('customer_name', 'like', "%{$q}%")
+                    ->orWhere('content', 'like', "%{$q}%")
+                    ->orWhere('admin_reply', 'like', "%{$q}%");
+            });
+        }
+
+        if ($type === 'influencer') {
+            $customerQuery->whereRaw('1=0');
+        } elseif ($type === 'customer') {
+            $influencerQuery->whereRaw('1=0');
+        }
+
+        $influencerTestimonials = $influencerQuery->paginate(10, ['*'], 'influencer_page')->withQueryString();
+        $customerTestimonials = $customerQuery->paginate(10, ['*'], 'customer_page')->withQueryString();
 
         return view('admin.testimoni.index', compact('influencerTestimonials', 'customerTestimonials'));
     }

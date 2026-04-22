@@ -14,7 +14,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::guard('admin')->user() ?? $request->user();
+        $user = Auth::guard('admin')->user();
 
         if (!$user || !isset($user->role) || !in_array($user->role, ['admin', 'owner'], true)) {
             abort(403);

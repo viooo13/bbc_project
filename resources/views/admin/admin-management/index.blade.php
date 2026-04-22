@@ -378,6 +378,21 @@
 
             <section class="content-section">
                 <h2>Daftar Admin</h2>
+                <form method="GET" action="{{ route('admin.management.index') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 0 0 16px;">
+                    <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama / username / email..." style="flex:1; min-width: 240px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                    <select name="role" style="min-width: 160px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                        <option value="">Semua Role</option>
+                        <option value="owner" {{ request('role') === 'owner' ? 'selected' : '' }}>Owner</option>
+                        <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>Admin</option>
+                    </select>
+                    <select name="status" style="min-width: 180px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                        <option value="">Semua Status</option>
+                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif</option>
+                        <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                    </select>
+                    <button type="submit" style="padding:10px 14px; border:none; border-radius:8px; background:#2c3e50; color:#fff; font-weight:700; cursor:pointer;">Terapkan</button>
+                    <a href="{{ route('admin.management.index') }}" style="padding:10px 14px; border:1px solid #e9ecef; border-radius:8px; background:#fff; color:#334155; font-weight:700; text-decoration:none;">Reset</a>
+                </form>
                 <div class="table-container">
                     <table class="admin-table">
                         <thead>
@@ -395,7 +410,7 @@
                         <tbody>
                             @forelse($admins as $key => $admin)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ ($admins->firstItem() ?? 0) + $key }}</td>
                                     <td><span class="admin-name">{{ $admin->name }}</span></td>
                                     <td>{{ $admin->username }}</td>
                                     <td>{{ $admin->email }}</td>
@@ -433,6 +448,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                </div>
+
+                <div style="margin-top: 16px;">
+                    {{ $admins->links() }}
                 </div>
             </section>
         </main>

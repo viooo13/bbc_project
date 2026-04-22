@@ -30,9 +30,25 @@ class PaketController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pakets = Paket::all();
+        $q = trim((string) $request->query('q', ''));
+        $status = trim((string) $request->query('status', ''));
+
+        $query = Paket::query();
+
+        if ($q !== '') {
+            $query->where(function ($sub) use ($q) {
+                $sub->where('name', 'like', "%{$q}%")
+                    ->orWhere('description', 'like', "%{$q}%");
+            });
+        }
+
+        if (in_array($status, ['active', 'inactive'], true)) {
+            $query->where('status', $status);
+        }
+
+        $pakets = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
         return view('admin.paket.index', compact('pakets'));
     }
 

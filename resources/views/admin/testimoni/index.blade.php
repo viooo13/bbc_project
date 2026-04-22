@@ -10,7 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #334155; }
         .dashboard-container { display: flex; min-height: 100vh; }
-        .sidebar { width: 250px; background: #fff; position: fixed; height: 100vh; border-right: 1px solid #e9ecef; }
+        .sidebar { width: 272px; background: #fff; position: fixed; height: 100vh; border-right: 1px solid #e9ecef; }
         .logo { display: flex; align-items: center; padding: 20px; border-bottom: 1px solid #e9ecef; }
         .logo img { width: 40px; height: 40px; margin-right: 10px; border-radius: 8px; object-fit: cover; }
         .logo span { font-size: 18px; font-weight: 700; color: #2c3e50; }
@@ -19,7 +19,7 @@
         .menu-item:hover { background: #f8f9fa; color: #2c3e50; }
         .menu-item.active { background: #e74c3c; color: #fff; border-left-color: #e74c3c; }
         .menu-item i { width: 20px; margin-right: 12px; }
-        .main-content { flex: 1; margin-left: 250px; padding: 30px; }
+        .main-content { flex: 1; margin-left: 272px; padding: 30px; }
         .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
         .page-header h1 { font-size: 28px; color: #2c3e50; }
         .page-header p { color: #64748b; margin-top: 4px; }
@@ -62,6 +62,17 @@
                 <a href="{{ route('admin.testimoni.influencer.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Tambah Influencer</a>
             </div>
         </header>
+
+        <form method="GET" action="{{ route('admin.testimoni.index') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 0 0 16px;">
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari..." style="flex:1; min-width: 240px; padding:10px 12px; border:1px solid #e2e8f0; border-radius:8px;">
+            <select name="type" style="min-width: 200px; padding:10px 12px; border:1px solid #e2e8f0; border-radius:8px;">
+                <option value="">Semua</option>
+                <option value="influencer" {{ request('type') === 'influencer' ? 'selected' : '' }}>Influencer</option>
+                <option value="customer" {{ request('type') === 'customer' ? 'selected' : '' }}>Pelanggan</option>
+            </select>
+            <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i>Terapkan</button>
+            <a class="btn" href="{{ route('admin.testimoni.index') }}" style="border:1px solid #e2e8f0; background:#fff; color:#334155;"><i class="fas fa-rotate"></i>Reset</a>
+        </form>
 
         @if(session('success'))
             <div class="alert">{{ session('success') }}</div>
@@ -112,6 +123,10 @@
                     </tbody>
                 </table>
             </div>
+
+            <div style="margin-top: 12px;">
+                {{ $influencerTestimonials->links() }}
+            </div>
         </section>
 
         <section class="content-section">
@@ -153,6 +168,10 @@
                     @endforelse
                     </tbody>
                 </table>
+            </div>
+
+            <div style="margin-top: 12px;">
+                {{ $customerTestimonials->links() }}
             </div>
         </section>
     </main>
