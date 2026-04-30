@@ -193,46 +193,43 @@
         }
         .rekomendasi-slider {
             position: relative;
-            margin: 0 auto;
+            width: 100vw;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
             padding: 1rem 0;
-            width: 100%;
         }
 
         .rekomendasi-viewport {
             overflow: hidden;
             margin: 0 auto;
-            border-radius: 1.5rem;
-            padding: 0.5rem 0; /* Memberi ruang untuk efek shadow card saat hover */
-            width: max-content;
-            max-width: 100%;
-        }
-
-        @media (max-width: 639px) {
-            .rekomendasi-viewport { max-width: 256px; } /* 1 card */
-        }
-        @media (min-width: 640px) and (max-width: 1023px) {
-            .rekomendasi-viewport { max-width: 536px; } /* 2 cards */
-        }
-        @media (min-width: 1024px) {
-            .rekomendasi-viewport { max-width: 872px; } /* 3 cards */
+            width: 100%;
+            max-width: none;
+            padding: 0.5rem 0;
         }
 
         .rekomendasi-track {
             display: flex;
             align-items: stretch;
-            gap: 1rem;
+            gap: 1.5rem;
             width: max-content;
-            transition: none;
+            transition: transform 1.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             will-change: transform;
-            padding: 0 0 1rem 0;
         }
 
         .rekomendasi-item {
             flex: 0 0 240px;
             padding: 0;
             display: flex;
+            opacity: 0.35;
+            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
+        .rekomendasi-item.active-card {
+            opacity: 1;
+        }
+
         .rekomendasi-item > div {
             width: 100%;
         }
@@ -245,8 +242,96 @@
 
         @media (min-width: 1024px) {
             .rekomendasi-item {
-                flex-basis: 280px;
+                flex-basis: 290px;
             }
+        }
+
+        .rekomendasi-card {
+            width: 100%;
+            min-height: 100%;
+            background: #f7f7f9;
+            border: 1px solid rgba(30, 22, 16, 0.05);
+            border-radius: 1.1rem;
+            box-shadow: inset 0 0 0 1px rgba(26, 22, 18, 0.03), 0 10px 24px rgba(84, 40, 27, 0.08);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rekomendasi-card-content {
+            padding: 0.92rem 0.98rem 0.96rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+            height: 100%;
+        }
+
+        .rekomendasi-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+        }
+
+        .rekomendasi-card-title {
+            color: #1f2430;
+            font-size: 0.98rem;
+            line-height: 1.28;
+            font-weight: 800;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .rekomendasi-card-desc {
+            color: #6b7280;
+            font-size: 0.78rem;
+            line-height: 1.45;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 3.25rem;
+        }
+
+        .rekomendasi-card-footer {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .rekomendasi-price {
+            font-weight: 900;
+            color: #b42318;
+            font-size: 1rem;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .rekomendasi-link {
+            width: 2.4rem;
+            height: 2.4rem;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff4ed;
+            color: #8f1e14;
+            transition: transform 0.25s ease, background-color 0.25s ease;
+            flex-shrink: 0;
+        }
+
+        .rekomendasi-card:hover .rekomendasi-link {
+            transform: translateX(2px);
+            background: #ffe7d8;
         }
 
         .influencer-card {
@@ -400,33 +485,42 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 34px;
-            height: 34px;
+            width: 44px;
+            height: 44px;
+            font-size: 1.1rem;
             border-radius: 999px;
-            border: 1px solid rgba(90, 31, 24, 0.2);
-            background: rgba(255, 255, 255, 0.9);
-            color: #5a1f18;
+            border: 1px solid rgba(90, 31, 24, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            color: #b42318;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
-            z-index: 2;
+            transition: all 0.3s ease;
+            z-index: 20;
+            box-shadow: 0 4px 12px rgba(84, 40, 27, 0.08);
         }
 
         .rekomendasi-nav:hover {
-            background: #ffffff;
-            transform: translateY(-50%) scale(1.05);
+            background: #b42318;
+            color: #ffffff;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 8px 24px rgba(180, 35, 24, 0.25);
         }
 
         .rekomendasi-nav.prev {
-            left: 0.35rem;
+            left: 1.5rem;
         }
 
         .rekomendasi-nav.next {
-            right: 0.35rem;
+            right: 1.5rem;
         }
-        
+
+        @media (max-width: 640px) {
+            .rekomendasi-nav.prev { left: 0.5rem; }
+            .rekomendasi-nav.next { right: 0.5rem; }
+        }
+
         /* Filter Button Styles */
         .filter-btn {
             transition: all 0.3s ease;
@@ -472,32 +566,38 @@
         
         /* Mobile Responsive Styles */
         @media (max-width: 768px) {
-            .package-card {
-                margin-bottom: 1.5rem;
+            .package-media {
+                height: 130px;
             }
-            .package-card img {
-                height: 200px !important;
+            
+            .package-content {
+                height: calc(100% - 130px);
             }
-            .package-card h4 {
-                font-size: 1.5rem !important;
+
+            .package-name {
+                font-size: 0.98rem;
             }
-            .package-card .price {
-                font-size: 1.75rem !important;
+
+            .package-price {
+                font-size: 1.5rem;
             }
         }
-        
+
         @media (max-width: 640px) {
-            .package-card img {
-                height: 180px !important;
+            .package-media {
+                height: 120px;
             }
-            .package-card h4 {
-                font-size: 1.25rem !important;
+            
+            .package-content {
+                height: calc(100% - 120px);
             }
-            .package-card .price {
-                font-size: 1.5rem !important;
+
+            .package-name {
+                font-size: 0.9rem;
             }
-            .package-card ul li {
-                font-size: 0.875rem !important;
+
+            .package-price {
+                font-size: 1.35rem;
             }
         }
     /* Background Selector Dots */
@@ -637,7 +737,7 @@
         }
         
         .animate-scroll-x {
-            animation: scrollX 20s linear infinite;
+            animation: scrollX 16s linear infinite;
         }
         
         .animate-scroll-x:hover {
@@ -654,13 +754,174 @@
             gap: 0.45rem;
         }
 
+        .package-carousel-shell {
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            padding-inline: clamp(0.8rem, 2.8vw, 2.4rem);
+        }
+
         .package-card {
+            background: transparent;
+            border: 1px solid rgba(135, 70, 58, 0.16);
+            border-radius: 1.35rem;
+            box-shadow: 0 10px 26px rgba(84, 40, 27, 0.1);
             transition: transform 0.35s ease, opacity 0.25s ease, box-shadow 0.3s ease;
             will-change: transform;
+            overflow: hidden;
+            min-height: 100%;
+            perspective: 1200px;
+            transform-style: preserve-3d;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%, rgba(0,0,0,0.06) 100%);
+            pointer-events: none;
+            border-radius: inherit;
+            z-index: 1;
         }
 
         .package-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
+            box-shadow: 0 18px 34px rgba(84, 40, 27, 0.16);
+        }
+
+        .package-card-featured {
+            border-color: rgba(180, 35, 24, 0.42);
+            box-shadow: 0 20px 36px rgba(130, 35, 25, 0.2);
+        }
+
+        .package-media {
+            height: 150px;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .package-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.45s ease;
+        }
+
+        .package-card:hover .package-media img {
+            transform: scale(1.05);
+        }
+
+        .package-content {
+            padding: 0.75rem 0.85rem 0.95rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            height: calc(100% - 150px);
+        }
+
+        .package-top-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+        }
+
+        .package-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            padding: 0.28rem 0.58rem;
+            font-size: 0.66rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .package-pill.badge {
+            background: rgba(180, 35, 24, 0.1);
+            color: #8f1e14;
+        }
+
+        .package-pill.portion {
+            background: #fff4ed;
+            color: #8f1e14;
+            border: 1px solid rgba(180, 35, 24, 0.18);
+        }
+
+        .package-name {
+            color: #2e1c12;
+            font-size: 1.08rem;
+            line-height: 1.15;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+
+        .package-price-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.45rem;
+        }
+
+        .package-price {
+            color: #b42318;
+            font-size: 1.7rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        .package-price-unit {
+            color: #7d6d64;
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding-bottom: 0.2rem;
+        }
+
+        .package-old-price {
+            color: #8d8d8d;
+            font-size: 0.73rem;
+            font-weight: 700;
+            text-decoration: line-through;
+        }
+
+        .package-desc {
+            color: #5a4a41;
+            font-size: 0.78rem;
+            line-height: 1.45;
+            min-height: 2.8rem;
+            margin: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .package-cta {
+            margin-top: auto;
+            width: 100%;
+            border: 0;
+            border-radius: 0.75rem;
+            padding: 0.62rem 0.8rem;
+            background: linear-gradient(135deg, #c52f22 0%, #9f2218 100%);
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
+            box-shadow: 0 10px 20px rgba(150, 38, 27, 0.26);
+            cursor: pointer;
+        }
+
+        .package-cta:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.03);
+            box-shadow: 0 14px 24px rgba(150, 38, 27, 0.32);
         }
 
         .package-carousel {
@@ -672,9 +933,8 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
             padding-bottom: 0.25rem;
-            width: max-content;
-            max-width: 100%;
-            margin: 0 auto;
+            width: 100%;
+            margin: 0;
         }
 
         .package-carousel::-webkit-scrollbar {
@@ -684,13 +944,19 @@
         .package-track {
             display: flex;
             align-items: stretch;
-            gap: 1rem;
+            gap: 1.05rem;
             padding-right: 0.25rem;
             width: max-content;
+            transform-style: preserve-3d;
+            perspective: 1500px;
+        }
+        
+        .package-slide {
+            transition: transform 0.3s ease-out;
         }
 
         .package-slide {
-            flex: 0 0 280px;
+            flex: 0 0 300px;
             scroll-snap-align: start;
             scroll-snap-stop: always;
         }
@@ -719,6 +985,12 @@
             transform: none;
         }
 
+        @media (max-width: 640px) {
+            .package-slide {
+                flex-basis: 260px;
+            }
+        }
+
         @media (min-width: 640px) {
             .package-nav-btn {
                 width: 40px;
@@ -726,13 +998,13 @@
             }
 
             .package-slide {
-                flex-basis: 295px;
+                flex-basis: 285px;
             }
         }
 
         @media (min-width: 1024px) {
             .package-slide {
-                flex-basis: 310px;
+                flex-basis: 305px;
             }
         }
     </style>
@@ -862,7 +1134,7 @@
     </section>
 
     <!-- PAKET ACARA -->
-    <section id="paket" class="py-16 bg-[#EFE1D1]">
+    <section id="paket" class="py-16">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-10">
                 <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Layanan Katering</span>
@@ -880,7 +1152,10 @@
             </div>
 
             @if(isset($pakets) && $pakets->count() > 0)
-                <div class="relative">
+                @php
+                    $featuredPackageIndex = $pakets->count() > 1 ? (int) ceil($pakets->count() / 2) : 1;
+                @endphp
+                <div class="relative package-carousel-shell">
                     <div id="packageNavControls" class="flex justify-center sm:justify-end gap-2 mb-3">
                         <button id="packagePrevBtn" type="button" class="package-nav-btn" aria-label="Geser paket ke kiri">
                             <i class="fas fa-chevron-left"></i>
@@ -893,27 +1168,39 @@
                     <div id="packageCarousel" class="package-carousel">
                         <div id="packageGrid" class="package-track">
                             @foreach($pakets as $paket)
-                                <div class="package-card package-slide bg-[#EFE1D1] rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 fade-up flex flex-col h-full">
-                                    <div class="h-48 overflow-hidden bg-[#EFE1D1]">
+                                <div class="package-card package-slide fade-up {{ $loop->iteration === $featuredPackageIndex ? 'package-card-featured' : '' }}">
+                                    <div class="package-media">
                                         <img src="{{ $paket->image ? asset($paket->image) : 'https://placehold.co/800x600/efe1d1/3a2a1a?text=Paket' }}"
                                              alt="{{ $paket->name }}"
-                                             class="w-full h-full object-cover hover:scale-105 transition duration-300">
+                                             class="w-full h-full object-cover">
                                     </div>
-                                    <div class="p-4 flex flex-col flex-grow">
-                                        <h4 class="text-lg font-bold mb-1 text-gray-800 line-clamp-2 min-h-[3.5rem]">{{ $paket->name }}</h4>
-                                        <div class="h-5 mb-1 flex items-end">
+                                    <div class="package-content">
+                                        <div class="package-top-meta">
+                                            <span class="package-pill badge">{{ $loop->iteration === $featuredPackageIndex ? 'Unggulan' : 'Paket' }}</span>
+                                            <span class="package-pill portion">{{ $paket->portion }} Porsi</span>
+                                        </div>
+
+                                        <h4 class="package-name line-clamp-2">{{ $paket->name }}</h4>
+
+                                        <div>
+                                            <div class="mb-1 min-h-[1rem]">
                                             @if(!empty($paket->original_price))
-                                                <div class="text-xs font-semibold text-gray-500 line-through">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
+                                                    <div class="package-old-price">Rp {{ number_format((float) $paket->original_price, 0, ',', '.') }}</div>
                                             @endif
+                                            </div>
+
+                                            <div class="package-price-row">
+                                                <div class="package-price">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</div>
+                                                <div class="package-price-unit">/paket</div>
+                                            </div>
                                         </div>
-                                        <div class="text-[1.85rem] leading-none font-bold text-red-600 mb-4">Rp {{ number_format((float) $paket->price, 0, ',', '.') }}</div>
-                                        <div class="text-gray-700 mb-3 text-sm leading-relaxed whitespace-pre-line flex-grow line-clamp-3 min-h-[4.5rem]">{{ $paket->description }}</div>
-                                        <div class="text-sm font-semibold text-gray-700 mb-5 bg-gray-50 px-3 py-1.5 rounded-lg inline-block w-max">Porsi: {{ $paket->portion }}</div>
-                                        <div class="flex gap-3 mt-auto">
-                                            <button onclick="addPaketToCart({{ (int) $paket->id }})" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition">
-                                                <i class="fas fa-cart-plus mr-2"></i>Tambah ke Keranjang
-                                            </button>
-                                        </div>
+
+                                        <p class="package-desc line-clamp-3">{{ $paket->description }}</p>
+
+                                        <button onclick="addPaketToCart({{ (int) $paket->id }})" class="package-cta">
+                                            <i class="fas fa-cart-plus"></i>
+                                            Tambah ke Keranjang
+                                        </button>
                                     </div>
                                 </div>
                             @endforeach
@@ -977,37 +1264,42 @@
                         <div class="rekomendasi-viewport">
                             <div id="rekomendasiTrack" class="rekomendasi-track">
                             @foreach($recommendedItems->take(12) as $item)
-                            <div class="rekomendasi-item h-full">
-                                <div class="bg-white rounded-[2rem] p-4 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 flex flex-col h-full relative group">
+                                                                                    <div class="rekomendasi-item h-full w-full">
+                                <div class="bg-white rounded-[1.5rem] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.1)] hover:-translate-y-2 transition-all duration-500 border border-gray-100 flex flex-col h-full relative group w-full">
                                     <!-- Badge -->
-                                    <div class="absolute top-6 left-6 z-10 bg-red-600/90 backdrop-blur-md text-white text-[9px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest border border-red-500/50">
+                                    <div class="absolute top-7 left-7 z-10 bg-red-600/90 backdrop-blur-md text-white text-[9px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest border border-red-500/50">
                                         Rekomendasi
                                     </div>
-                                    
+
                                     <!-- Image Container -->
-                                    <div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-orange-50 mb-4 shadow-inner">
-                                        <img src="{{ $item->image ? asset($item->image) : 'https://placehold.co/300x300/efe1d1/3a2a1a?text=Menu' }}" alt="{{ $item->name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                        
+                                    <div class="relative w-full aspect-[5/4] rounded-[1rem] overflow-hidden bg-orange-50 mb-4 shadow-inner">
+                                        <img src="{{ $item->image ? asset($item->image) : 'https://placehold.co/400x320/efe1d1/3a2a1a?text=Menu' }}" alt="{{ $item->name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
                                         <!-- Quick Add Overlay Icon -->
-                                        <div class="absolute bottom-3 right-3 text-white opacity-0 group-hover:opacity-100 transform translate-y-3 group-hover:translate-y-0 transition-all duration-300 pointer-events-none">
-                                            <i class="fas fa-eye text-lg"></i>
+                                        <div class="absolute bottom-3 left-1/2 -top-[-100%] translate-y-4 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 z-20 w-[85%]">
+                                            <a href="{{ route('menu.public') }}" class="block w-full py-2 bg-orange-100/95 text-orange-900 border border-transparent text-center text-[10px] font-bold rounded-[0.5rem] shadow-lg hover:bg-red-700 hover:text-white transition-colors uppercase tracking-wider backdrop-blur-sm">
+                                                Detail
+                                            </a>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Text Content -->
-                                    <div class="flex-grow flex flex-col text-left px-1">
-                                        <h4 class="font-extrabold text-[#26180f] text-base md:text-lg mb-1 leading-tight group-hover:text-red-700 transition-colors font-poppins line-clamp-2 min-h-[2.75rem] md:min-h-[3rem]">{{ $item->name }}</h4>
-                                        <p class="text-xs text-gray-500 leading-relaxed mb-4 line-clamp-2 font-medium flex-grow min-h-[2.5rem]">{{ $item->description }}</p>
-                                        
+                                    <div class="flex-grow flex flex-col text-left px-1 mt-1">
+                                        <h4 class="font-extrabold text-[#26180f] text-lg md:text-xl mb-1.5 leading-snug group-hover:text-red-700 transition-colors font-poppins tracking-tight line-clamp-2 min-h-[3rem]">{{ $item->name }}</h4>
+                                        <p class="text-[0.75rem] text-gray-500 leading-relaxed mb-4 line-clamp-2 font-medium flex-grow min-h-[2.5rem]">{{ $item->description }}</p>
+
                                         <!-- Footer (Price & View Action) -->
-                                        <div class="mt-auto flex items-center justify-between pt-3 border-t border-gray-50">
-                                            <div class="font-black text-red-600 text-lg md:text-xl font-poppins">
-                                                Rp {{ number_format((float)($item->price ?? 0), 0, ',', '.') }}
+                                        <div class="mt-auto flex items-end justify-between pt-3 border-t border-gray-50">
+                                            <div>
+                                                <span class="block text-[9px] uppercase tracking-widest text-red-600/70 font-bold mb-1">Harga</span>
+                                                <div class="font-black text-red-600 text-[1.1rem] font-poppins tracking-tight">
+                                                    <span class="text-[10px] align-super opacity-60 font-medium">Rp</span>{{ number_format((float)($item->price ?? 0), 0, ',', '.') }}
+                                                </div>
                                             </div>
-                                            <!-- Removed the Add to Cart button since individual menus cannot be ordered online -->
-                                            <a href="{{ route('menu.public') }}" class="w-10 h-10 bg-orange-100 text-orange-800 rounded-full flex items-center justify-center hover:bg-orange-200 transition-all duration-300 shadow-sm shrink-0" title="Lihat Daftar Menu">
-                                                <i class="fas fa-arrow-right"></i>
+                                            <!-- Quick detail button -->
+                                            <a href="{{ route('menu.public') }}" class="w-9 h-9 bg-orange-100 text-orange-800 rounded-full flex items-center justify-center hover:bg-orange-200 transition-all duration-300 shadow-sm shrink-0 group/btn" title="Lihat Daftar Menu">
+                                                <i class="fas fa-arrow-right -rotate-45 group-hover/btn:rotate-0 transition-transform duration-300 text-sm"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -1105,42 +1397,7 @@
                 <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-6"></div>
             </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-start" id="daftarTestimoni">
-                    @if(isset($testimonials) && $testimonials->count() > 0)
-                        @foreach($testimonials as $idx => $testimonial)
-                            <div class="bg-[#F9EDDE] p-6 rounded-xl shadow-md hover:shadow-lg transition self-start fade-up border hover:border-red-900/10" style="transition-delay: {{ number_format($idx * 0.07, 2) }}s;">
-                                <div class="flex items-center justify-between">
-                                    <div class="font-extrabold text-base md:text-lg text-[#3a2a1a] font-poppins">{{ $testimonial->customer_name }}</div>
-                                    <div class="text-amber-500 text-base md:text-lg font-semibold">
-                                        @for($i = 0; $i < 5; $i++)
-                                            @if($i < $testimonial->rating) <i class="fas fa-star"></i> @else <i class="far fa-star text-gray-400"></i> @endif
-                                        @endfor
-                                    </div>
-                                </div>
-                                <div class="mt-4" data-review-block>
-                                    <p class="text-sm md:text-base font-medium text-gray-700 leading-relaxed font-poppins review-clamp" data-review-text style="--review-fade-bg:#F9EDDE;">"{{ $testimonial->content }}"</p>
-                                    <button type="button" class="mt-2 text-xs md:text-sm font-semibold text-red-600 hover:text-red-800 underline hidden transition-colors" data-toggle-text>
-                                        Lihat selengkapnya
-                                    </button>
-                                </div>
-                                @if($testimonial->admin_reply)
-                                    <div class="mt-5 p-4 bg-red-50/80 rounded-xl border-l-4 border-red-600" data-review-block>
-                                        <p class="text-sm md:text-base font-bold text-red-700 mb-1 font-poppins"><i class="fas fa-check-circle mr-1"></i> Balasan Admin:</p>
-                                        <p class="text-sm md:text-base font-medium text-gray-700 leading-relaxed review-clamp font-poppins italic" data-review-text style="--review-fade-bg:#FEF2F2;">{{ $testimonial->admin_reply }}</p>
-                                        <button type="button" class="mt-2 text-xs md:text-sm font-semibold text-red-600 hover:text-red-800 underline hidden transition-colors" data-toggle-text>
-                                            Lihat selengkapnya
-                                        </button>
-                                    </div>
-                                @endif
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="col-span-full text-center text-base md:text-lg font-medium text-gray-600 font-poppins bg-[#F9EDDE] border border-[#e6d8c5] rounded-xl py-12 shadow-sm">
-                            <i class="far fa-comment-dots text-3xl md:text-4xl text-red-600/50 mb-3 block"></i>
-                            Ulasan pelanggan belum tersedia.
-                        </div>
-                    @endif
-                </div>
+            @include('partials.testimonial-carousel', ['testimonials' => $testimonials ?? collect()])
         </div>
     </section>
 
@@ -1474,12 +1731,11 @@
             }
 
             function syncNavVisibility() {
-                const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
                 const hasOverflow = (carousel.scrollWidth - carousel.clientWidth) > 2;
 
                 if (navControls) {
-                    // On mobile/tablet: always show controls. On desktop: show only if overflow.
-                    navControls.classList.toggle('hidden', isDesktop && !hasOverflow);
+                    // Show controls only when cards exceed container bounds on all devices
+                    navControls.classList.toggle('hidden', !hasOverflow);
                 }
 
                 updateButtons();
@@ -1572,72 +1828,163 @@
             const nextBtn = document.getElementById('rekomNext');
             if (!slider || !track || !prevBtn || !nextBtn) return;
 
-            const baseItems = Array.from(track.querySelectorAll('.rekomendasi-item'));
-            if (baseItems.length <= 1) return;
+            const originalItems = Array.from(track.querySelectorAll('.rekomendasi-item'));
+            if (originalItems.length <= 1) return;
 
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 return;
             }
 
-            let position = 0;
             let loopWidth = 0;
             let stepWidth = 0;
-            let rafId = null;
-            const speed = 0.45;
+            const clonesCount = originalItems.length;
+            let currentIndex = clonesCount;
+            let isAnimating = false;
+            let resumeTimer = null;
+            let pauseOnHover = false;
+            const slideStep = 1;
+            const slidePause = 4000;
+            const transitionDuration = 1000;
+
+            track.style.transform = 'translateX(0)';
 
             function clearClones() {
-                track.querySelectorAll('[data-reko-clone="1"]').forEach(el => el.remove());
+                track.innerHTML = '';
+            }
+
+            function updateActiveCard() {
+                const items = track.querySelectorAll('.rekomendasi-item');
+                items.forEach((item, idx) => {
+                    if (idx === currentIndex) {
+                        item.classList.add('active-card');
+                    } else {
+                        item.classList.remove('active-card');
+                    }
+                });
             }
 
             function rebuild() {
                 clearClones();
-                baseItems.forEach(item => {
-                    const clone = item.cloneNode(true);
-                    clone.setAttribute('data-reko-clone', '1');
+                
+                for (let i = 0; i < clonesCount; i++) {
+                    const clone = originalItems[i].cloneNode(true);
+                    clone.setAttribute('data-reko-clone', 'pre');
                     track.appendChild(clone);
+                }
+
+                originalItems.forEach(item => {
+                    track.appendChild(item.cloneNode(true));
                 });
+                
+                for (let i = 0; i < clonesCount; i++) {
+                    const clone = originalItems[i].cloneNode(true);
+                    clone.setAttribute('data-reko-clone', 'post');
+                    track.appendChild(clone);
+                }
 
+                const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '24') || 24;
                 const first = track.querySelector('.rekomendasi-item');
-                const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '16') || 16;
-                stepWidth = first ? (first.getBoundingClientRect().width + gap) : 220;
-                loopWidth = (stepWidth * baseItems.length);
-                position = ((position % loopWidth) + loopWidth) % loopWidth;
-                track.style.transform = `translateX(${-position}px)`;
+                stepWidth = first ? (first.offsetWidth + gap) : 344;
+                
+                // Tambahkan offset agar item aktif berada di tengah layar
+                const viewportWidth = window.innerWidth;
+                const centerOffset = (viewportWidth - (stepWidth - gap)) / 2;
+
+                loopWidth = stepWidth * originalItems.length;
+                currentIndex = clonesCount;
+                track.style.transition = 'none';
+                track.style.transform = `translateX(${centerOffset - (currentIndex * stepWidth)}px)`;
+                updateActiveCard();
+                void track.offsetWidth;
+                track.style.transition = `transform ${transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
             }
 
-            function tick() {
-                if (loopWidth <= 0) {
-                    rafId = requestAnimationFrame(tick);
-                    return;
+            function goTo(index, immediate = false) {
+                if (stepWidth <= 0) return;
+                const viewportWidth = window.innerWidth;
+                const centerOffset = (viewportWidth - (stepWidth - parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '24'))) / 2;
+                
+                track.style.transition = immediate ? 'none' : `transform ${transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+                track.style.transform = `translateX(${centerOffset - (index * stepWidth)}px)`;
+                
+                if (!immediate) {
+                    updateActiveCard();
+                } else {
+                    const prevTransition = track.style.transition;
+                    track.style.transition = 'none';
+                    updateActiveCard();
+                    void track.offsetWidth;
+                    track.style.transition = prevTransition;
                 }
-
-                position += speed;
-                if (position >= loopWidth) {
-                    position -= loopWidth;
-                }
-
-                track.style.transform = `translateX(${-position}px)`;
-                rafId = requestAnimationFrame(tick);
             }
+
+            function scheduleNextStep() {
+                clearTimeout(resumeTimer);
+                resumeTimer = setTimeout(() => {
+                    if (pauseOnHover || isAnimating || loopWidth <= 0) {
+                        scheduleNextStep();
+                        return;
+                    }
+
+                    isAnimating = true;
+                    currentIndex += slideStep;
+                    goTo(currentIndex);
+                }, slidePause);
+            }
+
+            track.addEventListener('transitionend', (e) => {
+                if (e.target !== track) return;
+                
+                if (currentIndex >= clonesCount * 2) {
+                    currentIndex -= originalItems.length;
+                    goTo(currentIndex, true);
+                } else if (currentIndex < clonesCount) {
+                    currentIndex += originalItems.length;
+                    goTo(currentIndex, true);
+                }
+
+                isAnimating = false;
+                scheduleNextStep();
+            });
+
+            slider.addEventListener('mouseenter', () => {
+                pauseOnHover = true;
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                pauseOnHover = false;
+                scheduleNextStep();
+            });
+
+            slider.addEventListener('focusin', () => {
+                pauseOnHover = true;
+            });
+
+            slider.addEventListener('focusout', () => {
+                pauseOnHover = false;
+                scheduleNextStep();
+            });
 
             prevBtn.addEventListener('click', () => {
                 if (loopWidth <= 0) return;
-                position -= stepWidth;
-                if (position < 0) position += loopWidth;
-                track.style.transform = `translateX(${-position}px)`;
+                clearTimeout(resumeTimer);
+                isAnimating = true;
+                currentIndex -= slideStep;
+                goTo(currentIndex);
             });
 
             nextBtn.addEventListener('click', () => {
                 if (loopWidth <= 0) return;
-                position += stepWidth;
-                if (position >= loopWidth) position -= loopWidth;
-                track.style.transform = `translateX(${-position}px)`;
+                clearTimeout(resumeTimer);
+                isAnimating = true;
+                currentIndex += slideStep;
+                goTo(currentIndex);
             });
 
             window.addEventListener('resize', rebuild);
 
             rebuild();
-            if (!rafId) rafId = requestAnimationFrame(tick);
+            scheduleNextStep();
         }
 
         initRecommendedAutoScroll();

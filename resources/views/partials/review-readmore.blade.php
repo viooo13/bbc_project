@@ -46,8 +46,8 @@
             return Number.isFinite(value) && value > 0 ? value : 3;
         }
 
-        function initReviewReadMore() {
-            const blocks = document.querySelectorAll('[data-review-block]');
+        function initReviewReadMore(root = document) {
+            const blocks = root.querySelectorAll('[data-review-block]:not([data-review-ready="1"])');
             if (!blocks.length) return;
 
             const defaultClampLines = getDefaultClampLines();
@@ -55,7 +55,10 @@
             blocks.forEach((block) => {
                 const text = block.querySelector('[data-review-text]');
                 const toggle = block.querySelector('[data-toggle-text]');
+                const card = block.closest('.testimonial-card');
                 if (!text || !toggle) return;
+
+                block.setAttribute('data-review-ready', '1');
 
                 const specificClamp = parseInt(text.getAttribute('data-clamp-lines') || '', 10);
                 const clampLines = Number.isFinite(specificClamp) && specificClamp > 0 ? specificClamp : defaultClampLines;
@@ -88,6 +91,9 @@
                     if (expanded) {
                         text.style.maxHeight = `${collapsedHeight}px`;
                         toggle.textContent = 'Lihat selengkapnya';
+                        if (card) {
+                            card.classList.remove('is-expanded');
+                        }
                         setTimeout(() => {
                             if (!expanded) {
                                 text.classList.remove('review-full');
@@ -97,8 +103,11 @@
                     } else {
                         text.classList.remove('review-clamp');
                         text.classList.add('review-full');
-                        text.style.maxHeight = `${expandedHeight}px`;
+                        text.style.maxHeight = `${Math.ceil(text.scrollHeight)}px`;
                         toggle.textContent = 'Lihat lebih sedikit';
+                        if (card) {
+                            card.classList.add('is-expanded');
+                        }
                     }
 
                     expanded = !expanded;
@@ -106,11 +115,14 @@
             });
         }
 
+        window.initReviewReadMore = initReviewReadMore;
+
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initReviewReadMore);
         } else {
             initReviewReadMore();
         }
+        
     })();
 </script>
 @endonce

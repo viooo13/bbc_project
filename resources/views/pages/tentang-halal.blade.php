@@ -282,39 +282,6 @@
             }
         }
 
-        .review-clamp {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            word-break: break-word;
-        }
-
-        .review-full {
-            display: block;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .review-animated {
-            display: block;
-            overflow: hidden;
-            transition: max-height 280ms ease;
-            will-change: max-height;
-            position: relative;
-        }
-
-        .review-animated.review-clamp::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 1.8em;
-            pointer-events: none;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--review-fade-bg, #F9EDDE));
-        }
-
         .influencer-card {
             border-radius: 16px;
             transition: transform 0.35s ease, box-shadow 0.35s ease;
@@ -664,44 +631,7 @@
                     <div class="w-16 md:w-24 h-1 bg-red-600 mx-auto rounded-full mt-6"></div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start" id="daftarTestimoni">
-                    @if(isset($testimonials) && $testimonials->count() > 0)
-                        @foreach($testimonials as $idx => $testimonial)
-                            <div class="bg-[#F9EDDE] p-6 rounded-xl shadow-md hover:shadow-lg transition self-start fade-up" style="transition-delay: {{ number_format($idx * 0.07, 2) }}s;">
-                                <div class="flex items-center justify-between">
-                                    <div class="font-extrabold text-sm text-[#3a2a1a]">{{ $testimonial->customer_name }}</div>
-                                    <div class="text-amber-500 text-sm font-semibold">
-                                        @for($i = 0; $i < 5; $i++)
-                                            @if($i < $testimonial->rating) ★ @else ☆ @endif
-                                        @endfor
-                                    </div>
-                                </div>
-                                <div class="mt-3" data-review-block>
-                                    <p class="text-xs text-gray-700 leading-relaxed review-clamp" data-review-text style="--review-fade-bg:#F9EDDE;">{{ $testimonial->content }}</p>
-                                    <button type="button" class="mt-2 text-xs font-semibold text-red-600 hover:text-red-700 underline hidden" data-toggle-text>
-                                        Lihat selengkapnya
-                                    </button>
-                                </div>
-                                @if($testimonial->admin_reply)
-                                    <div class="mt-4 p-3 bg-red-50 rounded-lg border-l-4 border-red-600" data-review-block>
-                                        <p class="text-sm font-semibold text-red-600 mb-1">Balasan:</p>
-                                        <p class="text-sm text-gray-700 review-clamp" data-review-text style="--review-fade-bg:#FEF2F2;">{{ $testimonial->admin_reply }}</p>
-                                        <button type="button" class="mt-2 text-xs font-semibold text-red-600 hover:text-red-700 underline hidden" data-toggle-text>
-                                            Lihat selengkapnya
-                                        </button>
-                                    </div>
-                                @endif
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="col-span-full text-center text-gray-700">
-                            <div class="bg-[#F9EDDE] rounded-2xl p-10 shadow">
-                                <h4 class="text-2xl font-bold mb-2">Belum ada ulasan</h4>
-                                <p class="text-sm">Ulasan akan tampil setelah ada testimoni dari pelanggan.</p>
-                            </div>
-                        </div>
-                    @endif
-                </div>
+                @include('partials.testimonial-carousel', ['testimonials' => $testimonials ?? collect()])
             </div>
         </div>
     </section>
@@ -726,61 +656,6 @@
             }
         }
 
-        function initReviewReadMore() {
-            const blocks = document.querySelectorAll('[data-review-block]');
-            if (!blocks.length) return;
-
-            blocks.forEach((block) => {
-                const text = block.querySelector('[data-review-text]');
-                const toggle = block.querySelector('[data-toggle-text]');
-                if (!text || !toggle) return;
-
-                const lineHeight = parseFloat(window.getComputedStyle(text).lineHeight) || 20;
-                const collapsedHeight = Math.round(lineHeight * 3);
-
-                text.classList.remove('review-full');
-                text.classList.add('review-clamp', 'review-animated');
-
-                text.classList.remove('review-clamp');
-                const expandedHeight = Math.ceil(text.scrollHeight);
-                text.classList.add('review-clamp');
-
-                const hasOverflow = expandedHeight - collapsedHeight > 2;
-                if (!hasOverflow) {
-                    toggle.classList.add('hidden');
-                    text.classList.remove('review-clamp', 'review-animated');
-                    text.classList.add('review-full');
-                    text.style.maxHeight = 'none';
-                    return;
-                }
-
-                let expanded = false;
-                text.style.maxHeight = `${collapsedHeight}px`;
-                toggle.classList.remove('hidden');
-
-                toggle.addEventListener('click', () => {
-                    if (expanded) {
-                        text.style.maxHeight = `${collapsedHeight}px`;
-                        toggle.textContent = 'Lihat selengkapnya';
-                        setTimeout(() => {
-                            if (!expanded) {
-                                text.classList.remove('review-full');
-                                text.classList.add('review-clamp');
-                            }
-                        }, 280);
-                    } else {
-                        text.classList.remove('review-clamp');
-                        text.classList.add('review-full');
-                        text.style.maxHeight = `${expandedHeight}px`;
-                        toggle.textContent = 'Lihat lebih sedikit';
-                    }
-
-                    expanded = !expanded;
-                });
-            });
-        }
-
-        initReviewReadMore();
     </script>
 </body>
 </html>
