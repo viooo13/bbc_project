@@ -1,0 +1,1 @@
+<?php \=file_get_contents('c:/bbc_project/resources/views/home.blade.php'); preg_match('#<!-- Text Content.*?<!-- Footer#s', \, \); file_put_contents('c:/bbc_project/temp_replace.txt', \[0]); echo 'saved';
