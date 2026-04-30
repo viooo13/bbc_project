@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #334155; }
+        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #334155; }
         .dashboard-container { display: flex; min-height: 100vh; }
 
         .sidebar { width: 250px; background: #fff; position: fixed; height: 100vh; border-right: 1px solid #e9ecef; }
@@ -24,7 +24,7 @@
         .user-details { min-width: 0; }
         .user-name { font-size: 14px; font-weight: 700; color: #2c3e50; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .main-content { flex: 1; margin-left: 250px; padding: 30px; }
+        .main-content { flex: 1; margin-left: 250px; padding: 30px; background: #ffffff; }
         .page-header { margin-bottom: 20px; }
         .page-header h1 { font-size: 28px; color: #2c3e50; }
         .page-header p { color: #64748b; margin-top: 4px; }

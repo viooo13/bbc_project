@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+            background-color: #ffffff;
             color: #334155;
             overflow-x: hidden;
         }
@@ -126,7 +126,7 @@
             flex: 1;
             margin-left: 250px;
             padding: 30px;
-            background-color: #f5f5f5;
+            background-color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;

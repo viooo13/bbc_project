@@ -27,14 +27,14 @@
     }
 @endphp
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
     .sidebar.admin-sidebar {
         width: 272px;
-        background:
-            radial-gradient(circle at top, rgba(255,255,255,.75), transparent 40%),
-            linear-gradient(180deg, #fffdf8 0%, #fff4e8 100%);
-        border-right: 1px solid #eadcc8;
+        background: #ffffff;
+        border-right: 1px solid #e2e8f0;
         box-shadow: 0 18px 40px rgba(45, 55, 72, 0.10);
+        font-family: 'Poppins', sans-serif;
     }
 
     .sidebar.admin-sidebar .sidebar-top {
@@ -42,7 +42,7 @@
         align-items: center;
         gap: 14px;
         padding: 18px 18px 16px;
-        border-bottom: 1px solid #eadcc8;
+        border-bottom: 1px solid #e2e8f0;
     }
 
     .sidebar.admin-sidebar .brand-logo {
@@ -69,7 +69,7 @@
     .sidebar.admin-sidebar .brand-subtitle {
         margin-top: 4px;
         font-size: 12px;
-        color: #8a6a4c;
+        color: #64748b;
         font-weight: 600;
         letter-spacing: 0.2px;
     }
@@ -82,7 +82,7 @@
         margin: 5px 10px;
         border-radius: 14px;
         border-left: 0;
-        color: #73583e;
+        color: #475569;
         font-weight: 600;
         padding: 13px 14px;
         position: relative;
@@ -98,8 +98,8 @@
     }
 
     .sidebar.admin-sidebar .menu-item:hover {
-        background: linear-gradient(90deg, rgba(139, 0, 0, 0.08), rgba(218, 165, 32, 0.10));
-        color: #8B0000;
+        background: #f1f5f9;
+        color: #dc2626;
         transform: translateX(2px);
     }
 
@@ -130,12 +130,12 @@
     }
 
     .sidebar.admin-sidebar .user-info {
-        border-top: 1px solid #eadcc8;
+        border-top: 1px solid #e2e8f0;
         padding: 14px 14px 16px;
         gap: 12px;
         margin: 0 12px 12px;
         border-radius: 16px;
-        background: rgba(255,255,255,0.72);
+        background: #f8fafc;
         backdrop-filter: blur(8px);
         box-shadow: 0 10px 22px rgba(45, 55, 72, 0.06);
         border: none;
@@ -165,14 +165,14 @@
 
     .sidebar.admin-sidebar .user-role {
         font-size: 11px;
-        color: #8a6a4c;
+        color: #64748b;
         font-weight: 600;
         margin-top: 2px;
     }
 
     .sidebar.admin-sidebar .user-email {
         font-size: 11px;
-        color: #9a8066;
+        color: #94a3b8;
         margin-top: 2px;
     }
 </style>

@@ -16,7 +16,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+            background-color: #ffffff;
             color: #334155;
             overflow-x: hidden;
         }
@@ -127,7 +127,7 @@
             flex: 1;
             margin-left: 250px;
             padding: 30px;
-            background-color: #f5f5f5;
+            background-color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -406,6 +406,85 @@
             width: 100% !important;
             height: 320px !important;
         }
+
+        /* Pagination Styling - Compact */
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 3px;
+            flex-wrap: wrap;
+        }
+        .pagination li {
+            display: inline-flex;
+        }
+        .pagination li a,
+        .pagination li span {
+            padding: 5px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            background: #fff;
+            transition: all 0.15s ease;
+            min-width: 32px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+        .pagination li.active span {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .pagination li a:hover {
+            background: var(--line);
+            color: var(--primary);
+        }
+        .pagination li.disabled span {
+            color: #adb5bd;
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
+        .pagination li:first-child a,
+        .pagination li:first-child span,
+        .pagination li:last-child a,
+        .pagination li:last-child span {
+            padding: 5px 8px;
+        }
+        /* Bootstrap 4 pagination compatibility */
+        .pagination .page-item {
+            display: inline-flex;
+        }
+        .pagination .page-link {
+            padding: 5px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            background: #fff;
+            transition: all 0.15s ease;
+            min-width: 32px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            margin: 0 2px;
+        }
+        .pagination .page-item.active .page-link {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .pagination .page-item.disabled .page-link {
+            color: #adb5bd;
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -563,7 +642,7 @@
                     </table>
                 </div>
                 <div style="margin-top: 16px;">
-                    {{ $completedOrders->links() }}
+                    {{ $completedOrders->links('pagination::bootstrap-4') }}
                 </div>
             </section>
         </main>

@@ -89,13 +89,33 @@ Route::get('/menu-public', function () {
 });
 
 // Admin Dashboard
-Route::get('/admin/dashboard', function () {
+Route::get('/admin/dashboard', function (Request $request) {
     $pendingCount = \App\Models\Pesanan::where('status', 'pending')->count();
     $totalOrders = \App\Models\Pesanan::count();
     $totalRevenue = \App\Models\Pesanan::where('status', 'completed')->sum('total_price');
     $totalCustomers = \App\Models\User::where('role', 'user')->count();
     $totalMenus = \App\Models\Menu::count();
-    $latestOrders = \App\Models\Pesanan::orderByDesc('created_at')->limit(5)->get();
+
+    // Search & Filter for orders
+    $q = trim((string) $request->query('q', ''));
+    $status = trim((string) $request->query('status', ''));
+
+    $ordersQuery = \App\Models\Pesanan::query();
+
+    if ($q !== '') {
+        $ordersQuery->where(function ($sub) use ($q) {
+            $sub->where('order_id', 'like', "%{$q}%")
+                ->orWhere('customer_name', 'like', "%{$q}%")
+                ->orWhere('customer_email', 'like', "%{$q}%")
+                ->orWhere('customer_phone', 'like', "%{$q}%");
+        });
+    }
+
+    if (in_array($status, ['pending', 'confirmed', 'shipped', 'completed', 'rejected'], true)) {
+        $ordersQuery->where('status', $status);
+    }
+
+    $latestOrders = $ordersQuery->orderByDesc('created_at')->paginate(5)->withQueryString();
 
     $monthlySalesRaw = \App\Models\Pesanan::where('status', 'completed')
         ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as ym, SUM(total_price) as total")

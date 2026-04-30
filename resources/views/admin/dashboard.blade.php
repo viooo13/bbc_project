@@ -473,6 +473,85 @@
             width: 100% !important;
             height: 320px !important;
         }
+
+        /* Pagination Styling - Compact */
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 3px;
+            flex-wrap: wrap;
+        }
+        .pagination li {
+            display: inline-flex;
+        }
+        .pagination li a,
+        .pagination li span {
+            padding: 5px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            background: #fff;
+            transition: all 0.15s ease;
+            min-width: 32px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+        .pagination li.active span {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .pagination li a:hover {
+            background: var(--line);
+            color: var(--primary);
+        }
+        .pagination li.disabled span {
+            color: #adb5bd;
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
+        .pagination li:first-child a,
+        .pagination li:first-child span,
+        .pagination li:last-child a,
+        .pagination li:last-child span {
+            padding: 5px 8px;
+        }
+        /* Bootstrap 4 pagination compatibility */
+        .pagination .page-item {
+            display: inline-flex;
+        }
+        .pagination .page-link {
+            padding: 5px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            background: #fff;
+            transition: all 0.15s ease;
+            min-width: 32px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            margin: 0 2px;
+        }
+        .pagination .page-item.active .page-link {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .pagination .page-item.disabled .page-link {
+            color: #adb5bd;
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -564,8 +643,25 @@
             <div class="orders-wrapper">
                 <!-- KIRI -->
                 <section class="orders-section">
-                    <div class="section-header">
+                    <div class="section-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
                         <h2>Info Pesanan</h2>
+                        <form method="GET" action="{{ route('admin.dashboard') }}" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari order/pelanggan..." style="padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;min-width:180px;">
+                            <select name="status" style="padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:#fff;">
+                                <option value="">Semua Status</option>
+                                <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                                <option value="shipped" {{ request('status') === 'shipped' ? 'selected' : '' }}>Shipped</option>
+                                <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Completed</option>
+                                <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Rejected</option>
+                            </select>
+                            <button type="submit" style="padding:8px 14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                            <a href="{{ route('admin.dashboard') }}" style="padding:8px 14px;background:#e9ecef;color:#495057;border:none;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
+                                <i class="fas fa-rotate-left"></i> Reset
+                            </a>
+                        </form>
                     </div>
                     <div class="table-container">
                         <table class="orders-table">
@@ -603,6 +699,11 @@
                                 @endif
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div style="margin-top:16px;">
+                        {{ $latestOrders->links('pagination::bootstrap-4') }}
                     </div>
                 </section>
 

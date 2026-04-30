@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #334155; }
+        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #334155; }
         .dashboard-container { display: flex; min-height: 100vh; }
         .sidebar { width: 272px; background: #fff; position: fixed; height: 100vh; border-right: 1px solid #e9ecef; }
         .logo { display: flex; align-items: center; padding: 20px; border-bottom: 1px solid #e9ecef; }
@@ -19,7 +19,7 @@
         .menu-item:hover { background: #f8f9fa; color: #2c3e50; }
         .menu-item.active { background: #e74c3c; color: #fff; border-left-color: #e74c3c; }
         .menu-item i { width: 20px; margin-right: 12px; }
-        .main-content { flex: 1; margin-left: 272px; padding: 30px; }
+        .main-content { flex: 1; margin-left: 272px; padding: 30px; background: #ffffff; }
         .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
         .page-header h1 { font-size: 28px; color: #2c3e50; }
         .page-header p { color: #64748b; margin-top: 4px; }
@@ -46,6 +46,86 @@
         .reply-form textarea { width: 100%; min-height: 64px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; font-family: inherit; font-size: 13px; }
         .reply-form .btn { margin-top: 8px; }
         .alert { padding: 12px 14px; border-radius: 8px; margin-bottom: 16px; background: #e7f8ed; color: #166534; font-weight: 600; }
+
+        /* Pagination Styling - Compact */
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 3px;
+            flex-wrap: wrap;
+        }
+        .pagination li {
+            display: inline-flex;
+        }
+        .pagination li a,
+        .pagination li span {
+            padding: 5px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            background: #fff;
+            transition: all 0.15s ease;
+            min-width: 32px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+        .pagination li.active span {
+            background: #e74c3c;
+            color: #fff;
+            border-color: #e74c3c;
+        }
+        .pagination li a:hover {
+            background: #f8fafc;
+            color: #2c3e50;
+            border-color: #adb5bd;
+        }
+        .pagination li.disabled span {
+            color: #adb5bd;
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
+        .pagination li:first-child a,
+        .pagination li:first-child span,
+        .pagination li:last-child a,
+        .pagination li:last-child span {
+            padding: 5px 8px;
+        }
+        /* Bootstrap 4 pagination compatibility */
+        .pagination .page-item {
+            display: inline-flex;
+        }
+        .pagination .page-link {
+            padding: 5px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            background: #fff;
+            transition: all 0.15s ease;
+            min-width: 32px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            margin: 0 2px;
+        }
+        .pagination .page-item.active .page-link {
+            background: #e74c3c;
+            color: #fff;
+            border-color: #e74c3c;
+        }
+        .pagination .page-item.disabled .page-link {
+            color: #adb5bd;
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -171,7 +251,7 @@
             </div>
 
             <div style="margin-top: 12px;">
-                {{ $customerTestimonials->links() }}
+                {{ $customerTestimonials->links('pagination::bootstrap-4') }}
             </div>
         </section>
     </main>
