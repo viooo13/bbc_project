@@ -603,6 +603,19 @@
             <!-- Orders Table -->
             <section class="content-section">
                 <h2>Daftar Pesanan</h2>
+                <form method="GET" action="{{ route('pesanan.index') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 0 0 16px;">
+                    <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari order id / nama / email / telepon..." style="flex:1; min-width: 260px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                    <select name="status" style="min-width: 180px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                        <option value="">Semua Status</option>
+                        <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Menunggu</option>
+                        <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
+                        <option value="shipped" {{ request('status') === 'shipped' ? 'selected' : '' }}>Dikirim</option>
+                        <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
+                        <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Ditolak</option>
+                    </select>
+                    <button type="submit" style="padding:10px 14px; border:none; border-radius:8px; background:#2c3e50; color:#fff; font-weight:700; cursor:pointer;">Terapkan</button>
+                    <a href="{{ route('pesanan.index') }}" style="padding:10px 14px; border:1px solid #e9ecef; border-radius:8px; background:#fff; color:#334155; font-weight:700; text-decoration:none;">Reset</a>
+                </form>
                 <div class="table-container">
                     <table class="pesanan-table">
                         <thead>
@@ -681,6 +694,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                </div>
+
+                <div style="margin-top: 16px;">
+                    {{ $pesanans->links() }}
                 </div>
             </section>
         </main>

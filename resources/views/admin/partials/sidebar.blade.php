@@ -15,16 +15,176 @@
         'admin' => 'Kelola Admin',
     ];
     $activeTitle = $menuTitles[$activeMenu] ?? 'Dashboard';
+
+    $adminInitials = collect(explode(' ', trim((string) $adminName)))
+        ->filter()
+        ->map(fn ($part) => strtoupper(substr($part, 0, 1)))
+        ->take(2)
+        ->implode('');
+
+    if ($adminInitials === '') {
+        $adminInitials = 'AD';
+    }
 @endphp
 
-<aside class="sidebar">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;gap:10px;">
-        <img src="{{ asset('logo.jpeg') }}" alt="Logo" onerror="this.onerror=null;this.style.display='none';" style="display:block;width:56px;height:56px;object-fit:contain;flex:0 0 auto;">
-        <div style="font-weight:800;color:#2c3e50;font-size:14px;line-height:1.1;text-align:left;flex:1;padding-left:6px;">
-            ADMIN BBC
+<style>
+    .sidebar.admin-sidebar {
+        width: 272px;
+        background:
+            radial-gradient(circle at top, rgba(255,255,255,.75), transparent 40%),
+            linear-gradient(180deg, #fffdf8 0%, #fff4e8 100%);
+        border-right: 1px solid #eadcc8;
+        box-shadow: 0 18px 40px rgba(45, 55, 72, 0.10);
+    }
+
+    .sidebar.admin-sidebar .sidebar-top {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 18px 18px 16px;
+        border-bottom: 1px solid #eadcc8;
+    }
+
+    .sidebar.admin-sidebar .brand-logo {
+        display: block;
+        width: 72px;
+        height: 72px;
+        object-fit: contain;
+        flex: 0 0 auto;
+        border-radius: 0;
+        background: transparent;
+        border: none;
+        padding: 0;
+        filter: drop-shadow(0 8px 16px rgba(45, 55, 72, 0.10));
+    }
+
+    .sidebar.admin-sidebar .brand-title {
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.3px;
+        color: #2D3748;
+        line-height: 1.2;
+    }
+
+    .sidebar.admin-sidebar .brand-subtitle {
+        margin-top: 4px;
+        font-size: 12px;
+        color: #8a6a4c;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+    }
+
+    .sidebar.admin-sidebar .menu {
+        padding: 14px 0 12px;
+    }
+
+    .sidebar.admin-sidebar .menu-item {
+        margin: 5px 10px;
+        border-radius: 14px;
+        border-left: 0;
+        color: #73583e;
+        font-weight: 600;
+        padding: 13px 14px;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, color 0.22s ease;
+    }
+
+    .sidebar.admin-sidebar .menu-item i {
+        width: 18px;
+        margin-right: 10px;
+        font-size: 15px;
+        color: inherit;
+    }
+
+    .sidebar.admin-sidebar .menu-item:hover {
+        background: linear-gradient(90deg, rgba(139, 0, 0, 0.08), rgba(218, 165, 32, 0.10));
+        color: #8B0000;
+        transform: translateX(2px);
+    }
+
+    .sidebar.admin-sidebar .menu-item.active {
+        background: linear-gradient(90deg, #8B0000 0%, #a70f0f 100%);
+        color: #fff;
+        box-shadow: 0 10px 22px rgba(139, 0, 0, 0.22);
+    }
+
+    .sidebar.admin-sidebar .menu-item.active::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, rgba(255,255,255,0.18), transparent 35%, rgba(255,255,255,0.10));
+        pointer-events: none;
+    }
+
+    .sidebar.admin-sidebar .pending-badge {
+        margin-left: auto;
+        background: rgba(255,255,255,0.96);
+        color: #8B0000;
+        padding: 3px 8px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        box-shadow: 0 8px 18px rgba(139, 0, 0, 0.12);
+        border: none;
+    }
+
+    .sidebar.admin-sidebar .user-info {
+        border-top: 1px solid #eadcc8;
+        padding: 14px 14px 16px;
+        gap: 12px;
+        margin: 0 12px 12px;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.72);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 10px 22px rgba(45, 55, 72, 0.06);
+        border: none;
+    }
+
+    .sidebar.admin-sidebar .user-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #8B0000 0%, #DAA520 100%);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        letter-spacing: 0.4px;
+        flex: 0 0 auto;
+        box-shadow: 0 8px 18px rgba(139, 0, 0, 0.18);
+        border: none;
+    }
+
+    .sidebar.admin-sidebar .user-name {
+        font-size: 13px;
+        color: #2D3748;
+        font-weight: 700;
+    }
+
+    .sidebar.admin-sidebar .user-role {
+        font-size: 11px;
+        color: #8a6a4c;
+        font-weight: 600;
+        margin-top: 2px;
+    }
+
+    .sidebar.admin-sidebar .user-email {
+        font-size: 11px;
+        color: #9a8066;
+        margin-top: 2px;
+    }
+</style>
+
+<aside class="sidebar admin-sidebar">
+    <div class="sidebar-top">
+        <img src="{{ asset('logo.jpeg') }}" alt="Logo" onerror="this.onerror=null;this.style.display='none';" class="brand-logo">
+        <div>
+            <div class="brand-title">ADMIN BBC</div>
+            <div class="brand-subtitle">Panel Manajemen</div>
         </div>
     </div>
-    <hr style="border:0;border-top:1px solid #e9ecef;margin:0;">
 
     <nav class="menu">
         <a href="/admin/dashboard" class="menu-item {{ $activeMenu === 'dashboard' ? 'active' : '' }}">
@@ -39,7 +199,7 @@
             <i class="fas fa-shopping-bag"></i>
             <span>Pesanan</span>
             @if((int) $pendingCount > 0)
-                <span style="margin-left:auto;background:#e74c3c;color:#fff;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;">{{ $pendingCount }}</span>
+                <span class="pending-badge">{{ $pendingCount }}</span>
             @endif
         </a>
         <a href="/laporan" class="menu-item {{ $activeMenu === 'laporan' ? 'active' : '' }}">
@@ -57,11 +217,15 @@
     </nav>
 
     <div class="user-info">
-        <div style="width:44px;height:44px;border-radius:999px;background:#e74c3c;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;letter-spacing:0.5px;flex:0 0 auto;">
-            BC
+        <div class="user-avatar">
+            {{ $adminInitials }}
         </div>
         <div class="user-details">
             <div class="user-name">{{ $adminName }}</div>
+            <div class="user-role">Administrator</div>
+            @if(!empty($adminEmail))
+                <div class="user-email">{{ $adminEmail }}</div>
+            @endif
         </div>
     </div>
 </aside>

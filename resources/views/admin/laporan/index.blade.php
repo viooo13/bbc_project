@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Laporan Penjualan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
             margin: 0;
@@ -322,6 +323,89 @@
         .text-center {
             text-align: center;
         }
+
+        :root {
+            --primary: #8B0000;
+            --primary-soft: #a70f0f;
+            --secondary: #DAA520;
+            --cream: #EFE1D1;
+            --surface-2: #ffffff;
+            --text-main: #2D3748;
+            --line: #eadcc8;
+            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.28), transparent 26%),
+                radial-gradient(circle at 88% 84%, rgba(139, 0, 0, 0.10), transparent 34%),
+                var(--cream);
+            color: var(--text-main);
+        }
+
+        .main-content {
+            background: transparent;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .page-header p,
+        .stat-label {
+            color: #8a6a4c;
+        }
+
+        .content-section,
+        .stat-card {
+            border-radius: 16px;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-card);
+        }
+
+        .content-section h2,
+        .stat-value,
+        .data-table th {
+            color: var(--text-main);
+        }
+
+        .content-section h2 {
+            color: var(--primary);
+        }
+
+        .data-table th {
+            background-color: #fff3e4;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .data-table td {
+            border-bottom: 1px solid var(--line);
+        }
+
+        .data-table tr:hover {
+            background-color: #fffaf2;
+        }
+
+        .export-btn,
+        .logout-btn {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
+            border-radius: 10px;
+        }
+
+        .chart-box {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .chart-box canvas {
+            width: 100% !important;
+            height: 320px !important;
+        }
     </style>
 </head>
 <body>
@@ -340,7 +424,7 @@
                         <i class="fas fa-file-excel"></i>
                         Export Excel
                     </a>
-                    <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    <form id="logoutForm" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                     <button class="logout-btn" onclick="document.getElementById('logoutForm').submit();">
@@ -349,6 +433,44 @@
                     </button>
                 </div>
             </header>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-sack-dollar"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value">Rp {{ number_format((float) ($totalSales ?? 0), 0, ',', '.') }}</div>
+                        <div class="stat-label">Total Penjualan</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-box-open"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value">Rp {{ number_format((float) ($paketSales ?? 0), 0, ',', '.') }}</div>
+                        <div class="stat-label">Penjualan Paket</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value">Rp {{ number_format((float) ($currentMonthSales ?? 0), 0, ',', '.') }}</div>
+                        <div class="stat-label">Bulan Ini</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-minus"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value">Rp {{ number_format((float) ($lastMonthSales ?? 0), 0, ',', '.') }}</div>
+                        <div class="stat-label">Bulan Lalu</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Grafik Penjualan 6 Bulan Terakhir</h2>
+                <div class="chart-box">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </section>
 
             <!-- Yearly Sales Report -->
             <section class="content-section">
@@ -440,8 +562,52 @@
                         </tbody>
                     </table>
                 </div>
+                <div style="margin-top: 16px;">
+                    {{ $completedOrders->links() }}
+                </div>
             </section>
         </main>
     </div>
+    <script>
+        const salesLabels = @json($monthlySalesLabels ?? []);
+        const salesData = @json($monthlySalesData ?? []);
+
+        const salesCtx = document.getElementById('salesChart');
+        if (salesCtx) {
+            new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: salesLabels,
+                    datasets: [{
+                        label: 'Penjualan',
+                        data: salesData,
+                        borderColor: '#8B0000',
+                        backgroundColor: 'rgba(139, 0, 0, 0.12)',
+                        fill: true,
+                        borderWidth: 3,
+                        tension: 0.35,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: '#DAA520'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => 'Rp ' + Number(value).toLocaleString('id-ID')
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>

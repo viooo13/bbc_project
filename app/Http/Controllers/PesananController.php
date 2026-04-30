@@ -65,9 +65,27 @@ class PesananController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pesanans = Pesanan::all();
+        $q = trim((string) $request->query('q', ''));
+        $status = trim((string) $request->query('status', ''));
+
+        $query = Pesanan::query();
+
+        if ($q !== '') {
+            $query->where(function ($sub) use ($q) {
+                $sub->where('order_id', 'like', "%{$q}%")
+                    ->orWhere('customer_name', 'like', "%{$q}%")
+                    ->orWhere('customer_email', 'like', "%{$q}%")
+                    ->orWhere('customer_phone', 'like', "%{$q}%");
+            });
+        }
+
+        if (in_array($status, ['pending', 'confirmed', 'shipped', 'completed', 'rejected'], true)) {
+            $query->where('status', $status);
+        }
+
+        $pesanans = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
         
         // Group by status for stats
         $stats = [

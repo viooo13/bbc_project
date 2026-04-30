@@ -384,6 +384,16 @@
 
             <section class="content-section">
                 <h2>Daftar Paket</h2>
+                <form method="GET" action="{{ route('paket.index') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 0 0 16px;">
+                    <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama / deskripsi..." style="flex:1; min-width: 220px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                    <select name="status" style="min-width: 180px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                        <option value="">Semua Status</option>
+                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif</option>
+                        <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                    </select>
+                    <button type="submit" style="padding:10px 14px; border:none; border-radius:8px; background:#2c3e50; color:#fff; font-weight:700; cursor:pointer;">Terapkan</button>
+                    <a href="{{ route('paket.index') }}" style="padding:10px 14px; border:1px solid #e9ecef; border-radius:8px; background:#fff; color:#334155; font-weight:700; text-decoration:none;">Reset</a>
+                </form>
                 <div class="table-container">
                     <table class="pakets-table">
                         <thead>
@@ -446,6 +456,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                </div>
+
+                <div style="margin-top: 16px;">
+                    {{ $pakets->links() }}
                 </div>
             </section>
         </main>

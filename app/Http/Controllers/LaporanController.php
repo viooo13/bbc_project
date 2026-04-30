@@ -36,7 +36,7 @@ class LaporanController extends Controller
         $baseQuery = Pesanan::where('status', 'completed');
         $baseQuery = $this->applyFilters($baseQuery, $request);
 
-        $completedOrders = (clone $baseQuery)->orderByDesc('created_at')->get();
+        $completedOrders = (clone $baseQuery)->orderByDesc('created_at')->paginate(10)->withQueryString();
 
         // Total penjualan keseluruhan (filtered)
         $totalSales = (clone $baseQuery)->sum('total_price');
@@ -87,6 +87,22 @@ class LaporanController extends Controller
             ->whereMonth('created_at', $lastMonth->month)
             ->sum('total_price');
 
+        // Data grafik 6 bulan terakhir (filtered)
+        $monthlySalesRaw = (clone $baseQuery)
+            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as ym, SUM(total_price) as total")
+            ->groupBy('ym')
+            ->pluck('total', 'ym');
+
+        $monthlySalesLabels = [];
+        $monthlySalesData = [];
+
+        for ($i = 5; $i >= 0; $i--) {
+            $month = now()->copy()->subMonths($i);
+            $key = $month->format('Y-%m');
+            $monthlySalesLabels[] = $month->translatedFormat('M Y');
+            $monthlySalesData[] = (float) ($monthlySalesRaw[$key] ?? 0);
+        }
+
         return view('admin.laporan.index', compact(
             'completedOrders',
             'totalSales',
@@ -94,7 +110,9 @@ class LaporanController extends Controller
             'paketSales',
             'yearlyPaketSales',
             'currentMonthSales',
-            'lastMonthSales'
+            'lastMonthSales',
+            'monthlySalesLabels',
+            'monthlySalesData'
         ));
     }
 
