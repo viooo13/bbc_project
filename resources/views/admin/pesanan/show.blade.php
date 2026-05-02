@@ -25,106 +25,10 @@
             min-height: 100vh;
         }
 
-        /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            background: white;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-            position: fixed;
-            height: 100vh;
-            z-index: 1000;
-            border-right: 1px solid #e9ecef;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .logo img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-
-        .logo span {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
-        .menu {
-            flex: 1;
-            padding: 16px 0;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            color: #6c757d;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-        }
-
-        .menu-item:hover {
-            background-color: #f8f9fa;
-            color: #2c3e50;
-        }
-
-        .menu-item.active {
-            background-color: #e74c3c;
-            color: white;
-            border-left-color: #e74c3c;
-        }
-
-        .menu-item i {
-            width: 20px;
-            margin-right: 12px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            border-top: 1px solid #e9ecef;
-        }
-
-        .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 12px;
-        }
-
-        .user-details {
-            flex: 1;
-        }
-
-        .user-name {
-            font-weight: 600;
-            margin-bottom: 2px;
-            font-size: 14px;
-            color: #2c3e50;
-        }
-
-        .user-email {
-            font-size: 12px;
-            color: #6c757d;
-        }
-
         /* Main Content Styles */
         .main-content {
             flex: 1;
-            margin-left: 250px;
+            margin-left: 272px;
             padding: 30px;
             background-color: #ffffff;
             min-height: 100vh;

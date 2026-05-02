@@ -11,20 +11,7 @@
         body { font-family: 'Inter', sans-serif; background: #ffffff; color: #334155; }
         .dashboard-container { display: flex; min-height: 100vh; }
 
-        .sidebar { width: 250px; background: #fff; position: fixed; height: 100vh; border-right: 1px solid #e9ecef; }
-        .logo { display: flex; align-items: center; padding: 20px; border-bottom: 1px solid #e9ecef; }
-        .logo img { width: 40px; height: 40px; margin-right: 10px; border-radius: 8px; object-fit: cover; }
-        .logo span { font-size: 18px; font-weight: 700; color: #2c3e50; }
-        .menu { padding: 16px 0; }
-        .menu-item { display: flex; align-items: center; padding: 15px 20px; color: #6c757d; text-decoration: none; border-left: 3px solid transparent; }
-        .menu-item:hover { background: #f8f9fa; color: #2c3e50; }
-        .menu-item.active { background: #e74c3c; color: #fff; border-left-color: #e74c3c; }
-        .menu-item i { width: 20px; margin-right: 12px; }
-        .user-info { margin-top: auto; padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-top: 1px solid #e9ecef; }
-        .user-details { min-width: 0; }
-        .user-name { font-size: 14px; font-weight: 700; color: #2c3e50; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        .main-content { flex: 1; margin-left: 250px; padding: 30px; background: #ffffff; }
+        .main-content { flex: 1; margin-left: 272px; padding: 30px; background: #ffffff; }
         .page-header { margin-bottom: 20px; }
         .page-header h1 { font-size: 28px; color: #2c3e50; }
         .page-header p { color: #64748b; margin-top: 4px; }
@@ -41,17 +28,12 @@
         .err { background:#fee2e2; color:#991b1b; padding:10px; border-radius:8px; margin-bottom:14px; }
 
         @media (max-width: 992px) {
-            .sidebar { position: static; width: 100%; height: auto; }
             .main-content { margin-left: 0; }
             .dashboard-container { flex-direction: column; }
-            .menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .menu-item { border-left: none; border-bottom: 2px solid transparent; }
-            .menu-item.active { border-bottom-color: #e74c3c; }
         }
 
         @media (max-width: 640px) {
             .main-content { padding: 18px; }
-            .menu { grid-template-columns: 1fr; }
         }
     </style>
 </head>

@@ -35,6 +35,13 @@
         border-right: 1px solid #e2e8f0;
         box-shadow: 0 18px 40px rgba(45, 55, 72, 0.10);
         font-family: 'Poppins', sans-serif;
+        position: fixed;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+        top: 0;
+        left: 0;
     }
 
     .sidebar.admin-sidebar .sidebar-top {
@@ -75,10 +82,14 @@
     }
 
     .sidebar.admin-sidebar .menu {
+        display: flex;
+        flex-direction: column;
         padding: 14px 0 12px;
     }
 
     .sidebar.admin-sidebar .menu-item {
+        display: flex;
+        align-items: center;
         margin: 5px 10px;
         border-radius: 14px;
         border-left: 0;
@@ -87,6 +98,7 @@
         padding: 13px 14px;
         position: relative;
         overflow: hidden;
+        text-decoration: none;
         transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, color 0.22s ease;
     }
 
@@ -130,13 +142,14 @@
     }
 
     .sidebar.admin-sidebar .user-info {
+        display: flex;
+        align-items: center;
         border-top: 1px solid #e2e8f0;
         padding: 14px 14px 16px;
         gap: 12px;
-        margin: 0 12px 12px;
+        margin: auto 12px 12px;
         border-radius: 16px;
         background: #f8fafc;
-        backdrop-filter: blur(8px);
         box-shadow: 0 10px 22px rgba(45, 55, 72, 0.06);
         border: none;
     }
@@ -174,6 +187,32 @@
         font-size: 11px;
         color: #94a3b8;
         margin-top: 2px;
+    }
+
+    @media (max-width: 992px) {
+        .sidebar.admin-sidebar {
+            position: static;
+            width: 100%;
+            height: auto;
+            border-right: none;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .sidebar.admin-sidebar .menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 10px;
+        }
+        .sidebar.admin-sidebar .menu-item {
+            flex: 1 1 45%;
+            margin: 0;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .sidebar.admin-sidebar .menu-item {
+            flex: 1 1 100%;
+        }
     }
 </style>
 

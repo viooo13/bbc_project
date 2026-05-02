@@ -10,19 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background:#ffffff; margin:0; color: #334155; }
         .dashboard-container { display: flex; min-height: 100vh; }
-        .sidebar { width: 250px; background: #fff; position: fixed; height: 100vh; border-right: 1px solid #e9ecef; }
-        .logo { display: flex; align-items: center; padding: 20px; border-bottom: 1px solid #e9ecef; }
-        .logo img { width: 40px; height: 40px; margin-right: 10px; border-radius: 8px; object-fit: cover; }
-        .logo span { font-size: 18px; font-weight: 700; color: #2c3e50; }
-        .menu { padding: 16px 0; }
-        .menu-item { display: flex; align-items: center; padding: 15px 20px; color: #6c757d; text-decoration: none; border-left: 3px solid transparent; }
-        .menu-item:hover { background: #f8f9fa; color: #2c3e50; }
-        .menu-item.active { background: #e74c3c; color: #fff; border-left-color: #e74c3c; }
-        .menu-item i { width: 20px; margin-right: 12px; }
-        .user-info { margin-top: auto; padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-top: 1px solid #e9ecef; }
-        .user-details { min-width: 0; }
-        .user-name { font-size: 14px; font-weight: 700; color: #2c3e50; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .main-content { flex: 1; margin-left: 250px; padding: 30px; background:#ffffff; }
+        .main-content { flex: 1; margin-left: 272px; padding: 30px; background:#ffffff; }
         .page-header { margin-bottom: 20px; }
         .page-header h1 { font-size: 28px; color:#2c3e50; }
         .page-header p { color:#64748b; margin-top: 4px; }
@@ -39,7 +27,6 @@
 
         @media (max-width: 992px) {
             .main-content { margin-left: 0; }
-            .dashboard-container { flex-direction: column; }
         }
 
         @media (max-width: 640px) {
