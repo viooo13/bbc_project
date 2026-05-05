@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar - Bakso Bunderan Ciomas</title>
+    <title>Lupa Password Admin - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -96,6 +96,45 @@
             margin-top: 4px;
         }
 
+        /* Steps */
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .step-number.inactive {
+            background: var(--gray-200);
+            color: var(--gray-500);
+        }
+
+        .step-label {
+            font-size: 11px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
         /* Title */
         .title {
             font-size: 22px;
@@ -122,6 +161,7 @@
             align-items: center;
             gap: 10px;
             animation: slideIn 0.3s ease;
+            transition: opacity 0.5s ease;
         }
 
         @keyframes slideIn {
@@ -133,6 +173,12 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid rgba(22, 163, 74, 0.2);
         }
 
         .alert-error {
@@ -198,52 +244,6 @@
             color: var(--primary);
         }
 
-        .toggle-password {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--gray-400);
-            cursor: pointer;
-            padding: 4px;
-            font-size: 14px;
-            transition: color 0.2s ease;
-        }
-
-        .toggle-password:hover {
-            color: var(--gray-600);
-        }
-
-        /* Terms */
-        .terms {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 24px;
-            font-size: 13px;
-            color: var(--gray-600);
-        }
-
-        .terms input {
-            width: 18px;
-            height: 18px;
-            margin-top: 2px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
-
-        .terms a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .terms a:hover {
-            text-decoration: underline;
-        }
-
         /* Button */
         .btn-submit {
             width: 100%;
@@ -269,22 +269,22 @@
             transform: translateY(0);
         }
 
-        /* Switch Link */
-        .switch-link {
-            text-align: center;
+        /* Back Link */
+        .back-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             margin-top: 20px;
             font-size: 13px;
             color: var(--gray-500);
-        }
-
-        .switch-link a {
-            color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
+            transition: color 0.2s ease;
         }
 
-        .switch-link a:hover {
-            text-decoration: underline;
+        .back-link:hover {
+            color: var(--primary);
         }
 
         /* Responsive */
@@ -326,102 +326,76 @@
                     <img src="{{ asset('logo.jpeg') }}" alt="BBC Logo">
                 </div>
                 <div class="brand-name">BBC</div>
-                <div class="brand-tagline">Bakso Bunderan Ciomas</div>
+                <div class="brand-tagline">Admin Portal</div>
+            </div>
+
+            <!-- Steps -->
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <span class="step-label">Email</span>
+                </div>
+                <div class="step">
+                    <div class="step-number inactive">2</div>
+                    <span class="step-label">Verifikasi</span>
+                </div>
             </div>
 
             <!-- Title -->
-            <h1 class="title">Buat Akun Baru</h1>
-            <p class="subtitle">Bergabung dan nikmati menu favorit Anda</p>
+            <h1 class="title">Lupa Password?</h1>
+            <p class="subtitle">Masukkan email admin Anda</p>
 
             <!-- Alerts -->
+            @if(session('success'))
+                <div class="alert alert-success" id="alertMsg">
+                    <i class="fas fa-check-circle"></i>
+                    {{ session('success') }}
+                </div>
+            @endif
             @if(session('error'))
-                <div class="alert alert-error">
+                <div class="alert alert-error" id="alertMsg">
                     <i class="fas fa-circle-exclamation"></i>
                     {{ session('error') }}
                 </div>
             @endif
-
             @if($errors->any())
-                <div class="alert alert-error">
+                <div class="alert alert-error" id="alertMsg">
                     <i class="fas fa-circle-exclamation"></i>
                     {{ $errors->first() }}
                 </div>
             @endif
 
             <!-- Form -->
-            <form action="{{ route('user.register.submit') }}" method="POST">
+            <form action="{{ route('admin.password.send-otp') }}" method="POST">
                 @csrf
 
                 <div class="field">
-                    <label class="field-label">Nama Lengkap</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-user input-icon"></i>
-                        <input type="text" name="name" class="field-input with-icon" required placeholder="John Doe">
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="field-label">Email</label>
+                    <label class="field-label">Email Admin</label>
                     <div class="input-wrapper">
                         <i class="fas fa-envelope input-icon"></i>
-                        <input type="email" name="email" class="field-input with-icon" required placeholder="nama@email.com">
+                        <input type="email" name="email" class="field-input with-icon" required placeholder="admin@email.com" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
                     </div>
                 </div>
 
-                <div class="field">
-                    <label class="field-label">No. Telepon</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-phone input-icon"></i>
-                        <input type="tel" name="phone" class="field-input with-icon" required placeholder="08123456789">
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="field-label">Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" name="password" id="password" class="field-input" required minlength="6" placeholder="Minimal 6 karakter">
-                        <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
-                            <i class="far fa-eye-slash"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="field-label">Konfirmasi Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" name="password_confirmation" id="password_confirmation" class="field-input" required placeholder="Ulangi password">
-                        <button type="button" class="toggle-password" onclick="togglePassword('password_confirmation', this)">
-                            <i class="far fa-eye-slash"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <label class="terms">
-                    <input type="checkbox" name="agree" value="1" required>
-                    <span>Saya setuju dengan <a href="#">syarat dan ketentuan</a> yang berlaku</span>
-                </label>
-
-                <button type="submit" class="btn-submit">Daftar Sekarang</button>
+                <button type="submit" class="btn-submit">Kirim Kode Verifikasi</button>
             </form>
 
-            <p class="switch-link">Sudah punya akun? <a href="{{ route('user.login') }}">Masuk disini</a></p>
+            <a href="{{ route('login') }}" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Kembali ke Login
+            </a>
         </div>
     </div>
 
     <script>
-        function togglePassword(inputId, button) {
-            const input = document.getElementById(inputId);
-            if (!input) return;
-
-            const icon = button.querySelector('i');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.className = 'far fa-eye';
-            } else {
-                input.type = 'password';
-                icon.className = 'far fa-eye-slash';
+        // Auto-hide alert after 3 seconds
+        setTimeout(function() {
+            const alert = document.getElementById('alertMsg');
+            if (alert) {
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
             }
-        }
+        }, 3000);
     </script>
 </body>
 </html>

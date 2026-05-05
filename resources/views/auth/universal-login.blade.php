@@ -6,328 +6,480 @@
     <title>Login - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #e9decf;
-            --bg-card: #f6f4f1;
-            --text-main: #1f1f1f;
-            --text-soft: #666;
-            --line: #7f7f7f;
-            --line-focus: #e5382d;
-            --brand: #ef1f1f;
-            --brand-dark: #d91515;
+            --primary: #dc2626;
+            --primary-dark: #b91c1c;
+            --primary-light: #fef2f2;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
-            font-family: 'Poppins', sans-serif;
-            background:
-                radial-gradient(circle at 10% 15%, rgba(255, 255, 255, 0.32), transparent 28%),
-                radial-gradient(circle at 88% 82%, rgba(229, 56, 45, 0.14), transparent 34%),
-                var(--bg-main);
-            display: grid;
-            place-items: center;
-            padding: 30px 20px;
-            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
         }
 
         .auth-card {
-            width: 100%;
-            max-width: 392px;
-            background: var(--bg-card);
-            border: 1px solid #ece7e2;
-            border-radius: 18px;
-            box-shadow: 0 20px 40px rgba(101, 67, 33, 0.13), 8px 10px 0 rgba(227, 92, 78, 0.25);
-            padding: 20px 24px 22px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 40px 32px;
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                0 10px 15px -3px rgba(0, 0, 0, 0.05),
+                0 25px 50px -12px rgba(220, 38, 38, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        .brand {
+        /* Logo Section */
+        .logo-section {
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 32px;
         }
 
-        .brand img {
-            width: 74px;
-            height: 74px;
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 16px;
+            background: white;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .logo-container img {
+            width: 90px;
+            height: 90px;
             object-fit: contain;
-            display: block;
-            margin: 0 auto;
-            filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.14));
         }
 
+        .brand-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-tagline {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-top: 4px;
+        }
+
+        /* Tabs */
         .tabs {
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 12px;
+            gap: 8px;
+            background: var(--gray-100);
+            padding: 4px;
+            border-radius: 12px;
+            margin-bottom: 28px;
         }
 
         .tab {
-            border: 1px solid #2a2a2a;
-            background: #fff;
-            color: #111;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.2px;
-            padding: 6px 16px;
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-500);
             cursor: pointer;
             transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .tab:hover {
+            color: var(--gray-700);
         }
 
         .tab.active {
-            background: var(--brand);
-            border-color: var(--brand);
-            color: #fff;
-            box-shadow: 0 5px 12px rgba(239, 31, 31, 0.27);
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
+        /* Title */
         .title {
-            text-align: center;
-            margin: 0;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            line-height: 1.15;
-            letter-spacing: 0.2px;
+            color: var(--gray-900);
+            text-align: center;
+            margin-bottom: 8px;
         }
 
         .subtitle {
+            font-size: 14px;
+            color: var(--gray-500);
             text-align: center;
-            margin: 4px 0 16px;
-            font-size: 12px;
-            color: var(--text-soft);
+            margin-bottom: 24px;
         }
 
+        /* Alerts */
         .alert {
-            border-radius: 10px;
-            padding: 9px 11px;
-            font-size: 12px;
-            margin-bottom: 12px;
-        }
-
-        .alert.error { background: #fee2e2; color: #991b1b; }
-        .alert.success { background: #dcfce7; color: #166534; }
-
-        .field {
-            position: relative;
-            margin-bottom: 12px;
-        }
-
-        .field label {
-            display: block;
-            font-size: 11px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: #2d2d2d;
-        }
-
-        .field input {
-            width: 100%;
-            border: none;
-            border-bottom: 1px solid var(--line);
-            background: transparent;
-            padding: 8px 32px 8px 30px;
-            font-size: 12px;
-            color: #111;
-            outline: none;
-            transition: border-color 0.2s ease;
-        }
-
-        .field input::placeholder {
-            color: #9d9d9d;
-        }
-
-        .field input:focus {
-            border-bottom-color: var(--line-focus);
-        }
-
-        .icon {
-            position: absolute;
-            left: 5px;
-            bottom: 11px;
+            padding: 12px 16px;
+            border-radius: 12px;
             font-size: 13px;
-            color: #111;
-        }
-
-        .toggle {
-            position: absolute;
-            right: 2px;
-            bottom: 6px;
-            border: none;
-            background: transparent;
-            font-size: 13px;
-            color: #383838;
-            cursor: pointer;
-            padding: 4px;
-            border-radius: 6px;
-        }
-
-        .remember-row {
-            margin: 8px 0 12px;
-            font-size: 11px;
-            color: #444;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
         }
 
-        .action-row {
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-error {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid rgba(22, 163, 74, 0.2);
+        }
+
+        /* Form Fields */
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .field-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--gray-900);
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        .field-input.with-icon {
+            padding-left: 44px;
+        }
+
+        .field-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .field-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            font-size: 16px;
+            transition: color 0.2s ease;
+        }
+
+        .field-input:focus + .input-icon {
+            color: var(--primary);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .toggle-password:hover {
+            color: var(--gray-600);
+        }
+
+        /* Remember & Forgot */
+        .form-options {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 2px;
+            margin-bottom: 24px;
         }
 
-        .action-row a {
-            color: var(--brand);
-            font-size: 10px;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .btn {
-            border: none;
-            border-radius: 999px;
-            background: linear-gradient(180deg, var(--brand), var(--brand-dark));
-            color: #fff;
-            font-size: 11px;
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: 0.3px;
-            padding: 9px 20px;
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--gray-600);
             cursor: pointer;
-            box-shadow: 0 6px 12px rgba(217, 21, 21, 0.3);
-            transition: transform 0.15s ease, box-shadow 0.2s ease;
         }
 
-        .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 9px 16px rgba(217, 21, 21, 0.34);
+        .remember-me input {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--gray-300);
+            border-radius: 6px;
+            accent-color: var(--primary);
+            cursor: pointer;
         }
 
-        .switch-link {
-            margin-top: 12px;
-            text-align: center;
-            font-size: 10px;
+        .forgot-link {
+            font-size: 13px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-link:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Button */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
             font-weight: 600;
-            color: #111;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        /* Switch Link */
+        .switch-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--gray-500);
         }
 
         .switch-link a {
-            color: var(--brand);
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 800;
+            font-weight: 600;
         }
 
-        .hidden { display: none; }
+        .switch-link a:hover {
+            text-decoration: underline;
+        }
 
-        @media (max-width: 420px) {
-            body {
-                padding: 18px 14px;
-            }
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
 
+        /* Responsive */
+        /* Remove browser default password icons */
+        input::-webkit-credentials-auto-fill-button,
+        input::-webkit-contacts-auto-fill-button {
+            visibility: hidden;
+            display: none !important;
+            pointer-events: none;
+        }
+
+        @media (max-width: 480px) {
             .auth-card {
-                border-radius: 14px;
-                padding: 16px 16px 18px;
+                padding: 32px 24px;
+                border-radius: 20px;
             }
 
-            .title {
-                font-size: 21px;
+            .logo-container {
+                width: 72px;
+                height: 72px;
             }
 
-            .btn {
-                padding: 8px 16px;
+            .logo-container i {
+                font-size: 32px;
+            }
+
+            .brand-name {
+                font-size: 22px;
             }
         }
     </style>
 </head>
 <body>
-    <section class="auth-card">
-        <div class="brand">
-            <img src="{{ asset('logo.jpeg') }}" alt="Logo BBC" onerror="this.onerror=null;this.style.display='none';" />
+    <div class="container">
+        <div class="auth-card">
+            <!-- Logo -->
+            <div class="logo-section">
+                <div class="logo-container">
+                    <img src="{{ asset('logo.jpeg') }}" alt="BBC Logo">
+                </div>
+                <div class="brand-name">BBC</div>
+                <div class="brand-tagline">Bakso Bunderan Ciomas</div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button type="button" id="userTab" class="tab active" onclick="switchRole('user')">Pelanggan</button>
+                <button type="button" id="adminTab" class="tab" onclick="switchRole('admin')">Admin</button>
+            </div>
+
+            <!-- Title -->
+            <h1 id="authTitle" class="title">Selamat Datang</h1>
+            <p id="authSubtitle" class="subtitle">Masuk untuk melanjutkan</p>
+
+            <!-- Alerts -->
+            @if(session('error'))
+                <div class="alert alert-error">
+                    <i class="fas fa-circle-exclamation"></i>
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if(session('success'))
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <!-- User Form -->
+            <form id="userForm" action="{{ route('universal.login.submit') }}" method="POST">
+                @csrf
+                <input type="hidden" name="role" value="user" id="roleInput">
+
+                <div class="field">
+                    <label class="field-label">Email</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" name="email" class="field-input with-icon" autocomplete="off" required placeholder="nama@email.com">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="field-label">Password</label>
+                    <div class="input-wrapper">
+                        <input id="userPassword" type="password" name="password" class="field-input" autocomplete="new-password" required placeholder="Masukkan password">
+                        <button type="button" class="toggle-password" onclick="togglePassword('userPassword', this)">
+                            <i class="far fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember">
+                        <span>Ingat saya</span>
+                    </label>
+                    <a href="{{ route('password.request') }}" class="forgot-link">Lupa password?</a>
+                </div>
+
+                <button type="submit" class="btn-submit">Masuk</button>
+
+                <p class="switch-link">Belum punya akun? <a href="{{ route('user.register') }}">Daftar sekarang</a></p>
+            </form>
+
+            <!-- Admin Form -->
+            <form id="adminForm" class="hidden" action="{{ route('universal.login.submit') }}" method="POST">
+                @csrf
+                <input type="hidden" name="role" value="admin" id="adminRoleInput">
+
+                <div class="field">
+                    <label class="field-label">Username</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" name="username" class="field-input with-icon" autocomplete="off" required placeholder="Masukkan username">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="field-label">Password</label>
+                    <div class="input-wrapper">
+                        <input id="adminPassword" type="password" name="password" class="field-input" autocomplete="new-password" required placeholder="Masukkan password">
+                        <button type="button" class="toggle-password" onclick="togglePassword('adminPassword', this)">
+                            <i class="far fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember">
+                        <span>Ingat saya</span>
+                    </label>
+                    <a href="{{ route('admin.password.request') }}" class="forgot-link">Lupa password?</a>
+                </div>
+
+                <button type="submit" class="btn-submit">Masuk sebagai Admin</button>
+            </form>
         </div>
-
-        <div class="tabs">
-            <button type="button" id="userTab" class="tab active" onclick="switchRole('user')">User</button>
-            <button type="button" id="adminTab" class="tab" onclick="switchRole('admin')">Admin</button>
-        </div>
-
-        <h1 id="authTitle" class="title">Login Pelanggan</h1>
-        <p class="subtitle">Masuk untuk memesan menu favorit Anda</p>
-
-        @if(session('error'))
-            <div class="alert error">{{ session('error') }}</div>
-        @endif
-
-        @if(session('success'))
-            <div class="alert success">{{ session('success') }}</div>
-        @endif
-
-        <form id="userForm" action="{{ route('universal.login.submit') }}" method="POST">
-            @csrf
-            <input type="hidden" name="role" value="user" id="roleInput">
-
-            <div class="field">
-                <label>Email</label>
-                <i class="fas fa-envelope icon"></i>
-                <input type="email" name="email" required placeholder="nama@email.com">
-            </div>
-
-            <div class="field">
-                <label>Password</label>
-                <i class="fas fa-lock icon"></i>
-                <input id="userPassword" type="password" name="password" required placeholder="Masukkan password">
-                <button type="button" class="toggle" onclick="togglePassword('userPassword', this)"><i class="far fa-eye-slash"></i></button>
-            </div>
-
-            <label class="remember-row">
-                <input type="checkbox" name="remember">
-                <span>Ingat saya</span>
-            </label>
-
-            <div class="action-row">
-                <a href="#">Lupa Password?</a>
-                <button type="submit" class="btn">LOGIN</button>
-            </div>
-
-            <p class="switch-link">Belum punya akun? <a href="{{ route('user.register') }}">Daftar disini</a></p>
-        </form>
-
-        <form id="adminForm" class="hidden" action="{{ route('universal.login.submit') }}" method="POST">
-            @csrf
-            <input type="hidden" name="role" value="admin" id="adminRoleInput">
-
-            <div class="field">
-                <label>Username</label>
-                <i class="fas fa-user icon"></i>
-                <input type="text" name="username" value="bbcjaya123" required placeholder="Masukkan username">
-            </div>
-
-            <div class="field">
-                <label>Password</label>
-                <i class="fas fa-lock icon"></i>
-                <input id="adminPassword" type="password" name="password" value="bbcjaya123" required placeholder="Masukkan password">
-                <button type="button" class="toggle" onclick="togglePassword('adminPassword', this)"><i class="far fa-eye-slash"></i></button>
-            </div>
-
-            <label class="remember-row">
-                <input type="checkbox" name="remember">
-                <span>Ingat saya</span>
-            </label>
-
-            <div class="action-row">
-                <a href="#">Lupa Password?</a>
-                <button type="submit" class="btn">LOGIN ADMIN</button>
-            </div>
-
-            <p class="switch-link">Masuk ke dashboard admin</p>
-        </form>
-    </section>
+    </div>
 
     <script>
         function switchRole(role) {
@@ -336,23 +488,23 @@
             const userForm = document.getElementById('userForm');
             const adminForm = document.getElementById('adminForm');
             const title = document.getElementById('authTitle');
+            const subtitle = document.getElementById('authSubtitle');
 
             if (role === 'user') {
                 userTab.classList.add('active');
                 adminTab.classList.remove('active');
                 userForm.classList.remove('hidden');
                 adminForm.classList.add('hidden');
-                title.textContent = 'Login Pelanggan';
-                document.getElementById('roleInput').value = 'user';
-                return;
+                title.textContent = 'Selamat Datang';
+                subtitle.textContent = 'Masuk untuk melanjutkan';
+            } else {
+                adminTab.classList.add('active');
+                userTab.classList.remove('active');
+                adminForm.classList.remove('hidden');
+                userForm.classList.add('hidden');
+                title.textContent = 'Admin Portal';
+                subtitle.textContent = 'Akses dashboard admin';
             }
-
-            adminTab.classList.add('active');
-            userTab.classList.remove('active');
-            adminForm.classList.remove('hidden');
-            userForm.classList.add('hidden');
-            title.textContent = 'Login Administrator';
-            document.getElementById('adminRoleInput').value = 'admin';
         }
 
         function togglePassword(inputId, button) {
@@ -363,11 +515,10 @@
             if (input.type === 'password') {
                 input.type = 'text';
                 icon.className = 'far fa-eye';
-                return;
+            } else {
+                input.type = 'password';
+                icon.className = 'far fa-eye-slash';
             }
-
-            input.type = 'password';
-            icon.className = 'far fa-eye-slash';
         }
     </script>
 </body>
