@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Manajemen Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -495,6 +495,11 @@
             color: var(--primary);
         }
     </style>
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body>
     <div class="dashboard-container">
@@ -504,7 +509,7 @@
         <main class="main-content">
             <header class="page-header">
                 <div>
-                    <h1>Menu Management</h1>
+                    <h1 class="font-bold">Menu Management</h1>
                     <p>Kelola menu produk BBC</p>
                 </div>
                 <div class="header-actions">
@@ -710,3 +715,7 @@
     </div>
 </body>
 </html>
+
+
+
+

@@ -6,14 +6,14 @@
     <title>Verifikasi OTP - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap&family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Outfit', 'sans-serif'], attractive: ['Pacifico', 'cursive'] },
+                    fontFamily: { sans: ['Poppins', 'sans-serif'], display: ['Outfit', 'sans-serif'], attractive: ['Pacifico', 'cursive'] },
                     colors: { brand: { DEFAULT: '#8B0000', dark: '#6B0000', light: '#fef2f2' } },
                     keyframes: {
                         cardEntry: { from: { opacity: '0', transform: 'translateY(16px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
@@ -71,6 +71,11 @@
             .auth-alert { font-size: 12px !important; padding: 10px 12px !important; margin-bottom: 14px !important; }
         }
     </style>
+
+    <style>
+        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+    </style>
 </head>
 <body class="font-sans min-h-screen flex items-center justify-center bg-stone-50 p-5 overflow-x-hidden">
     <div class="w-full max-w-[440px] relative z-10">
@@ -81,7 +86,11 @@
                 <div class="auth-logo w-[180px] mx-auto mb-3">
                     <img src="{{ asset('logo.jpeg') }}" alt="BBC Logo" class="w-full h-auto object-contain">
                 </div>
-                <div class="auth-tagline text-[22px] font-attractive font-normal text-brand tracking-wide">Bakso Bunderan Ciomas</div>
+                <div class="auth-tagline text-[22px] font-bold text-brand tracking-tight">
+                    Bakso
+                    Bunderan
+                    Ciomas
+                </div>
             </div>
 
             <!-- Steps -->
@@ -182,3 +191,7 @@
     </script>
 </body>
 </html>
+
+
+
+
