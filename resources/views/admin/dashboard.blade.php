@@ -453,6 +453,133 @@
             background: #f8f9fa;
             cursor: not-allowed;
         }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .orders-wrapper {
+                flex-direction: column;
+            }
+
+            .quick-actions {
+                width: 100%;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .page-header p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .stat-value {
+                font-size: 20px;
+            }
+
+            .orders-section,
+            .chart-section,
+            .quick-actions {
+                padding: 16px;
+            }
+
+            .orders-table th,
+            .orders-table td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .stat-icon {
+                margin-right: 15px;
+                margin-bottom: 0;
+            }
+
+            .orders-table {
+                font-size: 11px;
+            }
+
+            .orders-table th,
+            .orders-table td {
+                padding: 8px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .btn-sm {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -590,7 +717,7 @@
                                                 @endphp
                                                 <span class="status-badge {{ $badgeClass }}">{{ strtoupper($order->status) }}</span>
                                             </td>
-                                            <td><a href="/pesanan/{{ $order->id }}" class="btn-detail" style="text-decoration:none;display:inline-block;">Detail</a></td>
+                                            <td><a href="{{ route('pesanan.show', $order->id) }}" class="btn-detail" style="text-decoration:none;display:inline-block;">Detail</a></td>
                                         </tr>
                                     @endforeach
                                 @else
@@ -612,14 +739,14 @@
                 <section class="quick-actions">
                     <h2>Aksi Cepat</h2>
                     <div class="action-buttons">
-                        <button class="btn btn-primary">
+                        <a href="{{ route('admin.menu.create') }}" class="btn btn-primary" style="text-decoration:none;">
                             <i class="fas fa-plus"></i>
                             Tambah Menu Baru
-                        </button>
-                        <button class="btn btn-warning">
+                        </a>
+                        <a href="{{ route('admin.laporan.index') }}" class="btn btn-warning" style="text-decoration:none;">
                             <i class="fas fa-download"></i>
                             Export Laporan
-                        </button>
+                        </a>
                     </div>
                 </section>
             </div>
@@ -631,7 +758,7 @@
         const salesData = @json($monthlySalesData ?? []);
 
         const salesCtx = document.getElementById('salesChart');
-        if (salesCtx) {
+        if (salesCtx && salesLabels.length > 0 && salesData.length > 0) {
             new Chart(salesCtx, {
                 type: 'line',
                 data: {

@@ -4,15 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Kelola Pesanan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #8B0000;
+            --primary-soft: #a70f0f;
+            --secondary: #DAA520;
+            --cream: #ffffff;
+            --surface: #fffaf4;
+            --surface-2: #ffffff;
+            --text-main: #2D3748;
+            --text-soft: #6b7280;
+            --line: #e2e8f0;
+            --shadow-soft: 0 10px 24px rgba(139, 0, 0, 0.08);
+            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #334155;
+            font-family: 'Poppins', sans-serif;
+            background: var(--cream);
+            color: var(--text-main);
             overflow-x: hidden;
         }
 
@@ -25,14 +39,14 @@
             flex: 1;
             margin-left: 272px;
             padding: 30px;
-            background-color: #ffffff;
+            background: transparent;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
         .page-header {
-            margin-bottom: 22px;
+            margin-bottom: 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -40,13 +54,13 @@
 
         .page-header h1 {
             font-size: 28px;
-            font-weight: 600;
-            color: #2c3e50;
+            font-weight: 700;
+            color: var(--primary);
             margin-bottom: 0;
         }
 
         .page-header p {
-            color: #64748b;
+            color: var(--text-soft);
             font-size: 16px;
             margin-bottom: 0;
         }
@@ -54,22 +68,23 @@
         .layout {
             display: grid;
             grid-template-columns: 1fr 300px;
-            gap: 22px;
+            gap: 24px;
             align-items: start;
         }
 
         .card {
-            background: white;
-            border-radius: 10px;
-            padding: 18px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            background: var(--surface-2);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--line);
         }
 
         .card h2 {
-            font-size: 16px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 16px;
         }
 
         .table-container {
@@ -83,29 +98,37 @@
 
         th {
             text-align: left;
-            padding: 10px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 12px;
-            color: #2c3e50;
-            font-weight: 700;
+            padding: 14px;
+            background: #fff3e4;
+            border-bottom: 2px solid var(--line);
+            font-size: 13px;
+            color: var(--text-main);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         td {
-            padding: 10px;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 12px;
-            color: #334155;
+            padding: 14px;
+            border-bottom: 1px solid var(--line);
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        tr:hover {
+            background-color: #fffaf2;
         }
 
         tr:last-child td { border-bottom: none; }
 
         .status-badge {
             display: inline-block;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 999px;
             font-size: 11px;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .status-badge.selesai { background: #d4edda; color: #155724; }
@@ -115,39 +138,43 @@
 
         .action-buttons {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
         .btn-sm {
-            padding: 4px 8px;
+            padding: 5px 10px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 12px;
-            font-weight: 800;
-            transition: all 0.2s ease;
+            font-weight: 600;
+            transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             text-decoration: none;
             line-height: 1;
         }
 
+        .btn-sm:hover {
+            transform: translateY(-1px);
+        }
+
         .btn-confirm { background-color: #4caf50; color: #fff; }
-        .btn-confirm:hover { background-color: #45a049; transform: translateY(-1px); }
+        .btn-confirm:hover { background-color: #45a049; }
 
         .btn-reject { background-color: #f44336; color: #fff; }
-        .btn-reject:hover { background-color: #da190b; transform: translateY(-1px); }
+        .btn-reject:hover { background-color: #da190b; }
 
         .btn-ship { background-color: #ff9800; color: #fff; }
-        .btn-ship:hover { background-color: #e68900; transform: translateY(-1px); }
+        .btn-ship:hover { background-color: #e68900; }
 
         .btn-paid { background-color: #22c55e; color: #fff; }
-        .btn-paid:hover { filter: brightness(1.05); transform: translateY(-1px); }
+        .btn-paid:hover { filter: brightness(1.03); }
 
         .btn-complete { background-color: #2196f3; color: #fff; }
-        .btn-complete:hover { background-color: #1e88e5; transform: translateY(-1px); }
+        .btn-complete:hover { background-color: #1e88e5; }
 
         .modal {
             display: none;
@@ -168,32 +195,33 @@
 
         .modal-content {
             background: white;
-            border-radius: 10px;
+            border-radius: 16px;
             width: 90%;
             max-width: 520px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.15);
             overflow: hidden;
         }
 
         .modal-header {
-            padding: 16px 18px;
-            border-bottom: 1px solid #e9ecef;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--line);
         }
 
         .modal-header h2 {
-            font-size: 16px;
+            font-size: 18px;
             margin: 0;
-            color: #2c3e50;
+            color: var(--primary);
+            font-weight: 600;
         }
 
-        .modal-body { padding: 16px 18px; }
+        .modal-body { padding: 20px 24px; }
 
         .form-group label {
             display: block;
-            font-size: 12px;
-            font-weight: 800;
+            font-size: 13px;
+            font-weight: 600;
             margin-bottom: 8px;
-            color: #2c3e50;
+            color: var(--text-main);
         }
 
         .form-group textarea {
@@ -347,6 +375,91 @@
             color: #adb5bd;
             background: #f8f9fa;
             cursor: not-allowed;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .quick {
+                position: static;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .page-header p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            table th,
+            table td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .btn-sm {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            table {
+                font-size: 11px;
+            }
+
+            table th,
+            table td {
+                padding: 8px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .btn-sm {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .status-badge {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
         }
     </style>
 </head>

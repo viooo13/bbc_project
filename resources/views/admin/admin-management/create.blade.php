@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Tambah Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,7 +14,7 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #ffffff;
             color: #334155;
             overflow-x: hidden;
@@ -230,7 +230,7 @@
                     <p>Buat akun admin baru untuk sistem</p>
                 </div>
                 <div class="header-actions">
-                    <a href="/kelola-admin" class="back-btn">
+                    <a href="{{ route('admin.management.index') }}" class="back-btn">
                         <i class="fas fa-arrow-left"></i>
                         Kembali
                     </a>
@@ -257,7 +257,7 @@
 
             <section class="content-section">
                 <h2>Form Tambah Admin</h2>
-                <form action="/kelola-admin" method="POST">
+                <form action="{{ route('admin.management.store') }}" method="POST">
                     @csrf
 
                     <div class="form-group">
@@ -309,7 +309,7 @@
                     </div>
 
                     <div class="form-actions">
-                        <a href="/kelola-admin" class="btn btn-cancel">
+                        <a href="{{ route('admin.management.index') }}" class="btn btn-cancel">
                             <i class="fas fa-times"></i>
                             Batal
                         </a>

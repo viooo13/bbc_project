@@ -4,9 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Manajemen Pesanan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #8B0000;
+            --primary-soft: #a70f0f;
+            --secondary: #DAA520;
+            --cream: #ffffff;
+            --surface: #fffaf4;
+            --surface-2: #ffffff;
+            --text-main: #2D3748;
+            --text-soft: #6b7280;
+            --line: #e2e8f0;
+            --shadow-soft: 0 10px 24px rgba(139, 0, 0, 0.08);
+            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,9 +28,9 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #334155;
+            font-family: 'Poppins', sans-serif;
+            background: var(--cream);
+            color: var(--text-main);
             overflow-x: hidden;
         }
 
@@ -30,7 +44,7 @@
             flex: 1;
             margin-left: 272px;
             padding: 30px;
-            background-color: #ffffff;
+            background: transparent;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -45,13 +59,13 @@
 
         .page-header h1 {
             font-size: 28px;
-            font-weight: 600;
-            color: #2c3e50;
+            font-weight: 700;
+            color: var(--primary);
             margin-bottom: 0;
         }
 
         .page-header p {
-            color: #64748b;
+            color: var(--text-soft);
             font-size: 16px;
             margin-bottom: 0;
         }
@@ -62,11 +76,11 @@
         }
 
         .logout-btn {
-            background-color: #dc3545;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -74,74 +88,86 @@
             align-items: center;
             gap: 6px;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
         }
 
         .logout-btn:hover {
-            background-color: #c82333;
+            filter: brightness(1.03);
             transform: translateY(-1px);
         }
 
         /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
             margin-bottom: 30px;
         }
 
         .stat-card {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: var(--surface-2);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow-card);
             text-align: center;
-            border-left: 4px solid transparent;
+            border: 1px solid var(--line);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(45, 55, 72, 0.12);
         }
 
         .stat-card.pending {
-            border-left-color: #ff9800;
+            border-top: 3px solid #ff9800;
         }
 
         .stat-card.confirmed {
-            border-left-color: #2196f3;
+            border-top: 3px solid #2196f3;
         }
 
         .stat-card.shipped {
-            border-left-color: #9c27b0;
+            border-top: 3px solid #9c27b0;
         }
 
         .stat-card.completed {
-            border-left-color: #4caf50;
+            border-top: 3px solid #4caf50;
         }
 
         .stat-card.rejected {
-            border-left-color: #f44336;
+            border-top: 3px solid #f44336;
         }
 
         .stat-value {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 700;
             margin-bottom: 5px;
+            color: var(--text-main);
         }
 
         .stat-label {
             font-size: 12px;
-            color: #7f8c8d;
+            color: var(--text-soft);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
         }
 
         /* Content Section */
         .content-section {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: var(--surface-2);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--line);
+            margin-bottom: 24px;
         }
 
         .content-section h2 {
             font-size: 20px;
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--primary);
             margin-bottom: 20px;
         }
 
@@ -155,23 +181,26 @@
         }
 
         .pesanan-table th {
-            background-color: #f8f9fa;
-            padding: 12px;
+            background-color: #fff3e4;
+            padding: 14px;
             text-align: left;
             font-weight: 600;
-            color: #2c3e50;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 14px;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--line);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .pesanan-table td {
-            padding: 12px;
-            border-bottom: 1px solid #e9ecef;
+            padding: 14px;
+            border-bottom: 1px solid var(--line);
             font-size: 14px;
+            color: var(--text-main);
         }
 
         .pesanan-table tr:hover {
-            background-color: #f8fafc;
+            background-color: #fffaf2;
         }
 
         .pesanan-table tr:last-child td {
@@ -181,10 +210,11 @@
         .status-badge {
             display: inline-block;
             padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .status-badge.pending {
@@ -214,16 +244,17 @@
 
         .action-buttons {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
         .btn-sm {
-            padding: 4px 8px;
+            padding: 5px 10px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: 600;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -231,13 +262,13 @@
             text-decoration: none;
         }
 
-        .btn-detail {
-            background-color: #667eea;
-            color: white;
+        .btn-sm:hover {
+            transform: translateY(-1px);
         }
 
-        .btn-detail:hover {
-            background-color: #5a6fd8;
+        .btn-detail {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
 
         .btn-confirm {
@@ -287,23 +318,24 @@
 
         .empty-state {
             text-align: center;
-            padding: 40px;
-            color: #6c757d;
+            padding: 60px 20px;
+            color: var(--text-soft);
         }
 
         .empty-state i {
-            font-size: 48px;
+            font-size: 64px;
             margin-bottom: 20px;
-            color: #ccc;
+            color: #cbd5e0;
         }
 
         .alert {
-            padding: 12px 20px;
-            border-radius: 6px;
+            padding: 14px 20px;
+            border-radius: 12px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-weight: 500;
         }
 
         .alert-success {
@@ -325,7 +357,7 @@
 
         .customer-name {
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--text-main);
         }
 
         /* Pagination Styling - Compact */
@@ -371,6 +403,142 @@
             background: #f8f9fa;
             cursor: not-allowed;
         }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                gap: 15px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .page-header p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-value {
+                font-size: 20px;
+            }
+
+            .content-section {
+                padding: 16px;
+            }
+
+            .pesanan-table th,
+            .pesanan-table td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pesanan-table {
+                font-size: 11px;
+            }
+
+            .pesanan-table th,
+            .pesanan-table td {
+                padding: 8px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .btn-sm {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .status-badge {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+        }
+        /* Bootstrap 4 pagination compatibility */
+        .pagination .page-item {
+            display: inline-flex;
+        }
+        .pagination .page-link {
+            padding: 5px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            background: #fff;
+            transition: all 0.15s ease;
+            min-width: 32px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            margin: 0 2px;
+        }
+        .pagination .page-item.active .page-link {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .pagination .page-item.disabled .page-link {
+            color: #adb5bd;
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
         .pagination li:first-child a,
         .pagination li:first-child span,
         .pagination li:last-child a,
@@ -386,7 +554,6 @@
             width: 14px !important;
             height: 14px !important;
         }
-        /* Bootstrap 4 pagination compatibility */
         .pagination .page-item {
             display: inline-flex;
         }
@@ -548,7 +715,10 @@
                     <p>Kelola pesanan dari pelanggan</p>
                 </div>
                 <div class="header-actions">
-                    <button class="logout-btn">
+                    <form id="logoutForm" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                    <button class="logout-btn" onclick="document.getElementById('logoutForm').submit();">
                         <i class="fas fa-sign-out-alt"></i>
                         Logout
                     </button>
@@ -734,32 +904,32 @@
         document.getElementById('rejectForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (currentRejectOrderId) {
-                this.action = `/pesanan/${currentRejectOrderId}/reject`;
+                this.action = "{{ route('pesanan.reject', ':id') }}".replace(':id', currentRejectOrderId);
                 this.submit();
             }
         });
 
         function confirmOrder(orderId) {
             if (confirm('Konfirmasi pesanan ini?')) {
-                window.location.href = `/pesanan/${orderId}/confirm`;
+                window.location.href = "{{ route('pesanan.confirm', ':id') }}".replace(':id', orderId);
             }
         }
 
         function shipOrder(orderId) {
             if (confirm('Kirim pesanan ini?')) {
-                window.location.href = `/pesanan/${orderId}/ship`;
+                window.location.href = "{{ route('pesanan.ship', ':id') }}".replace(':id', orderId);
             }
         }
 
         function paidOrder(orderId) {
             if (confirm('Tandai pesanan ini sebagai sudah dibayar?')) {
-                window.location.href = `/pesanan/${orderId}/paid`;
+                window.location.href = "{{ route('pesanan.paid', ':id') }}".replace(':id', orderId);
             }
         }
 
         function completeOrder(orderId) {
             if (confirm('Tandai pesanan ini sebagai selesai?')) {
-                window.location.href = `/pesanan/${orderId}/complete`;
+                window.location.href = "{{ route('pesanan.complete', ':id') }}".replace(':id', orderId);
             }
         }
 

@@ -4,9 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Manajemen Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #8B0000;
+            --primary-soft: #a70f0f;
+            --secondary: #DAA520;
+            --cream: #ffffff;
+            --surface: #fffaf4;
+            --surface-2: #ffffff;
+            --text-main: #2D3748;
+            --text-soft: #6b7280;
+            --line: #e2e8f0;
+            --shadow-soft: 0 10px 24px rgba(139, 0, 0, 0.08);
+            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,9 +28,9 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #334155;
+            font-family: 'Poppins', sans-serif;
+            background: #ffffff;
+            color: var(--text-main);
             overflow-x: hidden;
         }
 
@@ -30,7 +44,7 @@
             flex: 1;
             margin-left: 272px;
             padding: 30px;
-            background-color: #ffffff;
+            background: transparent;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -45,13 +59,13 @@
 
         .page-header h1 {
             font-size: 28px;
-            font-weight: 600;
-            color: #2c3e50;
+            font-weight: 700;
+            color: var(--primary);
             margin-bottom: 0;
         }
 
         .page-header p {
-            color: #64748b;
+            color: var(--text-soft);
             font-size: 16px;
             margin-bottom: 0;
         }
@@ -65,7 +79,7 @@
         .logout-btn, .add-btn {
             padding: 8px 16px;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -76,37 +90,41 @@
         }
 
         .logout-btn {
-            background-color: #dc3545;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
             color: white;
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
         }
 
         .logout-btn:hover {
-            background-color: #c82333;
+            filter: brightness(1.03);
             transform: translateY(-1px);
         }
 
         .add-btn {
-            background-color: #e74c3c;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
             color: white;
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
         }
 
         .add-btn:hover {
-            background-color: #c0392b;
+            filter: brightness(1.03);
             transform: translateY(-1px);
         }
 
         /* Table Section */
         .content-section {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: var(--surface-2);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--line);
+            margin-bottom: 24px;
         }
 
         .content-section h2 {
             font-size: 20px;
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--primary);
             margin-bottom: 20px;
         }
 
@@ -120,24 +138,27 @@
         }
 
         .menus-table th {
-            background-color: #f8f9fa;
-            padding: 12px 14px;
+            background-color: #fff3e4;
+            padding: 14px;
             text-align: left;
             font-weight: 600;
-            color: #2c3e50;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 14px;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--line);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .menus-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid #e9ecef;
+            padding: 14px;
+            border-bottom: 1px solid var(--line);
             font-size: 14px;
             vertical-align: middle;
+            color: var(--text-main);
         }
 
         .menus-table tr:hover {
-            background-color: #f8fafc;
+            background-color: #fffaf2;
         }
 
         .menus-table tr:last-child td {
@@ -148,17 +169,19 @@
             width: 64px;
             height: 64px;
             object-fit: cover;
-            border-radius: 10px;
-            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
         }
 
         .status-badge {
             display: inline-block;
             padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .status-badge.active {
@@ -173,15 +196,16 @@
 
         .action-buttons {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .btn-sm {
-            padding: 4px 8px;
+            padding: 5px 10px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: 600;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -189,13 +213,13 @@
             text-decoration: none;
         }
 
-        .btn-edit {
-            background-color: #667eea;
-            color: white;
+        .btn-sm:hover {
+            transform: translateY(-1px);
         }
 
-        .btn-edit:hover {
-            background-color: #5a6fd8;
+        .btn-edit {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
 
         .btn-delete {
@@ -325,15 +349,6 @@
             cursor: not-allowed;
         }
 
-        .category-badge {
-            display: inline-block;
-            background-color: #f0f0f0;
-            color: #555;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-
         /* Paket Section */
         .paket-section {
             margin-top: 30px;
@@ -421,78 +436,129 @@
             font-weight: 600;
         }
 
-        :root {
-            --primary: #8B0000;
-            --primary-soft: #a70f0f;
-            --secondary: #DAA520;
-            --cream: #EFE1D1;
-            --surface-2: #ffffff;
-            --text-main: #2D3748;
-            --line: #eadcc8;
-            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+        .category-badge {
+            display: inline-block;
+            background-color: #f0f0f0;
+            color: #555;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background:
-                radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.28), transparent 26%),
-                radial-gradient(circle at 88% 84%, rgba(139, 0, 0, 0.10), transparent 34%),
-                var(--cream);
-            color: var(--text-main);
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .page-header p {
+                font-size: 14px;
+            }
         }
 
-        .main-content {
-            background: transparent;
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+
+            .content-section {
+                padding: 16px;
+            }
+
+            .menus-table th,
+            .menus-table td,
+            .pakets-table th,
+            .pakets-table td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .menu-image,
+            .paket-image {
+                width: 48px;
+                height: 48px;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .paket-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            form input,
+            form select,
+            form button,
+            form a {
+                width: 100%;
+            }
         }
 
-        .page-header h1,
-        .paket-section h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary);
-            font-weight: 700;
-        }
+        @media (max-width: 576px) {
+            .menus-table,
+            .pakets-table {
+                font-size: 11px;
+            }
 
-        .page-header p {
-            color: #8a6a4c;
-        }
+            .menus-table th,
+            .menus-table td,
+            .pakets-table th,
+            .pakets-table td {
+                padding: 8px;
+            }
 
-        .content-section {
-            background: var(--surface-2);
-            border-radius: 16px;
-            border: 1px solid var(--line);
-            box-shadow: var(--shadow-card);
-        }
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
 
-        .content-section h2 {
-            color: var(--primary);
-        }
+            .btn-sm {
+                width: 100%;
+                justify-content: center;
+            }
 
-        .menus-table th,
-        .pakets-table th {
-            background-color: #fff3e4;
-            color: var(--text-main);
-            border-bottom: 1px solid var(--line);
-        }
+            .status-badge,
+            .category-badge,
+            .portion-badge {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
 
-        .menus-table td,
-        .pakets-table td {
-            border-bottom: 1px solid var(--line);
-        }
-
-        .menus-table tr:hover,
-        .pakets-table tr:hover {
-            background-color: #fffaf2;
-        }
-
-        .logout-btn,
-        .add-btn,
-        .add-paket-btn {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
-            border-radius: 10px;
-        }
-
-        .price {
-            color: var(--primary);
+            .menu-image,
+            .paket-image {
+                width: 40px;
+                height: 40px;
+            }
         }
     </style>
 </head>

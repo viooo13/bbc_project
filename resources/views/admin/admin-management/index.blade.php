@@ -4,9 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Kelola Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #8B0000;
+            --primary-soft: #a70f0f;
+            --secondary: #DAA520;
+            --cream: #ffffff;
+            --surface: #fffaf4;
+            --surface-2: #ffffff;
+            --text-main: #2D3748;
+            --text-soft: #6b7280;
+            --line: #e2e8f0;
+            --shadow-soft: 0 10px 24px rgba(139, 0, 0, 0.08);
+            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,9 +28,9 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #334155;
+            font-family: 'Poppins', sans-serif;
+            background: var(--cream);
+            color: var(--text-main);
             overflow-x: hidden;
         }
 
@@ -30,7 +44,7 @@
             flex: 1;
             margin-left: 272px;
             padding: 30px;
-            background-color: #ffffff;
+            background: transparent;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -45,13 +59,13 @@
 
         .page-header h1 {
             font-size: 28px;
-            font-weight: 600;
-            color: #2c3e50;
+            font-weight: 700;
+            color: var(--primary);
             margin-bottom: 0;
         }
 
         .page-header p {
-            color: #64748b;
+            color: var(--text-soft);
             font-size: 16px;
             margin-bottom: 0;
         }
@@ -65,7 +79,7 @@
         .logout-btn, .add-btn {
             padding: 8px 16px;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -76,37 +90,41 @@
         }
 
         .logout-btn {
-            background-color: #dc3545;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
             color: white;
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
         }
 
         .logout-btn:hover {
-            background-color: #c82333;
+            filter: brightness(1.03);
             transform: translateY(-1px);
         }
 
         .add-btn {
-            background-color: #2c3e50;
+            background: linear-gradient(90deg, #2c3e50 0%, #34495e 100%);
             color: white;
+            box-shadow: 0 8px 20px rgba(44, 62, 80, 0.18);
         }
 
         .add-btn:hover {
-            background-color: #1a232f;
+            filter: brightness(1.03);
             transform: translateY(-1px);
         }
 
         /* Table Section */
         .content-section {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: var(--surface-2);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--line);
+            margin-bottom: 24px;
         }
 
         .content-section h2 {
             font-size: 20px;
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--primary);
             margin-bottom: 20px;
         }
 
@@ -120,23 +138,26 @@
         }
 
         .admin-table th {
-            background-color: #f8f9fa;
-            padding: 12px;
+            background-color: #fff3e4;
+            padding: 14px;
             text-align: left;
             font-weight: 600;
-            color: #2c3e50;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 14px;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--line);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .admin-table td {
-            padding: 12px;
-            border-bottom: 1px solid #e9ecef;
+            padding: 14px;
+            border-bottom: 1px solid var(--line);
             font-size: 14px;
+            color: var(--text-main);
         }
 
         .admin-table tr:hover {
-            background-color: #f8fafc;
+            background-color: #fffaf2;
         }
 
         .admin-table tr:last-child td {
@@ -146,10 +167,11 @@
         .status-badge {
             display: inline-block;
             padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .status-badge.active {
@@ -165,10 +187,11 @@
         .role-badge {
             display: inline-block;
             padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .role-badge.owner {
@@ -183,20 +206,25 @@
 
         .action-buttons {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .btn-sm {
-            padding: 4px 8px;
+            padding: 5px 10px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: 600;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 4px;
             text-decoration: none;
+        }
+
+        .btn-sm:hover {
+            transform: translateY(-1px);
         }
 
         .btn-edit {
@@ -327,6 +355,85 @@
             color: #adb5bd;
             background: #f8f9fa;
             cursor: not-allowed;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .page-header p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+
+            .content-section {
+                padding: 16px;
+            }
+
+            .admin-table th,
+            .admin-table td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .admin-table {
+                font-size: 11px;
+            }
+
+            .admin-table th,
+            .admin-table td {
+                padding: 8px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .btn-sm {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .status-badge,
+            .role-badge {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
         }
     </style>
 </head>

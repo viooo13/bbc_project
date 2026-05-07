@@ -4,10 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Laporan Penjualan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            --primary: #8B0000;
+            --primary-soft: #a70f0f;
+            --secondary: #DAA520;
+            --cream: #ffffff;
+            --surface: #fffaf4;
+            --surface-2: #ffffff;
+            --text-main: #2D3748;
+            --text-soft: #6b7280;
+            --line: #e2e8f0;
+            --shadow-soft: 0 10px 24px rgba(139, 0, 0, 0.08);
+            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,9 +29,9 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #334155;
+            font-family: 'Poppins', sans-serif;
+            background: var(--cream);
+            color: var(--text-main);
             overflow-x: hidden;
         }
 
@@ -31,7 +45,7 @@
             flex: 1;
             margin-left: 272px;
             padding: 30px;
-            background-color: #ffffff;
+            background: transparent;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -46,13 +60,13 @@
 
         .page-header h1 {
             font-size: 28px;
-            font-weight: 600;
-            color: #2c3e50;
+            font-weight: 700;
+            color: var(--primary);
             margin-bottom: 0;
         }
 
         .page-header p {
-            color: #64748b;
+            color: var(--text-soft);
             font-size: 16px;
             margin-bottom: 0;
         }
@@ -64,11 +78,11 @@
         }
 
         .export-btn {
-            background-color: #22c55e;
+            background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
@@ -77,19 +91,20 @@
             gap: 8px;
             transition: all 0.3s ease;
             text-decoration: none;
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.18);
         }
 
         .export-btn:hover {
-            filter: brightness(1.05);
+            filter: brightness(1.03);
             transform: translateY(-1px);
         }
 
         .logout-btn {
-            background-color: #dc3545;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -97,10 +112,11 @@
             align-items: center;
             gap: 6px;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
         }
 
         .logout-btn:hover {
-            background-color: #c82333;
+            filter: brightness(1.03);
             transform: translateY(-1px);
         }
 
@@ -113,24 +129,25 @@
         }
 
         .stat-card {
-            background: white;
-            border-radius: 8px;
+            background: var(--surface-2);
+            border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-card);
             display: flex;
             align-items: center;
+            border: 1px solid var(--line);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 16px 32px rgba(45, 55, 72, 0.12);
         }
 
         .stat-icon {
             width: 50px;
             height: 50px;
-            border-radius: 8px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -140,19 +157,19 @@
         }
 
         .stat-card:nth-child(1) .stat-icon {
-            background-color: #27ae60;
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
         }
 
         .stat-card:nth-child(2) .stat-icon {
-            background-color: #8e44ad;
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
         }
 
         .stat-card:nth-child(3) .stat-icon {
-            background-color: #e67e22;
+            background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
         }
 
         .stat-card:nth-child(4) .stat-icon {
-            background-color: #3498db;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
         }
 
         .stat-content {
@@ -161,29 +178,31 @@
 
         .stat-value {
             font-size: 24px;
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 5px;
-            color: #2c3e50;
+            color: var(--text-main);
         }
 
         .stat-label {
             font-size: 14px;
-            color: #7f8c8d;
+            color: var(--text-soft);
+            font-weight: 500;
         }
 
         /* Tables */
         .content-section {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: var(--surface-2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--line);
         }
 
         .content-section h2 {
             font-size: 20px;
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--primary);
             margin-bottom: 20px;
         }
 
@@ -197,23 +216,26 @@
         }
 
         .data-table th {
-            background-color: #f8f9fa;
-            padding: 12px;
+            background-color: #fff3e4;
+            padding: 14px;
             text-align: left;
             font-weight: 600;
-            color: #2c3e50;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 14px;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--line);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .data-table td {
-            padding: 12px;
-            border-bottom: 1px solid #e9ecef;
+            padding: 14px;
+            border-bottom: 1px solid var(--line);
             font-size: 14px;
+            color: var(--text-main);
         }
 
         .data-table tr:hover {
-            background-color: #f8fafc;
+            background-color: #fffaf2;
         }
 
         .data-table tr:last-child td {
@@ -226,77 +248,6 @@
 
         .text-center {
             text-align: center;
-        }
-
-        :root {
-            --primary: #8B0000;
-            --primary-soft: #a70f0f;
-            --secondary: #DAA520;
-            --cream: #EFE1D1;
-            --surface-2: #ffffff;
-            --text-main: #2D3748;
-            --line: #eadcc8;
-            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background:
-                radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.28), transparent 26%),
-                radial-gradient(circle at 88% 84%, rgba(139, 0, 0, 0.10), transparent 34%),
-                var(--cream);
-            color: var(--text-main);
-        }
-
-        .main-content {
-            background: transparent;
-        }
-
-        .page-header h1 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .page-header p,
-        .stat-label {
-            color: #8a6a4c;
-        }
-
-        .content-section,
-        .stat-card {
-            border-radius: 16px;
-            border: 1px solid var(--line);
-            box-shadow: var(--shadow-card);
-        }
-
-        .content-section h2,
-        .stat-value,
-        .data-table th {
-            color: var(--text-main);
-        }
-
-        .content-section h2 {
-            color: var(--primary);
-        }
-
-        .data-table th {
-            background-color: #fff3e4;
-            border-bottom: 1px solid var(--line);
-        }
-
-        .data-table td {
-            border-bottom: 1px solid var(--line);
-        }
-
-        .data-table tr:hover {
-            background-color: #fffaf2;
-        }
-
-        .export-btn,
-        .logout-btn {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
-            border-radius: 10px;
         }
 
         .chart-box {
@@ -388,6 +339,121 @@
             color: #adb5bd;
             background: #f8f9fa;
             cursor: not-allowed;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .page-header p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .stat-value {
+                font-size: 20px;
+            }
+
+            .content-section {
+                padding: 16px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .chart-box canvas {
+                height: 250px !important;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .stat-icon {
+                margin-right: 15px;
+                margin-bottom: 0;
+            }
+
+            .data-table {
+                font-size: 11px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 8px;
+            }
+
+            .chart-box canvas {
+                height: 200px !important;
+            }
         }
     </style>
 </head>
