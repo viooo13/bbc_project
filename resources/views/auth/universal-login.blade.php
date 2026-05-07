@@ -188,11 +188,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between mb-6 text-[13px]">
-                    <label class="flex items-center gap-2 cursor-pointer text-stone-600">
-                        <input type="checkbox" name="remember" class="w-4 h-4 accent-brand cursor-pointer rounded">
-                        <span class="font-medium">Ingat saya</span>
-                    </label>
+                <div class="flex items-center justify-end mb-6 text-[13px]">
                     <a href="{{ route('admin.password.request') }}" class="text-brand font-medium hover:text-brand-dark hover:underline underline-offset-2 transition-colors duration-200">Lupa password?</a>
                 </div>
 

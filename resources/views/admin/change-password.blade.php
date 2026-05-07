@@ -58,12 +58,12 @@
                 <p class="text-sm text-gray-500 mb-6">Ubah password akun admin Anda.</p>
 
                 @if(session('success'))
-                    <div class="bg-green-50 text-green-700 border border-green-200 rounded-lg px-4 py-3 text-sm mb-4">
+                    <div class="alert bg-green-50 text-green-700 border border-green-200 rounded-lg px-4 py-3 text-sm mb-4">
                         {{ session('success') }}
                     </div>
                 @endif
                 @if(session('error'))
-                    <div class="bg-red-50 text-red-700 border border-red-200 rounded-lg px-4 py-3 text-sm mb-4">
+                    <div class="alert bg-red-50 text-red-700 border border-red-200 rounded-lg px-4 py-3 text-sm mb-4">
                         {{ session('error') }}
                     </div>
                 @endif

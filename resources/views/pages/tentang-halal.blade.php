@@ -284,22 +284,7 @@
             }
         }
 
-        .influencer-card {
-            border-radius: 16px;
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
-        }
 
-        .influencer-media {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            background: #fff;
-            box-shadow: 0 10px 22px rgba(58, 42, 26, 0.14);
-        }
-
-        .influencer-media img {
-            transition: transform 0.55s ease;
-        }
 
         .influencer-media::after {
             content: '';
@@ -370,37 +355,13 @@
             transition: transform 0.25s ease, opacity 0.25s ease;
         }
 
-        .influencer-card:hover {
-            transform: translateY(-4px);
-        }
 
-        .influencer-card:hover .influencer-media {
-            box-shadow: 0 16px 30px rgba(58, 42, 26, 0.2);
-        }
 
-        .influencer-card:hover .influencer-media img {
-            transform: scale(1.045);
-        }
 
-        .influencer-card:hover .influencer-play {
-            transform: translate(-50%, -50%) scale(1.07);
-            background: #b42318;
-            color: #fff;
-        }
 
-        .influencer-card:hover .influencer-cta {
-            transform: translateY(-2px);
-            background: #8f1e14;
-            box-shadow: 0 12px 20px rgba(143, 30, 20, 0.3);
-        }
 
-        .influencer-card:hover .influencer-cta .external-icon {
-            transform: translate(1px, -1px);
-            opacity: 1;
-        }
 
         @media (prefers-reduced-motion: reduce) {
-            .influencer-card,
             .influencer-media,
             .influencer-media img,
             .influencer-play,
@@ -586,9 +547,9 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8">
                     @forelse(($influencerTestimonials ?? collect()) as $idx => $influencer)
                         <a href="{{ $influencer->youtube_url }}" target="_blank" rel="noopener" class="group block fade-up" style="transition-delay: {{ number_format($idx * 0.08, 2) }}s;">
-                            <article class="relative bg-white rounded-[1.25rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-black/5 hover:border-red-900/20 hover:-translate-y-1.5 h-full flex flex-col">
-                                <div class="relative overflow-hidden aspect-video">
-                                    <img src="{{ $influencer->thumbnail_url }}" alt="Influencer" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                            <article class="relative bg-white rounded-[1.25rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-black/5 hover:border-red-900/20 hover:-translate-y-1.5 h-full flex flex-col isolation-isolate">
+                                <div class="relative overflow-hidden aspect-video rounded-t-[1.25rem]">
+                                    <img src="{{ $influencer->thumbnail_url }}" alt="Influencer" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 no-photo-hover" />
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100"></div>
                                     
                                     <div class="absolute top-4 left-4">

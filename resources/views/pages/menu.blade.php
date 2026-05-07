@@ -3,257 +3,440 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu - Bakso Bunderan Ciomas</title>
+    <title>Menu Spesial - Bakso Bunderan Ciomas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
-    <style>
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+        :root {
+            --brand-red: #8b0000;
+            --brand-red-dark: #6b0000;
+            --brand-cream: #EFE1D1;
+            --brand-brown: #3a2a1a;
+            --brand-brown-light: #6a4a34;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--brand-cream);
+            color: var(--brand-brown);
+        }
+
+        /* Premium Header Section */
+        .menu-hero {
+            padding: 100px 0 60px;
+            text-align: center;
+            background: radial-gradient(circle at top, rgba(239, 225, 209, 0.3) 0%, transparent 70%);
+        }
+
+        .menu-hero-tag {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--brand-red);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-hero-tag::before, .menu-hero-tag::after {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: currentColor;
+            opacity: 0.3;
+        }
+
+        .menu-hero-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--brand-brown);
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+
+        .menu-hero-desc {
+            font-size: 16px;
+            color: var(--brand-brown-light);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
         .page-bg-image {
             position: relative;
             background-image: url('{{ asset('bg_body.png') }}');
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
-            background-attachment: scroll;
+            background-attachment: fixed;
         }
 
         .page-bg-image::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(239, 225, 209, 0.72);
+            background: linear-gradient(180deg, rgba(239, 225, 209, 0.6) 0%, rgba(239, 225, 209, 0.85) 100%);
             pointer-events: none;
         }
 
-        .page-bg-image > * {
-            position: relative;
-            z-index: 1;
-        }
-
         .menu-shell {
-            max-width: 1080px;
+            max-width: 1200px;
             margin: 0 auto;
             position: relative;
+            z-index: 10;
         }
 
+        /* Filter Buttons */
         .filter-btn {
-            border-radius: 9999px;
             padding: 0.6rem 1.5rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            line-height: 1;
-            background: #fff;
-            border: 1px solid rgba(58, 32, 24, 0.1);
-            color: #6a4a34;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            color: var(--brand-brown-light);
+            background: white;
+            border: 1px solid #e0d5c7;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.25s ease;
         }
 
         .filter-btn.filter-active {
-            background: #8b0000;
-            color: #ffffff;
-            border-color: #8b0000;
-            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.25);
-            font-weight: 700;
-            transform: translateY(-2px);
+            background: var(--brand-red);
+            color: #fff;
+            border-color: var(--brand-red);
         }
 
-        .filter-btn.filter-inactive {
-            background: #ffffff;
-            color: #6a4a34;
-            border-color: rgba(58, 32, 24, 0.1);
+        .filter-btn:hover:not(.filter-active) {
+            border-color: var(--brand-red);
+            color: var(--brand-red);
         }
 
-        .filter-btn:hover {
-            transform: translateY(-2px);
+        /* Vertical Menu Card with Smaller Image */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .menu-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #ece3d5;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px -8px rgba(139, 0, 0, 0.1);
+        }
+
+        .menu-card-img {
+            position: relative;
+            width: 100%;
+            height: 140px; /* Reduced fixed height */
+            flex-shrink: 0;
+            overflow: hidden;
             background: #fdf5e6;
-            color: #8b0000;
-            border-color: #8b0000;
-            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.1);
         }
 
-        .filter-btn.filter-active:hover {
-            background: #6b0000;
-            color: #ffffff;
-            border-color: #6b0000;
-            box-shadow: 0 6px 14px rgba(107, 0, 0, 0.3);
+        .menu-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
         }
 
+        .menu-card:hover .menu-card-img img {
+            transform: scale(1.05);
+        }
+
+        .menu-category {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(255,255,255,0.92);
+            color: var(--brand-red);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        .menu-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 4px 10px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .menu-badge.reko {
+            background: var(--brand-red);
+            color: #fff;
+        }
+
+        .menu-badge.reko i { color: #DAA520; }
+
+        .menu-badge.porsi {
+            background: var(--brand-brown);
+            color: #fff;
+        }
+
+        .menu-card-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .menu-card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .menu-card-desc {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .menu-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 12px;
+            margin-top: auto;
+            border-top: 1px solid #f5f0e8;
+        }
+
+        .menu-card-price {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--brand-red);
+        }
+
+        .menu-card-outlet {
+            font-size: 10px;
+            font-weight: 600;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Pager */
         .pager-wrap {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 0.75rem;
-            margin-top: 1.2rem;
+            margin-top: 2.5rem;
         }
 
         .pager-btn {
-            width: 2.1rem;
-            height: 2.1rem;
-            border-radius: 999px;
-            border: 1px solid rgba(58, 32, 24, 0.2);
-            background: #fff7ee;
-            color: #3a2018;
-            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: white;
+            color: var(--brand-red);
+            display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid #e0d5c7;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .pager-btn:hover:not(:disabled) {
-            background: #ef2f24;
-            border-color: #ef2f24;
-            color: #fff;
-            transform: translateY(-1px);
+            background: var(--brand-red);
+            color: white;
         }
 
         .pager-btn:disabled {
-            opacity: 0.42;
+            opacity: 0.3;
             cursor: not-allowed;
         }
 
         .pager-info {
-            min-width: 130px;
-            text-align: center;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: #4a2d21;
-        }
-
-        .delivery-availability {
-            margin-top: 1.6rem;
-            padding-top: 1.25rem;
-            border-top: 2px solid rgba(239, 47, 36, 0.9);
-        }
-
-        .delivery-title {
-            text-align: center;
-            color: #ef2f24;
-            font-size: 2.05rem;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 1rem;
-            letter-spacing: 0.01em;
-        }
-
-        .delivery-grid {
-            display: grid;
-            grid-template-columns: repeat(1, minmax(0, 1fr));
-            gap: 0.9rem;
-            justify-items: center;
-        }
-
-        .delivery-link {
-            display: inline-flex;
+            display: flex;
+            gap: 0.5rem;
             align-items: center;
-            justify-content: center;
-            gap: 0.55rem;
-            min-width: 190px;
-            padding: 0.45rem 0.9rem;
-            border-radius: 999px;
-            color: #7a0f15;
-            transition: transform 0.2s ease, filter 0.2s ease;
         }
 
-        .delivery-link:hover {
-            transform: translateY(-1px);
-            filter: brightness(0.96);
-        }
-
-        .delivery-pill-icon {
-            width: 38px;
-            height: 38px;
+        .pager-num {
+            width: 36px;
+            height: 36px;
             border-radius: 10px;
-            background: #ef2f24;
-            color: #fff;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.05rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--brand-brown-light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
 
-        .delivery-pill-text {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: 0.005em;
-            line-height: 1;
-            color: #8b0f16;
+        .pager-num:hover {
+            background: rgba(139, 0, 0, 0.05);
+            color: var(--brand-red);
         }
 
-        @media (min-width: 768px) {
-            .delivery-grid {
-                grid-template-columns: repeat(1, minmax(0, 1fr));
-                gap: 1.4rem;
-            }
-
-            .delivery-title {
-                margin-bottom: 1.2rem;
-            }
+        .pager-num.active {
+            background: var(--brand-red);
+            color: #fff;
         }
-    </style>
 
-    <style>
-        .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
-        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+        /* Visit Card */
+        .delivery-card {
+            margin-top: 4rem;
+            background: var(--brand-red);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .delivery-gofood-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff;
+            color: var(--brand-red);
+            padding: 0.8rem 2rem;
+            border-radius: 100px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .delivery-gofood-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1024px) {
+            .menu-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .menu-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .menu-grid { grid-template-columns: 1fr; }
+            .delivery-card { padding: 2rem 1.5rem; }
+        }
     </style>
 </head>
-<body class="font-poppins bg-[#EFE1D1] text-[#3a2a1a] overflow-x-hidden" style="font-family: 'Poppins', sans-serif;">
+<body class="overflow-x-hidden">
     @include('partials.navbar')
 
-    <section class="py-20 page-bg-image">
-        <div class="menu-shell px-4 sm:px-6">
-            <div class="text-center mb-10">
-                <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins">Kelezatan Tiada Tara</span>
-                <h1 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4 text-center">
-                    Menu
-                    Spesial
+    <main class="page-bg-image min-h-screen pt-12 pb-24 relative overflow-hidden">
+        <div class="menu-shell px-6">
+
+            <!-- Header Section -->
+            <header class="text-center mb-16 fade-in-up">
+                <div class="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-white/40 backdrop-blur-sm border border-white/50 text-[11px] font-bold uppercase tracking-[0.15em] text-red-800">
+                    <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                    Cita Rasa Legendaris
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-[#1a1a1a] tracking-tight mb-6 leading-tight">
+                    Jelajahi <span class="text-red-700">Cita Rasa</span> Kami
                 </h1>
-                <p class="text-base md:text-lg text-gray-700 max-w-2xl mx-auto font-medium font-poppins">Temukan hidangan favorit Anda dari berbagai varian bakso dan mie ayam autentik yang diolah dengan bahan-bahan pilihan terbaik.</p>
-            </div>
+                <p class="text-base md:text-xl text-[#4a4a4a] max-w-2xl mx-auto font-medium leading-relaxed">
+                    Daftar menu autentik Bakso Bunderan Ciomas. Temukan pilihan favorit Anda dan nikmati kehangatannya langsung di outlet kami.
+                </p>
+            </header>
 
-            <div class="flex flex-wrap justify-center gap-3 mb-10">
-                <button class="filter-btn filter-active" data-filter="all">Semua</button>
-                @foreach(['bakso', 'mie', 'paket', 'minuman'] as $category)
-                <button class="filter-btn filter-inactive" data-filter="{{ $category }}">{{ $category == 'mie' ? 'Mie Ayam' : ucfirst($category) }}</button>
+            <!-- Filter Section -->
+            <nav class="flex flex-wrap justify-center gap-3 mb-16 fade-in-up" style="transition-delay: 0.1s">
+                <button class="filter-btn filter-active" data-filter="all">Semua Koleksi</button>
+                @foreach(['bakso' => 'Varian Bakso', 'mie' => 'Mie Ayam', 'paket' => 'Paket Spesial', 'minuman' => 'Minuman Segar'] as $val => $label)
+                <button class="filter-btn filter-inactive" data-filter="{{ $val }}">{{ $label }}</button>
                 @endforeach
-            </div>
+            </nav>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 items-stretch" id="menuContainer">
+            <!-- Menu Grid -->
+            <div class="menu-grid" id="menuContainer">
                 @include('partials.menu-items')
             </div>
 
-            <div id="menuPagination" class="pager-wrap">
-                <button id="menuPrevPage" type="button" class="pager-btn" aria-label="Halaman sebelumnya">
+            <!-- Pagination -->
+            <div id="menuPagination" class="pager-wrap fade-in-up" style="transition-delay: 0.2s">
+                <button id="menuPrevPage" type="button" class="pager-btn" aria-label="Prev">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                <div id="menuPageInfo" class="pager-info">Halaman 1 dari 1</div>
-                <button id="menuNextPage" type="button" class="pager-btn" aria-label="Halaman berikutnya">
+                <div id="menuPageNumbers" class="pager-info">
+                    <!-- Numbers will be injected by JS -->
+                </div>
+                <button id="menuNextPage" type="button" class="pager-btn" aria-label="Next">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
 
-            <div class="delivery-availability">
-                <h4 class="delivery-title">Tersedia di</h4>
-                <div class="delivery-grid">
-                    <a href="https://gofood.co.id" target="_blank" rel="noopener" class="delivery-link" aria-label="GoFood">
-                        <span class="delivery-pill-icon"><i class="fas fa-utensils"></i></span>
-                        <span class="delivery-pill-text">gofood</span>
-                    </a>
-                </div>
-            </div>
+            <!-- Visit Us Card -->
+            <section class="delivery-card fade-in-up" style="transition-delay: 0.3s">
+                <p class="text-white/70 text-xs font-semibold uppercase tracking-widest mb-3">Lokasi & Kunjungan</p>
+                <h2 class="text-2xl md:text-4xl font-bold mb-4">Datang langsung ke outlet kami!</h2>
+                <p class="text-white/80 text-sm max-w-lg mx-auto mb-8">Nikmati bakso hangat langsung di Bunderan Ciomas bersama keluarga.</p>
+                <a href="/lokasi-kontak" class="delivery-gofood-btn">
+                    <i class="fas fa-location-dot"></i>
+                    Lihat Lokasi
+                </a>
+            </section>
+
         </div>
-    </section>
+    </main>
 
     @include('partials.footer')
 
     <script>
         let currentPage = 1;
-
         const menuContainer = document.getElementById('menuContainer');
         const paginationWrap = document.getElementById('menuPagination');
         const prevPageBtn = document.getElementById('menuPrevPage');
@@ -262,14 +445,12 @@
 
         function getPageSize() {
             const width = window.innerWidth;
-            if (width >= 1280) return 8;
-            if (width >= 1024) return 6;
-            if (width >= 640) return 4;
+            if (width >= 1024) return 8;
+            if (width >= 640) return 6;
             return 4;
         }
 
         function getMenuItems() {
-            if (!menuContainer) return [];
             return Array.from(menuContainer.querySelectorAll('.menu-item'));
         }
 
@@ -278,9 +459,7 @@
             const pageSize = getPageSize();
             const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
 
-            if (currentPage > totalPages) {
-                currentPage = totalPages;
-            }
+            if (currentPage > totalPages) currentPage = totalPages;
 
             const start = (currentPage - 1) * pageSize;
             const end = start + pageSize;
@@ -289,33 +468,40 @@
                 item.style.display = index >= start && index < end ? '' : 'none';
             });
 
-            if (pageInfo) {
-                pageInfo.textContent = `Halaman ${currentPage} dari ${totalPages}`;
+            // Update Numbered Pagination
+            const pageNumbersContainer = document.getElementById('menuPageNumbers');
+            if (pageNumbersContainer) {
+                pageNumbersContainer.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const span = document.createElement('span');
+                    span.className = `pager-num ${i === currentPage ? 'active' : ''}`;
+                    span.textContent = i;
+                    span.onclick = () => {
+                        if (i === currentPage) return;
+                        currentPage = i;
+                        applyMenuPagination();
+                        animateVisibleItems();
+                        window.scrollTo({ top: menuContainer.offsetTop - 150, behavior: 'smooth' });
+                    };
+                    pageNumbersContainer.appendChild(span);
+                }
             }
 
-            if (prevPageBtn) {
-                prevPageBtn.disabled = currentPage === 1;
-            }
-
-            if (nextPageBtn) {
-                nextPageBtn.disabled = currentPage === totalPages;
-            }
-
-            if (paginationWrap) {
-                paginationWrap.classList.toggle('hidden', items.length <= pageSize);
-            }
+            if (prevPageBtn) prevPageBtn.disabled = currentPage === 1;
+            if (nextPageBtn) nextPageBtn.disabled = currentPage === totalPages;
+            if (paginationWrap) paginationWrap.classList.toggle('hidden', items.length <= pageSize);
         }
 
         function animateVisibleItems() {
             const items = getMenuItems().filter(item => item.style.display !== 'none');
             items.forEach((item, index) => {
                 item.style.opacity = '0';
-                item.style.transform = 'translateY(16px)';
+                item.style.transform = 'translateY(20px)';
                 setTimeout(() => {
-                    item.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+                    item.style.transition = 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
                     item.style.opacity = '1';
                     item.style.transform = 'translateY(0)';
-                }, index * 55);
+                }, index * 80);
             });
         }
 
@@ -325,24 +511,25 @@
                 currentPage -= 1;
                 applyMenuPagination();
                 animateVisibleItems();
+                window.scrollTo({ top: menuContainer.offsetTop - 150, behavior: 'smooth' });
             });
         }
 
         if (nextPageBtn) {
             nextPageBtn.addEventListener('click', () => {
                 const totalItems = getMenuItems().length;
-                const totalPages = Math.max(1, Math.ceil(totalItems / getPageSize()));
+                const totalPages = Math.ceil(totalItems / getPageSize());
                 if (currentPage >= totalPages) return;
                 currentPage += 1;
                 applyMenuPagination();
                 animateVisibleItems();
+                window.scrollTo({ top: menuContainer.offsetTop - 150, behavior: 'smooth' });
             });
         }
 
         document.querySelectorAll('.filter-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const filter = this.dataset.filter;
-
                 document.querySelectorAll('.filter-btn').forEach(btn => {
                     btn.classList.remove('filter-active');
                     btn.classList.add('filter-inactive');
@@ -350,12 +537,8 @@
                 this.classList.add('filter-active');
                 this.classList.remove('filter-inactive');
 
-                if (!menuContainer) return;
-
-                menuContainer.innerHTML = '<div class="col-span-full text-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-red-600"></i><p class="mt-4 text-gray-600">Memuat menu...</p></div>';
-                if (paginationWrap) {
-                    paginationWrap.classList.add('hidden');
-                }
+                menuContainer.innerHTML = '<div class="col-span-full text-center py-24"><i class="fas fa-spinner fa-spin text-4xl text-red-600"></i><p class="mt-4 text-gray-500 font-bold uppercase tracking-widest text-xs">Menyiapkan Menu...</p></div>';
+                if (paginationWrap) paginationWrap.classList.add('hidden');
                 currentPage = 1;
 
                 fetch(`/filter-menu?category=${filter}`)
@@ -364,25 +547,26 @@
                         menuContainer.innerHTML = data.html;
                         applyMenuPagination();
                         animateVisibleItems();
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        menuContainer.innerHTML = '<div class="col-span-full text-center py-8 text-red-600"><i class="fas fa-exclamation-triangle text-3xl"></i><p class="mt-4">Terjadi kesalahan saat memuat menu</p></div>';
                     });
             });
         });
 
-        window.addEventListener('resize', () => {
-            applyMenuPagination();
-            animateVisibleItems();
-        });
+        // Intersection Observer for fade-in animations
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.id === 'menuContainer') animateVisibleItems();
+                }
+            });
+        }, observerOptions);
 
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        if (menuContainer) observer.observe(menuContainer);
+
+        window.addEventListener('resize', applyMenuPagination);
         applyMenuPagination();
-        animateVisibleItems();
     </script>
 </body>
 </html>
-
-
-
-

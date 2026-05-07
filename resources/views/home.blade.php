@@ -337,22 +337,7 @@
             background: #ffe7d8;
         }
 
-        .influencer-card {
-            border-radius: 16px;
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
-        }
 
-        .influencer-media {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            background: #fff;
-            box-shadow: 0 10px 22px rgba(58, 42, 26, 0.14);
-        }
-
-        .influencer-media img {
-            transition: transform 0.55s ease;
-        }
 
         .influencer-media::after {
             content: '';
@@ -444,37 +429,11 @@
             font-weight: 600;
         }
 
-        .influencer-card:hover {
-            transform: translateY(-4px);
-        }
 
-        .influencer-card:hover .influencer-media {
-            box-shadow: 0 16px 30px rgba(58, 42, 26, 0.2);
-        }
 
-        .influencer-card:hover .influencer-media img {
-            transform: scale(1.045);
-        }
 
-        .influencer-card:hover .influencer-play {
-            transform: translate(-50%, -50%) scale(1.07);
-            background: #b42318;
-            color: #fff;
-        }
-
-        .influencer-card:hover .influencer-cta {
-            transform: translateY(-2px);
-            background: #8f1e14;
-            box-shadow: 0 12px 20px rgba(143, 30, 20, 0.3);
-        }
-
-        .influencer-card:hover .influencer-cta .external-icon {
-            transform: translate(1px, -1px);
-            opacity: 1;
-        }
 
         @media (prefers-reduced-motion: reduce) {
-            .influencer-card,
             .influencer-media,
             .influencer-media img,
             .influencer-play,
@@ -622,23 +581,350 @@
             animation: caretBlink 0.7s steps(1, end) infinite;
         }
 
-        .hero-accent-kuah {
+        /* GROWTIM-STYLE HERO SECTION */
+        .hero-growtim-section {
             position: relative;
-            display: inline-block;
-            padding: 0.02em 0.4em 0.06em;
-            margin-left: 0.08em;
-            color: #fffaf4;
+            background: #EFE1D1;
+            padding: 140px 0 80px;
+            overflow: hidden;
+        }
+
+        .hero-growtim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.05fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-growtim-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                text-align: center;
+            }
+            .hero-growtim-section { padding: 120px 0 60px; }
+        }
+
+        /* Left Content */
+        .hero-content {
+            max-width: 520px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            background: rgba(139, 0, 0, 0.08);
+            border: 1px solid rgba(139, 0, 0, 0.15);
+            color: #8B0000;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #8B0000;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero-title {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            font-weight: 800;
+            color: #1a120b;
+            line-height: 1.12;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+
+        /* Spotlight Effect on Brand Name */
+        .hero-title-accent {
+            color: #8B0000;
+            position: relative;
+            display: inline;
+            background: linear-gradient(120deg, #8B0000 0%, #c0392b 50%, #8B0000 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: spotlightShimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes spotlightShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-title-accent::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 2px;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, rgba(139, 0, 0, 0.2), rgba(192, 57, 43, 0.25), rgba(139, 0, 0, 0.2));
+            border-radius: 4px;
+            z-index: -1;
+        }
+
+        .hero-desc {
+            font-size: 1.05rem;
+            color: #5a4a3a;
+            line-height: 1.7;
+            margin-bottom: 32px;
+            max-width: 480px;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-desc { margin: 0 auto 32px; }
+            .hero-content { margin: 0 auto; }
+        }
+
+        .hero-cta-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-cta-row { justify-content: center; }
+        }
+
+        .hero-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #8B0000;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.25);
+        }
+
+        .hero-btn-primary:hover {
+            background: #1a120b;
+            transform: translateY(-2px);
+            box-shadow: 0 14px 40px rgba(0,0,0,0.2);
+        }
+
+        .hero-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a120b;
+            border: 1.5px solid rgba(26, 18, 11, 0.18);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.5);
+        }
+
+        .hero-btn-secondary:hover {
+            background: rgba(255,255,255,0.85);
+            border-color: rgba(26, 18, 11, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Right: Bento Grid — 2x2 diagonal photos */
+        .hero-right-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 14px;
+            position: relative;
+            min-height: 420px;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-right-grid {
+                grid-template-columns: 1.2fr 0.8fr;
+                max-width: 560px;
+                margin: 0 auto;
+                min-height: 360px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-right-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                gap: 12px;
+                min-height: unset;
+            }
+        }
+
+        /* Shared Image Wrapper */
+        .grid-img-wrap {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .grid-main-img {
+            width: 100%;
+            height: 100%;
+            min-height: 180px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .grid-img-wrap:hover .grid-main-img {
+            transform: scale(1.04);
+        }
+
+        @media (max-width: 640px) {
+            .grid-main-img { min-height: 160px; }
+        }
+
+        /* Stat Card — top-right */
+        .grid-stat-card {
+            background: #1a120b;
+            border-radius: 20px;
+            padding: 24px 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+        }
+
+        .grid-stat-card::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(139, 0, 0, 0.25);
+        }
+
+        .grid-stat-num {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+            position: relative;
             z-index: 1;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-            isolation: isolate;
+        }
+
+        .grid-stat-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .grid-stat-avatars {
+            display: flex;
+            margin-top: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .g-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ddd 0%, #bbb 100%);
+            border: 2px solid #1a120b;
+            margin-left: -8px;
+        }
+
+        .g-avatar:first-child { margin-left: 0; }
+        .g-avatar:nth-child(2) { background: linear-gradient(135deg, #ccc 0%, #aaa 100%); }
+        .g-avatar:nth-child(3) { background: linear-gradient(135deg, #bbb 0%, #999 100%); }
+
+        .g-avatar-more {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #8B0000;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            border: 2px solid #1a120b;
+            margin-left: -8px;
+        }
+
+        /* Trust Card — bottom-left */
+        .grid-trust-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+            background: white;
+            border-radius: 20px;
+            padding: 22px 20px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+            position: relative;
+        }
+
+        .g-trust-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(139, 0, 0, 0.08);
+            color: #8B0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .g-trust-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a120b;
+        }
+
+        .g-trust-sub {
+            font-size: 12px;
+            color: #888;
+            font-weight: 500;
+        }
+
+        /* Promo Card - now hidden, merged into trust row */
+        .grid-promo-card {
+            display: none;
         }
 
         .hero-accent-kuah::before {
             content: '';
             position: absolute;
             z-index: -1;
-            left: -0.1em;
-            right: -0.12em;
+            left: 10%;
+            right: 14%;
             top: 50%;
             bottom: -0.14em;
             transform: translateY(-50%) rotate(-1.5deg);
@@ -1081,46 +1367,88 @@
     @include('partials.navbar')
     @include('partials.review-readmore')
 
-    <!-- HERO -->
-    <section id="home" class="relative min-h-screen overflow-hidden">
-        <!-- Background Container -->
-        <div class="absolute inset-0">
-            <div id="bg1" class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
-                <img src="bg_home.png" alt="Bakso Bunderan Ciomas" class="absolute inset-0 w-full h-full object-cover" />
-            </div>
-        </div>
-        
-        <!-- Overlay untuk text readability -->
-        <div class="absolute inset-0 bg-black/45 z-10"></div>
-        
-        <!-- Content -->
-        <div class="relative z-20 min-h-screen flex items-center justify-center pt-24 sm:pt-28">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 text-white text-center">
-                <div class="max-w-3xl mx-auto">
-                    <p class="inline-flex items-center justify-center gap-2 mb-4 px-1 text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase text-[#f8e9cf] fade-in-up w-full">
-                        <span class="w-2 h-2 rounded-full bg-[#f4c95d]"></span>
-                        Selamat Datang di Cita Rasa Legendaris
+    <!-- GROWTIM-STYLE HERO SECTION -->
+    <section id="home" class="hero-growtim-section">
+        <div class="container mx-auto px-6">
+            <div class="hero-growtim-grid">
+
+                <!-- Left: Content -->
+                <div class="hero-content fade-in-up">
+                    <div class="hero-badge">
+                        <span class="hero-badge-dot"></span>
+                        Legendaris Sejak 2012
+                    </div>
+
+                    <h1 class="hero-title">
+                        Cita Rasa Autentik<br>
+                        <span class="hero-title-accent">Bakso Bunderan Ciomas</span>
+                    </h1>
+
+                    <p class="hero-desc">
+                        Kelezatan warisan dalam satu mangkuk. Dibuat dari bahan pilihan terbaik dengan resep turun-temurun yang konsisten lezat dan 100% Halal.
                     </p>
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl leading-tight mb-4 font-bold fade-in-up" style="animation-delay: 0.15s">
-                        Bakso Bunderan Ciomas
-                    </h2>
-                    <p class="mb-8 text-base sm:text-lg font-poppins text-white/95 fade-in-up max-w-2xl mx-auto" style="animation-delay: 0.3s">Nikmati semangkuk bakso gurih halal dengan racikan autentik yang konsisten sejak lama, cocok untuk keluarga dan momen hangat bersama.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-stretch max-w-xl mx-auto fade-in-up" style="animation-delay: 0.45s">
-                        <button onclick="window.location.href='{{ route('menu.public') }}'" class="w-full min-h-[48px] sm:min-h-[52px] inline-flex items-center justify-center gap-2 bg-[#b42318] px-5 sm:px-6 py-3 rounded-xl font-semibold text-sm sm:text-base tracking-wide text-white shadow-lg shadow-[#5a1a12]/35 transition-all duration-300 hover:bg-white hover:text-[#b42318] hover:-translate-y-0.5 hover:shadow-2xl hover:brightness-100 font-poppins btn-animated hover-scale text-center border border-transparent hover:border-[#b42318]">
-                            <i class="fas fa-utensils text-sm"></i>
-                            <span>LIHAT MENU</span>
-                        </button>
-                        <button onclick="document.getElementById('lokasi')?.scrollIntoView({ behavior: 'smooth' })" class="w-full min-h-[48px] sm:min-h-[52px] inline-flex items-center justify-center gap-2 bg-white/90 text-[#b42318] px-5 sm:px-6 py-3 rounded-xl font-semibold text-sm sm:text-base tracking-wide border border-white/80 shadow-md shadow-black/10 transition-all duration-300 hover:bg-[#b42318] hover:text-white hover:-translate-y-0.5 hover:shadow-2xl hover:border-[#b42318] font-poppins btn-animated hover-scale text-center">
-                            <i class="fas fa-location-dot text-sm"></i>
-                            <span>LOKASI KAMI</span>
-                        </button>
+
+                    <div class="hero-cta-row">
+                        <a href="{{ route('menu.public') }}" class="hero-btn-primary">
+                            <span>Pesan Sekarang</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="{{ route('pages.tentang') }}" class="hero-btn-secondary">
+                            <span>Tentang BBC</span>
+                        </a>
                     </div>
                 </div>
+
+                <!-- Right: Bento Grid (diagonal 2-photo) -->
+                <div class="hero-right-grid fade-in-up" style="animation-delay: 0.2s">
+                    <!-- Top-Left: Photo 1 -->
+                    <div class="grid-img-wrap">
+                        <img src="{{ asset('bg_home.png') }}" alt="Signature Bakso BBC" class="grid-main-img" onerror="this.src='https://placehold.co/600x450/8B0000/fff?text=Bakso+BBC'" />
+                    </div>
+
+                    <!-- Top-Right: Stats Card -->
+                    <div class="grid-stat-card">
+                        <div class="grid-stat-num">10rb+</div>
+                        <div class="grid-stat-label">Pelanggan Puas</div>
+                        <div class="grid-stat-avatars">
+                            <div class="g-avatar"></div>
+                            <div class="g-avatar"></div>
+                            <div class="g-avatar"></div>
+                            <div class="g-avatar-more">+</div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom-Left: Trust / Halal Card -->
+                    <div class="grid-trust-card">
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div class="g-trust-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div>
+                                <div class="g-trust-title">Sertifikasi Halal</div>
+                                <div class="g-trust-sub">100% Dijamin</div>
+                            </div>
+                        </div>
+                        <div style="height:1px;background:rgba(0,0,0,0.06);"></div>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div class="g-trust-icon" style="background:rgba(218,165,32,0.1);color:#b8860b;">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div>
+                                <div class="g-trust-title">Legendaris</div>
+                                <div class="g-trust-sub">Sejak 2012</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom-Right: Photo 2 -->
+                    <div class="grid-img-wrap">
+                        <img src="{{ asset('about.jpeg') }}" alt="Suasana Bakso BBC" class="grid-main-img" onerror="this.src='https://placehold.co/600x450/1a120b/fff?text=Suasana+BBC'" />
+                    </div>
+                </div>
+
             </div>
         </div>
-        
-        <!-- Background Selector Dots -->
-        
     </section>
 
     <!-- PAKET ACARA -->
@@ -1324,9 +1652,9 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8">
                     @forelse(($influencerTestimonials ?? collect()) as $idx => $influencer)
                         <a href="{{ $influencer->youtube_url }}" target="_blank" rel="noopener" class="group block fade-up" style="transition-delay: {{ number_format($idx * 0.08, 2) }}s;">
-                            <article class="relative bg-white rounded-[1.25rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-black/5 hover:border-red-900/20 hover:-translate-y-1.5 h-full flex flex-col">
-                                <div class="relative overflow-hidden aspect-video">
-                                    <img src="{{ $influencer->thumbnail_url }}" alt="Influencer" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                            <article class="relative bg-white rounded-[1.25rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-black/5 hover:border-red-900/20 hover:-translate-y-1.5 h-full flex flex-col isolation-isolate">
+                                <div class="relative overflow-hidden aspect-video rounded-t-[1.25rem]">
+                                    <img src="{{ $influencer->thumbnail_url }}" alt="Influencer" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 no-photo-hover" />
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100"></div>
                                     
                                     <div class="absolute top-4 left-4">

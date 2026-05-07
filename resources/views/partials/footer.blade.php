@@ -1,91 +1,255 @@
-<footer class="bg-[#26180f] text-[#EFE1D1] pt-16 pb-8 relative overflow-hidden border-t-4 border-red-800 mt-auto">
-    <!-- Decorative subtle background blob -->
-    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-red-900/20 rounded-full blur-[80px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
-    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-900/10 rounded-full blur-[80px] pointer-events-none translate-y-1/3 -translate-x-1/4"></div>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 items-start mb-12">
-            
-            <!-- Brand Info -->
-            <div class="lg:col-span-4 flex flex-col items-center sm:items-start text-center sm:text-left">
-                <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-4">
-                    <div class="w-24 h-25 sm:w-28 sm:h-26 bg-white rounded-lg p-2 shadow-xl flex items-center justify-center shrink-0 overflow-hidden hover:scale-105 transition-transform duration-300">
-                        <img src="{{ asset('logo.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/150x150/8B0000/ffffff?text=BBC';" alt="Bakso Bunderan Ciomas" class="w-full h-full object-contain" />
-                    </div>
-                    <div class="leading-none text-left font-poppins pt-2">
-                        <div class="text-xl font-bold tracking-widest text-[#EFE1D1] uppercase">Bakso</div>
-                        <div class="text-xl font-bold tracking-widest text-[#EFE1D1] uppercase">Bunderan</div>
-                        <div class="text-xl font-bold tracking-widest text-red-600 uppercase">Ciomas</div>
-                    </div>
-                </div>
-            </div>
+<footer class="site-footer">
 
-            <!-- Alamat -->
-            <div class="lg:col-span-3 flex flex-col items-center sm:items-start text-center sm:text-left">
-                <h4 class="text-white font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    Alamat
-                </h4>
-                <div class="text-gray-300 text-sm leading-relaxed space-y-1.5">
-                    <p>Jl. Vihara Ciomas, Ciomas</p>
-                    <p>Rahayu, Kec. Ciomas,</p>
-                    <p>Kabupaten Bogor, Jawa Barat</p>
-                    <p class="font-bold text-white pt-1">16610</p>
-                </div>
-            </div>
-
-            <!-- Kontak -->
-            <div class="lg:col-span-3 flex flex-col items-center sm:items-start text-center sm:text-left">
-                <h4 class="text-white font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center">
-                        <i class="fas fa-phone-alt"></i>
-                    </div>
-                    Kontak
-                </h4>
-                <div class="text-gray-300 text-sm space-y-4">
-                    <a href="tel:0852xxxxxxxx" class="flex items-center gap-3 hover:text-white transition-colors group">
-                        <i class="fab fa-whatsapp text-xl text-gray-500 group-hover:text-green-500 transition-colors"></i>
-                        <span class="font-medium tracking-wide">0852xxxxxxxx</span>
-                    </a>
-                    <a href="mailto:baksobunderan@gmail.com" class="flex items-start gap-3 hover:text-white transition-colors group">
-                        <i class="fas fa-envelope text-xl text-gray-500 group-hover:text-red-500 transition-colors mt-1"></i>
-                        <span class="font-medium tracking-wide leading-tight">
-                            baksobunderan<br>@gmail.com
-                        </span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Media Sosial -->
-            <div class="lg:col-span-2 flex flex-col items-center sm:items-start text-center sm:text-left">
-                <h4 class="text-white font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    Sosial
-                </h4>
-                <div class="flex items-center gap-3">
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-gray-300 hover:bg-gradient-to-tr hover:from-pink-600 hover:to-purple-600 hover:text-white hover:border-transparent hover:-translate-y-1 transition-all duration-300 shadow-lg" aria-label="Instagram">
-                        <i class="fab fa-instagram text-lg"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-gray-300 hover:bg-[#1877F2] hover:text-white hover:border-transparent hover:-translate-y-1 transition-all duration-300 shadow-lg" aria-label="Facebook">
-                        <i class="fab fa-facebook-f text-lg"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-gray-300 hover:bg-black hover:text-white hover:border-transparent hover:-translate-y-1 transition-all duration-300 shadow-lg" aria-label="TikTok">
-                        <i class="fab fa-tiktok text-lg"></i>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Bottom Bar -->
-        <div class="border-t border-white/10 pt-8 flex flex-col items-center justify-center text-center">
-            <p class="text-gray-500 text-xs sm:text-sm font-medium tracking-wide">
-                &copy; {{ date('Y') }} Bakso Bunderan Ciomas. Hak Cipta Dilindungi.
-            </p>
+    <!-- Large Statement -->
+    <div class="footer-statement">
+        <div class="footer-w">
+            <p class="statement-label">Bakso Bunderan Ciomas</p>
+            <h2 class="statement-text">
+                Setiap mangkuk<br>punya cerita.
+            </h2>
+            <a href="/lokasi-kontak" class="statement-link">
+                Kunjungi outlet kami
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </a>
         </div>
     </div>
+
+    <!-- Divider -->
+    <div class="footer-w"><div class="footer-line"></div></div>
+
+    <!-- Info Row -->
+    <div class="footer-info">
+        <div class="footer-w">
+            <div class="info-grid">
+
+                <div class="info-col">
+                    <span class="info-label">Lokasi</span>
+                    <p>Jl. Vihara Ciomas,<br>Ciomas Rahayu, Kec. Ciomas<br>Kab. Bogor, Jawa Barat 16610</p>
+                </div>
+
+                <div class="info-col">
+                    <span class="info-label">Jam Buka</span>
+                    <p>Senin — Sabtu<br>10:00 — 21:00 WIB</p>
+                    <p class="info-note">Minggu & hari libur nasional tutup</p>
+                </div>
+
+                <div class="info-col">
+                    <span class="info-label">Kontak</span>
+                    <p>
+                        <a href="https://wa.me/6285200000000">0852-xxxx-xxxx</a><br>
+                        <a href="mailto:baksobunderan@gmail.com">baksobunderan@gmail.com</a>
+                    </p>
+                </div>
+
+                <div class="info-col">
+                    <span class="info-label">Sosial</span>
+                    <div class="social-links">
+                        <a href="#">Instagram</a>
+                        <a href="#">TikTok</a>
+                        <a href="#">Facebook</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="footer-w"><div class="footer-line"></div></div>
+    <div class="footer-bottom-row">
+        <div class="footer-w">
+            <div class="bottom-flex">
+                <span>&copy; {{ date('Y') }} Bakso Bunderan Ciomas</span>
+                <div class="bottom-links">
+                    <a href="/home">Beranda</a>
+                    <a href="/menu">Menu</a>
+                    <a href="/tentang-bbc">Tentang</a>
+                    <a href="/lokasi-kontak">Kontak</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </footer>
+
+<style>
+.site-footer {
+    background: #1a120b;
+    color: #8a7b6a;
+    font-family: 'Poppins', sans-serif;
+    margin-top: auto;
+}
+
+.footer-w {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+.footer-line {
+    height: 1px;
+    background: #2e2218;
+}
+
+/* Statement */
+.footer-statement {
+    padding: 80px 0 60px;
+}
+
+.statement-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6a5a48;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0 0 24px;
+}
+
+.statement-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    color: #EFE1D1;
+    line-height: 1.1;
+    margin: 0 0 40px;
+    letter-spacing: -1px;
+}
+
+.statement-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #8b0000;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid #8b0000;
+    padding-bottom: 4px;
+    transition: gap 0.3s, color 0.3s;
+}
+
+.statement-link:hover {
+    gap: 16px;
+    color: #c44;
+}
+
+/* Info */
+.footer-info {
+    padding: 48px 0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+}
+
+.info-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #6a5a48;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+}
+
+.info-col p {
+    font-size: 14px;
+    color: #8a7b6a;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.info-col a {
+    color: #8a7b6a;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.info-col a:hover {
+    color: #EFE1D1;
+}
+
+.info-note {
+    margin-top: 8px !important;
+    font-size: 12px !important;
+    color: #5a4a38 !important;
+    font-style: italic;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.social-links a {
+    font-size: 14px;
+    color: #8a7b6a;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.social-links a:hover {
+    color: #EFE1D1;
+}
+
+/* Bottom */
+.footer-bottom-row {
+    padding: 24px 0;
+}
+
+.bottom-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bottom-flex span {
+    font-size: 12px;
+    color: #4a3d30;
+}
+
+.bottom-links {
+    display: flex;
+    gap: 24px;
+}
+
+.bottom-links a {
+    font-size: 12px;
+    color: #4a3d30;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.bottom-links a:hover {
+    color: #EFE1D1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-statement { padding: 56px 0 40px; }
+    .statement-text { letter-spacing: -0.5px; }
+
+    .info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+
+    .bottom-flex {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .bottom-links { gap: 16px; }
+}
+
+@media (max-width: 480px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .footer-w { padding: 0 20px; }
+}
+</style>

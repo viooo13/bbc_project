@@ -272,3 +272,19 @@
         </div>
     </div>
 </aside>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const alerts = document.querySelectorAll('.alert, .auth-alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.style.transition = 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                alert.style.opacity = '0';
+                alert.style.transform = 'translateY(-12px)';
+                setTimeout(() => {
+                    alert.remove();
+                }, 600);
+            }, 3000);
+        });
+    });
+</script>
