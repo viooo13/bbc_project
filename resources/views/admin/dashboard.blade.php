@@ -597,13 +597,6 @@
                     <h1 class="font-bold">Dashboard</h1>
                     <p>Selamat datang di Admin Panel BBC</p>
                 </div>
-                <form id="logoutForm" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-                <button class="logout-btn" onclick="document.getElementById('logoutForm').submit();">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </button>
             </header>
 
             <!-- Stats Cards -->

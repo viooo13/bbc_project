@@ -388,25 +388,16 @@
     <main class="main-content">
         <header class="page-header">
             <div>
-                <h1>Manajemen Testimoni</h1>
-                <p>Kelola Testimoni Influencer dan Ulasan Pelanggan dari backend.</p>
+                <h1>Testimoni Influencer</h1>
+                <p>Kelola testimoni dari influencer dan media partner.</p>
             </div>
             <div class="header-actions">
-                <form id="logoutForm" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
                 <a href="{{ route('admin.testimoni.influencer.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Tambah Influencer</a>
-                <button class="btn btn-danger" onclick="document.getElementById('logoutForm').submit();"><i class="fas fa-sign-out-alt"></i>Logout</button>
             </div>
         </header>
 
-        <form method="GET" action="{{ route('admin.testimoni.index') }}" class="search-form">
-            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari testimoni...">
-            <select name="type">
-                <option value="">Semua Tipe</option>
-                <option value="influencer" {{ request('type') === 'influencer' ? 'selected' : '' }}>Influencer</option>
-                <option value="customer" {{ request('type') === 'customer' ? 'selected' : '' }}>Pelanggan</option>
-            </select>
+        <form class="filter-form" method="GET" action="{{ route('admin.testimoni.index') }}">
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari influencer...">
             <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i>Terapkan</button>
             <a class="btn btn-reset" href="{{ route('admin.testimoni.index') }}"><i class="fas fa-rotate"></i>Reset</a>
         </form>
@@ -466,51 +457,6 @@
             </div>
         </section>
 
-        <section class="content-section">
-            <h2>Ulasan Pelanggan</h2>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <th>Rating</th>
-                            <th>Ulasan</th>
-                            <th>Balasan Admin</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($customerTestimonials as $item)
-                        <tr>
-                            <td><strong>{{ $item->customer_name }}</strong><div class="muted">{{ optional($item->created_at)->format('d M Y H:i') }}</div></td>
-                            <td><span class="rating-stars">{{ str_repeat('★', (int)$item->rating) }}{{ str_repeat('☆', max(0, 5 - (int)$item->rating)) }}</span></td>
-                            <td>{{ $item->content }}</td>
-                            <td>
-                                <form class="reply-form" method="POST" action="{{ route('admin.testimoni.customer.reply', $item->id) }}">
-                                    @csrf
-                                    <textarea name="admin_reply" placeholder="Tulis balasan admin...">{{ old('admin_reply', $item->admin_reply) }}</textarea>
-                                    <button class="btn btn-primary" type="submit"><i class="fas fa-reply"></i>Simpan Balasan</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form method="POST" action="{{ route('admin.testimoni.customer.destroy', $item->id) }}" onsubmit="return confirm('Hapus ulasan pelanggan ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i>Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr><td colspan="5" class="muted">Belum ada ulasan pelanggan.</td></tr>
-                    @endforelse
-                    </tbody>
-                </table>
-            </div>
-
-            <div style="margin-top: 10px;">
-                {{ $customerTestimonials->links('pagination::bootstrap-4') }}
-            </div>
-        </section>
     </main>
 </div>
 </body>

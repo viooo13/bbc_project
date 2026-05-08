@@ -457,6 +457,10 @@ document.addEventListener('DOMContentLoaded', function() {
             moveActiveBtn(activeBtn);
             activeBtn.classList.add('text-white');
 
+            // Force reflow to apply styles without transition
+            navBtns.forEach(btn => btn.offsetHeight);
+            activeBg.offsetHeight;
+
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     navBtns.forEach(btn => {
@@ -481,8 +485,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 activeBg.style.opacity = '1';
                 moveActiveBtn(this);
                 navBtns.forEach(b => b.classList.remove('text-white'));
-                this.classList.add('text-white');
-                setTimeout(() => window.location.href = url, 150);
+                // Delay text-white until slider arrives (sync with transition)
+                setTimeout(() => {
+                    this.classList.add('text-white');
+                }, 400);
+                setTimeout(() => window.location.href = url, 550);
             });
         });
     }

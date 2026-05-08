@@ -715,13 +715,6 @@
                     <p>Kelola pesanan dari pelanggan</p>
                 </div>
                 <div class="header-actions">
-                    <form id="logoutForm" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                    <button class="logout-btn" onclick="document.getElementById('logoutForm').submit();">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
                 </div>
             </header>
 

@@ -473,13 +473,6 @@
                         <i class="fas fa-file-excel"></i>
                         Export Excel
                     </a>
-                    <form id="logoutForm" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                    <button class="logout-btn" onclick="document.getElementById('logoutForm').submit();">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
                 </div>
             </header>
 

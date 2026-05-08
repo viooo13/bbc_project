@@ -40,11 +40,6 @@ Route::post('/forgot-password-admin', [AuthController::class, 'sendAdminOtp'])->
 Route::get('/forgot-password-admin/verify', [AuthController::class, 'showAdminOtpVerify'])->name('admin.password.verify');
 Route::post('/forgot-password-admin/verify', [AuthController::class, 'verifyAdminOtp'])->name('admin.password.verify.post');
 
-// Admin Change Password (dashboard)
-Route::get('/admin/change-password', [AuthController::class, 'showAdminChangePassword'])->name('admin.change-password')->middleware(['auth:admin', 'admin']);
-Route::post('/admin/change-password', [AuthController::class, 'adminChangePassword'])->name('admin.change-password.update')->middleware(['auth:admin', 'admin']);
-
-
 // Backwards-compatible user-specific routes
 Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.login');
 Route::get('/user/register', [AuthController::class, 'showRegister'])->name('user.register');
@@ -244,6 +239,7 @@ Route::middleware(['auth:admin', 'admin'])->group(function () {
 
         // Testimoni Management Routes (Admin)
         Route::get('/testimoni', [AdminTestimonialController::class, 'index'])->name('admin.testimoni.index');
+        Route::get('/testimoni/ulasan', [AdminTestimonialController::class, 'indexUlasan'])->name('admin.testimoni.ulasan');
         Route::get('/testimoni/influencer/create', [AdminTestimonialController::class, 'createInfluencer'])->name('admin.testimoni.influencer.create');
         Route::post('/testimoni/influencer', [AdminTestimonialController::class, 'storeInfluencer'])->name('admin.testimoni.influencer.store');
         Route::get('/testimoni/influencer/{id}/edit', [AdminTestimonialController::class, 'editInfluencer'])->name('admin.testimoni.influencer.edit');

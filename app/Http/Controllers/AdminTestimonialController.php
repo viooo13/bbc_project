@@ -105,6 +105,24 @@ class AdminTestimonialController extends Controller
         return redirect()->route('admin.testimoni.index')->with('success', 'Testimoni influencer berhasil dihapus.');
     }
 
+    public function indexUlasan(Request $request)
+    {
+        $q = trim((string) $request->query('q', ''));
+
+        $ulasanQuery = Testimonial::query();
+
+        if ($q !== '') {
+            $ulasanQuery->where(function ($sub) use ($q) {
+                $sub->where('name', 'like', "%{$q}%")
+                    ->orWhere('review', 'like', "%{$q}%");
+            });
+        }
+
+        $customerTestimonials = $ulasanQuery->orderByDesc('created_at')->paginate(10)->withQueryString();
+
+        return view('admin.testimoni.ulasan', compact('customerTestimonials', 'q'));
+    }
+
     public function replyCustomer(Request $request, $id)
     {
         $validated = $request->validate([
