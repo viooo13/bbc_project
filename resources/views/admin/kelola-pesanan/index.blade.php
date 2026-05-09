@@ -4,30 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Kelola Pesanan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #8B0000;
             --primary-soft: #a70f0f;
-            --secondary: #DAA520;
-            --cream: #ffffff;
-            --surface: #fffaf4;
-            --surface-2: #ffffff;
-            --text-main: #2D3748;
-            --text-soft: #6b7280;
-            --line: #e2e8f0;
-            --shadow-soft: 0 10px 24px rgba(139, 0, 0, 0.08);
-            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--cream);
-            color: var(--text-main);
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
         }
 
         .dashboard-container {
@@ -38,104 +35,163 @@
         .main-content {
             flex: 1;
             margin-left: 272px;
-            padding: 30px;
-            background: transparent;
+            padding: 32px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         .page-header {
-            margin-bottom: 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            margin-bottom: 28px;
         }
 
         .page-header h1 {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0;
+            color: var(--text);
+            letter-spacing: -0.3px;
         }
 
         .page-header p {
-            color: var(--text-soft);
-            font-size: 16px;
-            margin-bottom: 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 4px;
         }
 
         .layout {
             display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 24px;
+            grid-template-columns: 1fr 280px;
+            gap: 20px;
             align-items: start;
         }
 
         .card {
-            background: var(--surface-2);
-            border-radius: 16px;
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
             padding: 24px;
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--line);
+            margin-bottom: 20px;
         }
 
-        .card h2 {
-            font-size: 18px;
+        .card-title {
+            font-size: 16px;
             font-weight: 600;
+            color: var(--text);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title i {
             color: var(--primary);
+        }
+
+        /* ── Alert ── */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .alert-success { background-color: #ecfdf5; color: #059669; border: 1px solid #d1fae5; }
+        .alert-error { background-color: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; }
+
+        /* ── Filter Bar ── */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
             margin-bottom: 16px;
         }
 
-        .table-container {
-            overflow-x: auto;
+        .filter-bar input,
+        .filter-bar select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
         }
 
-        table {
+        .filter-bar input:focus,
+        .filter-bar select:focus { border-color: var(--primary); }
+        .filter-bar input { flex: 1; min-width: 220px; }
+        .filter-bar select { min-width: 140px; }
+
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-soft); }
+        .btn-secondary { background: #f1f5f9; color: #475569; }
+        .btn-secondary:hover { background: #e2e8f0; }
+
+        /* ── Table ── */
+        .data-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        th {
+        .data-table th {
+            padding: 10px 14px;
             text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table td {
             padding: 14px;
-            background: #fff3e4;
-            border-bottom: 2px solid var(--line);
             font-size: 13px;
-            color: var(--text-main);
+            color: var(--text);
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
+        }
+
+        .data-table tbody tr:hover { background: #f8fafc; }
+        .data-table tbody tr:last-child td { border-bottom: none; }
+
+        /* ── Badges ── */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
 
-        td {
-            padding: 14px;
-            border-bottom: 1px solid var(--line);
-            font-size: 14px;
-            color: var(--text-main);
-        }
+        .badge-selesai { background: #dcfce7; color: #166534; }
+        .badge-proses { background: #fef9c3; color: #854d0e; }
+        .badge-dikirim { background: #dbeafe; color: #1e40af; }
+        .badge-cancel { background: #fee2e2; color: #991b1b; }
 
-        tr:hover {
-            background-color: #fffaf2;
-        }
-
-        tr:last-child td { border-bottom: none; }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .status-badge.selesai { background: #d4edda; color: #155724; }
-        .status-badge.proses { background: #fff3cd; color: #856404; }
-        .status-badge.dikirim { background: #cce5ff; color: #004085; }
-        .status-badge.cancel { background: #f8d7da; color: #721c24; }
-
+        /* ── Action Buttons ── */
         .action-buttons {
             display: flex;
             gap: 6px;
@@ -143,74 +199,120 @@
         }
 
         .btn-sm {
-            padding: 5px 10px;
+            padding: 6px 10px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-family: inherit;
             display: inline-flex;
             align-items: center;
             gap: 4px;
+            transition: all 0.2s;
             text-decoration: none;
-            line-height: 1;
         }
 
-        .btn-sm:hover {
-            transform: translateY(-1px);
+        .btn-sm:hover { filter: brightness(0.95); }
+        .btn-confirm { background: #ecfdf5; color: #059669; border: 1px solid #d1fae5; }
+        .btn-reject { background: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; }
+        .btn-ship { background: #fffbeb; color: #d97706; border: 1px solid #fef3c7; }
+        .btn-paid { background: #f0fdf4; color: #16a34a; border: 1px solid #dcfce7; }
+        .btn-complete { background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
+
+        /* ── Quick Actions ── */
+        .action-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .btn-confirm { background-color: #4caf50; color: #fff; }
-        .btn-confirm:hover { background-color: #45a049; }
+        .action-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+            background: var(--bg);
+            border: 1px solid var(--border-light);
+            transition: all 0.2s;
+        }
 
-        .btn-reject { background-color: #f44336; color: #fff; }
-        .btn-reject:hover { background-color: #da190b; }
+        .action-link:hover {
+            border-color: var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
 
-        .btn-ship { background-color: #ff9800; color: #fff; }
-        .btn-ship:hover { background-color: #e68900; }
+        .action-link .action-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
 
-        .btn-paid { background-color: #22c55e; color: #fff; }
-        .btn-paid:hover { filter: brightness(1.03); }
+        .action-link.red .action-icon { background: #fef2f2; color: var(--primary); }
+        .action-link.green .action-icon { background: #ecfdf5; color: #059669; }
 
-        .btn-complete { background-color: #2196f3; color: #fff; }
-        .btn-complete:hover { background-color: #1e88e5; }
+        /* ── Explanation Box ── */
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #1e3a8a;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            line-height: 1.5;
+        }
+        .info-box i { font-size: 16px; margin-top: 2px; }
 
+        /* ── Modals ── */
         .modal {
             display: none;
             position: fixed;
             z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
         }
 
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .modal.active { display: flex; align-items: center; justify-content: center; }
 
         .modal-content {
-            background: white;
+            background: var(--surface);
             border-radius: 16px;
             width: 90%;
-            max-width: 520px;
-            box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+            max-width: 480px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            animation: modalFadeIn 0.2s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .modal-header {
             padding: 20px 24px;
-            border-bottom: 1px solid var(--line);
+            border-bottom: 1px solid var(--border-light);
         }
 
         .modal-header h2 {
-            font-size: 18px;
+            font-size: 16px;
             margin: 0;
-            color: var(--primary);
+            color: var(--text);
             font-weight: 600;
         }
 
@@ -221,245 +323,65 @@
             font-size: 13px;
             font-weight: 600;
             margin-bottom: 8px;
-            color: var(--text-main);
+            color: var(--text);
         }
 
         .form-group textarea {
             width: 100%;
-            min-height: 90px;
-            padding: 10px 12px;
-            border: 1px solid #e2e8f0;
+            min-height: 100px;
+            padding: 12px;
+            border: 1px solid var(--border);
             border-radius: 8px;
             font-family: inherit;
             font-size: 13px;
             outline: none;
+            transition: border-color 0.2s;
         }
 
+        .form-group textarea:focus { border-color: var(--primary); }
+
         .modal-footer {
-            padding: 14px 18px;
-            border-top: 1px solid #e9ecef;
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-light);
             display: flex;
             justify-content: flex-end;
             gap: 10px;
+            background: var(--bg);
         }
 
-        .btn-close {
-            background: #e2e8f0;
-            color: #334155;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        .btn-action {
-            background: #f44336;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        .quick {
-            position: sticky;
-            top: 20px;
-        }
-
-        .quick .btn {
-            width: 100%;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 12px;
-            font-weight: 800;
-            font-size: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-            text-decoration: none;
-        }
-
-        .btn-red { background: #a10c0c; color: #fff; }
-        .btn-red:hover { filter: brightness(1.05); transform: translateY(-1px); }
-
-        .btn-green { background: #22c55e; color: #fff; }
-        .btn-green:hover { filter: brightness(1.05); transform: translateY(-1px); }
-
-        .stack { display: grid; gap: 12px; }
-
-        @media (max-width: 992px) {
-            .layout { grid-template-columns: 1fr; }
-            .quick { position: static; }
-        }
-
-        /* Pagination Styling - Compact */
-        .pagination {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            gap: 3px;
-            flex-wrap: wrap;
-        }
-        .pagination li {
-            display: inline-flex;
-        }
+        /* ── Pagination ── */
+        .pagination { display: flex; list-style: none; padding: 0; margin: 16px 0 0; gap: 4px; flex-wrap: wrap; }
+        .pagination li { display: inline-flex; }
         .pagination li a,
         .pagination li span {
-            padding: 5px 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-            background: #fff;
-            transition: all 0.15s ease;
-            min-width: 32px;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
+            padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+            color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500;
+            background: var(--surface); transition: all 0.15s; min-width: 32px; text-align: center;
         }
-        .pagination li.active span {
-            background: #2c3e50;
-            color: #fff;
-            border-color: #2c3e50;
-        }
-        .pagination li a:hover {
-            background: #e9ecef;
-            color: #2c3e50;
-            border-color: #adb5bd;
-        }
-        .pagination li.disabled span {
-            color: #adb5bd;
-            background: #f8f9fa;
-            cursor: not-allowed;
-        }
-        .pagination li:first-child a,
-        .pagination li:first-child span,
-        .pagination li:last-child a,
-        .pagination li:last-child span {
-            padding: 5px 8px;
-        }
-        /* Bootstrap 4 pagination compatibility */
-        .pagination .page-item {
-            display: inline-flex;
-        }
+        .pagination li.active span { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .pagination li a:hover { background: #f1f5f9; color: var(--text); }
+        .pagination li.disabled span { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
+        .pagination .page-item { display: inline-flex; }
         .pagination .page-link {
-            padding: 5px 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-            background: #fff;
-            transition: all 0.15s ease;
-            min-width: 32px;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            margin: 0 2px;
+            padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+            color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500;
+            background: var(--surface); transition: all 0.15s; min-width: 32px; text-align: center; margin: 0 2px;
         }
-        .pagination .page-item.active .page-link {
-            background: #2c3e50;
-            color: #fff;
-            border-color: #2c3e50;
-        }
-        .pagination .page-item.disabled .page-link {
-            color: #adb5bd;
-            background: #f8f9fa;
-            cursor: not-allowed;
-        }
+        .pagination .page-item.active .page-link { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .pagination .page-item.disabled .page-link { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
 
-        /* Responsive Design */
         @media (max-width: 992px) {
-            .main-content {
-                margin-left: 0;
-                padding: 20px;
-            }
-            
-            .dashboard-container {
-                flex-direction: column;
-            }
-
-            .layout {
-                grid-template-columns: 1fr;
-            }
-
-            .quick {
-                position: static;
-            }
-
-            .page-header h1 {
-                font-size: 24px;
-            }
-
-            .page-header p {
-                font-size: 14px;
-            }
+            .main-content { margin-left: 0; padding: 20px; }
+            .dashboard-container { flex-direction: column; }
+            .layout { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
-            .main-content {
-                padding: 15px;
-            }
-
-            .card {
-                padding: 16px;
-            }
-
-            table th,
-            table td {
-                padding: 10px;
-                font-size: 12px;
-            }
-
-            .btn-sm {
-                padding: 4px 8px;
-                font-size: 11px;
-            }
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            table {
-                font-size: 11px;
-            }
-
-            table th,
-            table td {
-                padding: 8px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .btn-sm {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .status-badge {
-                font-size: 10px;
-                padding: 3px 8px;
-            }
-
-            .modal-content {
-                width: 95%;
-            }
+            .main-content { padding: 16px; }
+            .card { padding: 16px; }
+            .data-table th, .data-table td { padding: 10px; font-size: 12px; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .filter-bar input, .filter-bar select, .filter-bar button, .filter-bar a { width: 100%; }
         }
     </style>
 </head>
@@ -469,25 +391,46 @@
 
         <main class="main-content">
             <header class="page-header">
-                <div>
-                    <h1>Kelola Pesanan</h1>
-                    <p>Ringkasan pesanan terbaru dan history.</p>
-                </div>
+                <h1>Kelola Pesanan</h1>
+                <p>Pantau dan kelola seluruh transaksi pesanan pelanggan.</p>
             </header>
 
+            @if(session('success'))
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i> {{ session('success') }}
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
+                </div>
+            @endif
+
             <div class="layout">
-                <div class="stack">
+                <div class="main-column">
+                    
+                    <!-- INFO BOX MENGATASI KEBINGUNGAN -->
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Panduan Halaman:</strong> Halaman ini memisahkan <b>Pesanan Terbaru</b> (yang baru masuk dan butuh prioritas) di atas, dengan <b>Semua Riwayat Pesanan</b> (seluruh data yang bisa dicari) di bagian bawah. Tombol <b>Halaman Pesanan Lengkap</b> di kanan adalah alternatif jika Anda ingin melihat tabel pesanan dalam layar penuh.
+                        </div>
+                    </div>
+
+                    <!-- CARD 1: RECENT ORDERS -->
                     <section class="card">
-                        <h2>Info Pesanan Terbaru</h2>
-                        <div class="table-container">
-                            <table>
+                        <div class="card-title">
+                            <i class="fas fa-clock"></i> 5 Pesanan Terbaru
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table class="data-table">
                                 <thead>
                                     <tr>
                                         <th>ID Pesanan</th>
                                         <th>Pelanggan</th>
                                         <th>Total</th>
                                         <th>Status</th>
-                                        <th>Aksi</th>
+                                        <th style="width: 200px;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -495,17 +438,17 @@
                                         @php
                                             $status = (string) ($o->status ?? '');
                                             $label = 'Proses';
-                                            $badge = 'proses';
+                                            $badge = 'badge-proses';
 
-                                            if ($status === 'completed') { $label = 'Selesai'; $badge = 'selesai'; }
-                                            elseif ($status === 'shipped') { $label = 'Dikirim'; $badge = 'dikirim'; }
-                                            elseif ($status === 'rejected') { $label = 'Cancel'; $badge = 'cancel'; }
+                                            if ($status === 'completed') { $label = 'Selesai'; $badge = 'badge-selesai'; }
+                                            elseif ($status === 'shipped') { $label = 'Dikirim'; $badge = 'badge-dikirim'; }
+                                            elseif ($status === 'rejected') { $label = 'Cancel'; $badge = 'badge-cancel'; }
                                         @endphp
                                         <tr>
-                                            <td>{{ $o->order_id }}</td>
+                                            <td style="font-weight:500;">{{ $o->order_id }}</td>
                                             <td>{{ $o->customer_name }}</td>
-                                            <td>Rp {{ number_format((float) $o->total_price, 0, ',', '.') }}</td>
-                                            <td><span class="status-badge {{ $badge }}">{{ $label }}</span></td>
+                                            <td style="font-weight:600;">Rp {{ number_format((float) $o->total_price, 0, ',', '.') }}</td>
+                                            <td><span class="badge {{ $badge }}">{{ $label }}</span></td>
                                             <td>
                                                 <div class="action-buttons">
                                                     @if(($o->status ?? '') === 'pending')
@@ -513,18 +456,18 @@
                                                         <button class="btn-sm btn-reject" onclick="openRejectModal({{ $o->id }})"><i class="fas fa-times"></i> Tolak</button>
                                                     @elseif(($o->status ?? '') === 'confirmed')
                                                         <button class="btn-sm btn-ship" onclick="shipOrder({{ $o->id }})"><i class="fas fa-truck"></i> Kirim</button>
-                                                        <button class="btn-sm btn-paid" onclick="paidOrder({{ $o->id }})"><i class="fas fa-money-check"></i> Sudah Dibayar</button>
+                                                        <button class="btn-sm btn-paid" onclick="paidOrder({{ $o->id }})"><i class="fas fa-money-bill"></i> Lunas</button>
                                                     @elseif(($o->status ?? '') === 'shipped')
                                                         <button class="btn-sm btn-complete" onclick="completeOrder({{ $o->id }})"><i class="fas fa-check-double"></i> Selesai</button>
                                                     @else
-                                                        <span style="color:#94a3b8;font-weight:700;">-</span>
+                                                        <span style="color:#94a3b8;font-size:12px;">Tidak ada aksi</span>
                                                     @endif
                                                 </div>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" style="text-align:center;color:#64748b;">Belum ada pesanan.</td>
+                                            <td colspan="5" style="text-align:center;color:#94a3b8;padding:24px;">Belum ada pesanan terbaru.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -532,11 +475,15 @@
                         </div>
                     </section>
 
+                    <!-- CARD 2: ALL ORDERS / HISTORY -->
                     <section class="card">
-                        <h2>History Pesanan</h2>
-                        <form method="GET" action="{{ route('admin.kelola_pesanan.index') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 0 0 12px;">
-                            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari order id / nama / email / telepon..." style="flex:1; min-width: 240px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
-                            <select name="status" style="min-width: 180px; padding:10px 12px; border:1px solid #e9ecef; border-radius:8px;">
+                        <div class="card-title">
+                            <i class="fas fa-list-ul"></i> Pencarian & Semua Riwayat Pesanan
+                        </div>
+                        
+                        <form method="GET" action="{{ route('admin.kelola_pesanan.index') }}" class="filter-bar">
+                            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari ID / nama / email / telepon...">
+                            <select name="status">
                                 <option value="">Semua Status</option>
                                 <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Menunggu</option>
                                 <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
@@ -544,18 +491,19 @@
                                 <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
                                 <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Ditolak</option>
                             </select>
-                            <button type="submit" style="padding:10px 14px; border:none; border-radius:8px; background:#2c3e50; color:#fff; font-weight:800; cursor:pointer;">Terapkan</button>
-                            <a href="{{ route('admin.kelola_pesanan.index') }}" style="padding:10px 14px; border:1px solid #e9ecef; border-radius:8px; background:#fff; color:#334155; font-weight:800; text-decoration:none;">Reset</a>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Terapkan</button>
+                            <a href="{{ route('admin.kelola_pesanan.index') }}" class="btn btn-secondary"><i class="fas fa-rotate-left"></i> Reset</a>
                         </form>
-                        <div class="table-container">
-                            <table>
+
+                        <div style="overflow-x:auto;">
+                            <table class="data-table">
                                 <thead>
                                     <tr>
                                         <th>ID Pesanan</th>
                                         <th>Pelanggan</th>
                                         <th>Total</th>
                                         <th>Status</th>
-                                        <th>Aksi</th>
+                                        <th style="width: 200px;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -563,62 +511,67 @@
                                         @php
                                             $status = (string) ($o->status ?? '');
                                             $label = 'Proses';
-                                            $badge = 'proses';
+                                            $badge = 'badge-proses';
 
-                                            if ($status === 'completed') { $label = 'Selesai'; $badge = 'selesai'; }
-                                            elseif ($status === 'shipped') { $label = 'Dikirim'; $badge = 'dikirim'; }
-                                            elseif ($status === 'rejected') { $label = 'Cancel'; $badge = 'cancel'; }
+                                            if ($status === 'completed') { $label = 'Selesai'; $badge = 'badge-selesai'; }
+                                            elseif ($status === 'shipped') { $label = 'Dikirim'; $badge = 'badge-dikirim'; }
+                                            elseif ($status === 'rejected') { $label = 'Cancel'; $badge = 'badge-cancel'; }
                                         @endphp
                                         <tr>
-                                            <td>{{ $o->order_id }}</td>
+                                            <td style="font-weight:500;">{{ $o->order_id }}</td>
                                             <td>{{ $o->customer_name }}</td>
-                                            <td>Rp {{ number_format((float) $o->total_price, 0, ',', '.') }}</td>
-                                            <td><span class="status-badge {{ $badge }}">{{ $label }}</span></td>
+                                            <td style="font-weight:600;">Rp {{ number_format((float) $o->total_price, 0, ',', '.') }}</td>
+                                            <td><span class="badge {{ $badge }}">{{ $label }}</span></td>
                                             <td>
                                                 <div class="action-buttons">
                                                     @if(($o->status ?? '') === 'pending')
-                                                        <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $o->id }})"><i class="fas fa-check"></i> Konfirmasi</button>
-                                                        <button class="btn-sm btn-reject" onclick="openRejectModal({{ $o->id }})"><i class="fas fa-times"></i> Tolak</button>
+                                                        <button class="btn-sm btn-confirm" onclick="confirmOrder({{ $o->id }})"><i class="fas fa-check"></i></button>
+                                                        <button class="btn-sm btn-reject" onclick="openRejectModal({{ $o->id }})"><i class="fas fa-times"></i></button>
                                                     @elseif(($o->status ?? '') === 'confirmed')
-                                                        <button class="btn-sm btn-ship" onclick="shipOrder({{ $o->id }})"><i class="fas fa-truck"></i> Kirim</button>
-                                                        <button class="btn-sm btn-paid" onclick="paidOrder({{ $o->id }})"><i class="fas fa-money-check"></i> Sudah Dibayar</button>
+                                                        <button class="btn-sm btn-ship" onclick="shipOrder({{ $o->id }})" title="Kirim"><i class="fas fa-truck"></i></button>
+                                                        <button class="btn-sm btn-paid" onclick="paidOrder({{ $o->id }})" title="Lunas"><i class="fas fa-money-bill"></i></button>
                                                     @elseif(($o->status ?? '') === 'shipped')
-                                                        <button class="btn-sm btn-complete" onclick="completeOrder({{ $o->id }})"><i class="fas fa-check-double"></i> Selesai</button>
+                                                        <button class="btn-sm btn-complete" onclick="completeOrder({{ $o->id }})" title="Selesai"><i class="fas fa-check-double"></i></button>
                                                     @else
-                                                        <span style="color:#94a3b8;font-weight:700;">-</span>
+                                                        <span style="color:#94a3b8;font-size:12px;">Tidak ada aksi</span>
                                                     @endif
                                                 </div>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" style="text-align:center;color:#64748b;">Belum ada data.</td>
+                                            <td colspan="5" style="text-align:center;color:#94a3b8;padding:24px;">Belum ada data pesanan.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
                         </div>
 
-                        <div style="margin-top: 12px;">
-                            {{ $orders->links('pagination::bootstrap-4') }}
-                        </div>
+                        {{ $orders->links('pagination::bootstrap-4') }}
                     </section>
                 </div>
 
-                <aside class="card quick">
-                    <h2>Aksi Cepat</h2>
-                    <div class="stack">
-                        <a class="btn btn-red" href="{{ route('pesanan.index') }}">Lihat Semua Pesanan</a>
-                        <a class="btn btn-green" href="{{ route('admin.kelola_pesanan.export') }}">
-                            <i class="fas fa-file-excel"></i>
-                            Export Laporan
-                        </a>
+                <!-- SIDEBAR / QUICK ACTIONS -->
+                <aside class="sidebar-column">
+                    <div class="card" style="position: sticky; top: 24px;">
+                        <div class="card-title">Aksi Cepat</div>
+                        <div class="action-list">
+                            <a href="{{ route('pesanan.index') }}" class="action-link red">
+                                <div class="action-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+                                <span>Halaman Pesanan Lengkap</span>
+                            </a>
+                            <a href="{{ route('admin.kelola_pesanan.export') }}" class="action-link green">
+                                <div class="action-icon"><i class="fas fa-file-excel"></i></div>
+                                <span>Export Laporan Excel</span>
+                            </a>
+                        </div>
                     </div>
                 </aside>
             </div>
         </main>
     </div>
 
+    <!-- MODAL REJECT -->
     <div id="rejectModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -629,12 +582,12 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="reason">Alasan Penolakan</label>
-                        <textarea id="reason" name="reason" placeholder="Masukkan alasan penolakan pesanan..." required></textarea>
+                        <textarea id="reason" name="reason" placeholder="Berikan alasan mengapa pesanan ini ditolak agar pelanggan mengerti..." required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-close" onclick="closeRejectModal()">Batal</button>
-                    <button type="submit" class="btn-action">Tolak Pesanan</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeRejectModal()">Batal</button>
+                    <button type="submit" class="btn btn-primary" style="background:#dc2626;">Kirim Penolakan</button>
                 </div>
             </form>
         </div>
@@ -687,10 +640,9 @@
             }
         }
 
+        // Close modal when clicking outside
         document.getElementById('rejectModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeRejectModal();
-            }
+            if (e.target === this) closeRejectModal();
         });
     </script>
 </body>
