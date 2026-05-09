@@ -368,8 +368,43 @@
         }
 
         @media (max-width: 640px) {
-            .menu-grid { grid-template-columns: 1fr; }
-            .delivery-card { padding: 2rem 1.5rem; }
+            .menu-grid { 
+                grid-template-columns: 1fr; 
+                gap: 20px; 
+            }
+            .menu-card-img { 
+                height: 180px; 
+            }
+            .menu-card-body { 
+                padding: 18px; 
+            }
+            .menu-card-title { 
+                font-size: 1.1rem; 
+                margin-bottom: 4px;
+            }
+            .menu-card-desc { 
+                font-size: 0.75rem; 
+                margin-bottom: 12px; 
+                -webkit-line-clamp: 3;
+            }
+            .menu-card-price { 
+                font-size: 1.15rem; 
+            }
+            .menu-badge { 
+                font-size: 9px; 
+                padding: 4px 10px; 
+                bottom: 12px; 
+                left: 12px; 
+            }
+            .menu-card-footer {
+                padding-top: 12px;
+            }
+            .delivery-card { 
+                padding: 2rem 1.5rem; 
+            }
+            .menu-hero {
+                padding: 80px 0 40px;
+            }
         }
     </style>
 </head>
