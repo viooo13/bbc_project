@@ -87,6 +87,7 @@
             align-items: center;
             gap: 6px;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .logout-btn {
@@ -369,11 +370,11 @@
         }
 
         .add-paket-btn {
-            background-color: #27ae60;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -381,10 +382,12 @@
             align-items: center;
             gap: 6px;
             transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
         }
 
         .add-paket-btn:hover {
-            background-color: #229954;
+            filter: brightness(1.03);
             transform: translateY(-1px);
         }
 

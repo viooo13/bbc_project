@@ -87,6 +87,7 @@
             align-items: center;
             gap: 6px;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .logout-btn {
@@ -101,9 +102,9 @@
         }
 
         .add-btn {
-            background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
             color: white;
-            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.18);
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
         }
 
         .add-btn:hover {
