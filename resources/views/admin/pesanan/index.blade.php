@@ -212,8 +212,8 @@
             text-decoration: none;
         }
 
-        .btn-primary { background: var(--text); color: #fff; }
-        .btn-primary:hover { background: #334155; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-soft); }
         .btn-secondary { background: #f1f5f9; color: #475569; }
         .btn-secondary:hover { background: #e2e8f0; }
 
