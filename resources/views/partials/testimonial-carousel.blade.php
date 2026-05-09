@@ -1,4 +1,3 @@
-@once
 <style>
     /* Testimonial Carousel Container */
     .testimonial-carousel-wrapper {
@@ -36,6 +35,46 @@
     .testimonial-fade-right {
         right: 0;
         background: linear-gradient(to left, #f8f7f4 0%, transparent 100%);
+    }
+
+    .testimonial-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(139, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.95);
+        color: #8B0000;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 20;
+        box-shadow: 0 4px 12px rgba(139, 0, 0, 0.08);
+    }
+
+    .testimonial-nav:hover {
+        background: #8B0000;
+        color: #ffffff;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 8px 24px rgba(139, 0, 0, 0.25);
+    }
+
+    .testimonial-nav.prev {
+        left: 1.5rem;
+    }
+
+    .testimonial-nav.next {
+        right: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+        .testimonial-nav.prev { left: 0.5rem; }
+        .testimonial-nav.next { right: 0.5rem; }
     }
 
     .testimonial-carousel-track {
@@ -574,6 +613,12 @@
         </div>
 
         <div class="testimonial-carousel-container" id="testimonialCarousel">
+            <button id="testimoniPrev" type="button" class="testimonial-nav prev" aria-label="Geser ulasan ke kiri">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button id="testimoniNext" type="button" class="testimonial-nav next" aria-label="Geser ulasan ke kanan">
+                <i class="fas fa-chevron-right"></i>
+            </button>
             <div class="testimonial-fade testimonial-fade-left" aria-hidden="true"></div>
             <div class="testimonial-fade testimonial-fade-right" aria-hidden="true"></div>
             <div class="testimonial-carousel-track" id="testimonialTrack">
@@ -657,78 +702,190 @@
         'use strict';
 
         function initTestimonialCarousel() {
-            const carousel = document.getElementById('testimonialCarousel');
-            const track = document.getElementById('testimonialTrack');
-            if (!carousel || !track) return;
+            try {
+                const carousel = document.getElementById('testimonialCarousel');
+                const track = document.getElementById('testimonialTrack');
+                const prevBtn = document.getElementById('testimoniPrev');
+                const nextBtn = document.getElementById('testimoniNext');
 
-            const baseItems = Array.from(track.querySelectorAll('.testimonial-card:not([data-testi-clone])'));
-            if (baseItems.length <= 0) return;
-
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                return;
-            }
-
-            let position = 0;
-            let loopWidth = 0;
-            let stepWidth = 0;
-            let rafId = null;
-            let isAutoScrolling = true;
-            const speed = 0.6;
-
-            function clearClones() {
-                track.querySelectorAll('[data-testi-clone="1"]').forEach(el => el.remove());
-            }
-
-            function rebuild() {
-                clearClones();
-                baseItems.forEach(item => {
-                    const clone = item.cloneNode(true);
-                    clone.setAttribute('data-testi-clone', '1');
-                    clone.removeAttribute('data-testimonial-id');
-                    track.appendChild(clone);
-                });
-
-                if (typeof window.initReviewReadMore === 'function') {
-                    window.initReviewReadMore(track);
+                if (!carousel) {
+                    console.warn('Testimonial carousel not found');
+                    return;
                 }
-
-                const first = track.querySelector('.testimonial-card');
-                const gap = parseFloat(getComputedStyle(track).gap || '24') || 24;
-                stepWidth = first ? (first.getBoundingClientRect().width + gap) : 320;
-                loopWidth = stepWidth * baseItems.length;
-                position = ((position % loopWidth) + loopWidth) % loopWidth;
-                track.style.transform = `translateX(${-position}px)`;
-            }
-
-            function tick() {
-                if (loopWidth <= 0) {
-                    rafId = requestAnimationFrame(tick);
+                if (!track) {
+                    console.warn('Testimonial track not found');
+                    return;
+                }
+                if (!prevBtn) {
+                    console.warn('Testimonial prev button not found');
+                    return;
+                }
+                if (!nextBtn) {
+                    console.warn('Testimonial next button not found');
                     return;
                 }
 
-                if (isAutoScrolling) {
-                    position += speed;
-                    if (position >= loopWidth) {
-                        position -= loopWidth;
-                    }
-                    track.style.transform = `translateX(${-position}px)`;
+                const baseItems = Array.from(track.querySelectorAll('.testimonial-card:not([data-testi-clone])'));
+                if (baseItems.length <= 1) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                    return;
                 }
 
-                rafId = requestAnimationFrame(tick);
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    return;
+                }
+
+                let loopWidth = 0;
+                let stepWidth = 0;
+                const clonesCount = baseItems.length;
+                let currentIndex = clonesCount;
+                let isAnimating = false;
+                let resumeTimer = null;
+                let pauseOnHover = false;
+                const slideStep = 1;
+                const slidePause = 4000;
+                const transitionDuration = 1000;
+
+                track.style.transform = 'translateX(0)';
+
+                function clearClones() {
+                    track.querySelectorAll('[data-testi-clone]').forEach(el => el.remove());
+                }
+
+                function rebuild() {
+                    clearClones();
+
+                    for (let i = 0; i < clonesCount; i++) {
+                        const clone = baseItems[i].cloneNode(true);
+                        clone.setAttribute('data-testi-clone', 'pre');
+                        clone.removeAttribute('data-testimonial-id');
+                        track.appendChild(clone);
+                    }
+
+                    baseItems.forEach(item => {
+                        track.appendChild(item.cloneNode(true));
+                    });
+
+                    for (let i = 0; i < clonesCount; i++) {
+                        const clone = baseItems[i].cloneNode(true);
+                        clone.setAttribute('data-testi-clone', 'post');
+                        clone.removeAttribute('data-testimonial-id');
+                        track.appendChild(clone);
+                    }
+
+                    if (typeof window.initReviewReadMore === 'function') {
+                        window.initReviewReadMore(track);
+                    }
+
+                    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '24') || 24;
+                    const first = track.querySelector('.testimonial-card');
+                    stepWidth = first ? (first.offsetWidth + gap) : 320;
+
+                    loopWidth = stepWidth * baseItems.length;
+                    currentIndex = clonesCount;
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(${-currentIndex * stepWidth}px)`;
+                    void track.offsetWidth;
+                    track.style.transition = `transform ${transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+                }
+
+            function goTo(index, immediate = false) {
+                    if (stepWidth <= 0 || isAnimating) return;
+                    isAnimating = true;
+
+                    track.style.transition = immediate ? 'none' : `transform ${transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+                    track.style.transform = `translateX(${-index * stepWidth}px)`;
+
+                    if (!immediate) {
+                        setTimeout(() => {
+                            isAnimating = false;
+                        }, transitionDuration);
+                    } else {
+                        isAnimating = false;
+                    }
+                }
+
+                function scheduleNextStep() {
+                    clearTimeout(resumeTimer);
+                    resumeTimer = setTimeout(() => {
+                        if (pauseOnHover || isAnimating || loopWidth <= 0) {
+                            scheduleNextStep();
+                            return;
+                        }
+                        next();
+                    }, slidePause);
+                }
+
+                function next() {
+                    if (isAnimating) return;
+                    currentIndex += slideStep;
+                    goTo(currentIndex);
+
+                    if (currentIndex >= baseItems.length * 2) {
+                        setTimeout(() => {
+                            currentIndex = clonesCount;
+                            goTo(currentIndex, true);
+                            scheduleNextStep();
+                        }, transitionDuration);
+                    } else {
+                        scheduleNextStep();
+                    }
+                }
+
+                function prev() {
+                    if (isAnimating) return;
+                    currentIndex -= slideStep;
+                    goTo(currentIndex);
+
+                    if (currentIndex < clonesCount) {
+                        setTimeout(() => {
+                            currentIndex = baseItems.length * 2 - slideStep;
+                            goTo(currentIndex, true);
+                            scheduleNextStep();
+                        }, transitionDuration);
+                    } else {
+                        scheduleNextStep();
+                    }
+                }
+
+                carousel.addEventListener('mouseenter', () => {
+                    pauseOnHover = true;
+                    clearTimeout(resumeTimer);
+                });
+
+                carousel.addEventListener('mouseleave', () => {
+                    pauseOnHover = false;
+                    scheduleNextStep();
+                });
+
+                carousel.addEventListener('touchstart', () => {
+                    pauseOnHover = true;
+                    clearTimeout(resumeTimer);
+                }, { passive: true });
+
+                carousel.addEventListener('touchend', () => {
+                    pauseOnHover = false;
+                    scheduleNextStep();
+                });
+
+                prevBtn.addEventListener('click', () => {
+                    clearTimeout(resumeTimer);
+                    prev();
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    clearTimeout(resumeTimer);
+                    next();
+                });
+
+                window.addEventListener('resize', rebuild);
+
+                rebuild();
+                scheduleNextStep();
+            } catch (error) {
+                console.error('Testimonial carousel initialization error:', error);
             }
-
-            carousel.addEventListener('mouseenter', () => {
-                isAutoScrolling = false;
-            });
-
-            carousel.addEventListener('mouseleave', () => {
-                isAutoScrolling = true;
-            });
-
-            window.addEventListener('resize', rebuild);
-
-            rebuild();
-            if (!rafId) rafId = requestAnimationFrame(tick);
         }
 
         if (document.readyState === 'loading') {
@@ -752,4 +909,3 @@
         mutationObserver.observe(document.body, { childList: true, subtree: true });
     })();
 </script>
-@endonce
