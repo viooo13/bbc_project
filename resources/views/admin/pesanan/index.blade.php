@@ -780,6 +780,7 @@
                                 <th>Pelanggan</th>
                                 <th>Total</th>
                                 <th>Status</th>
+                                <th>Bukti Pembayaran</th>
                                 <th>Tanggal</th>
                                 <th style="width: 170px;">Aksi</th>
                             </tr>
@@ -811,6 +812,15 @@
                                             @endswitch
                                         </span>
                                     </td>
+                                    <td>
+                                        @if($pesanan->payment_proof)
+                                            <button onclick="viewPaymentProof('{{ asset('uploads/payment_proofs/' . $pesanan->payment_proof) }}')" class="btn-sm btn-view" style="background:#4CAF50;color:white;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;">
+                                                <i class="fas fa-eye"></i> Lihat Bukti
+                                            </button>
+                                        @else
+                                            <span style="color:#94a3b8;font-size:12px;">-</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $pesanan->created_at->format('d M Y') }}</td>
                                     <td>
                                         <div class="action-buttons">
@@ -840,7 +850,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6">
+                                    <td colspan="7">
                                         <div class="empty-state">
                                             <i class="fas fa-inbox"></i>
                                             <p>Tidak ada pesanan</p>
@@ -857,6 +867,22 @@
                 </div>
             </section>
         </main>
+    </div>
+
+    <!-- Payment Proof Modal -->
+    <div id="paymentProofModal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2>Bukti Pembayaran</h2>
+                <button type="button" onclick="closePaymentProofModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#6b7280;">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <img id="paymentProofImage" src="" alt="Bukti Pembayaran" style="max-width:100%;max-height:500px;border-radius:8px;border:1px solid #e2e8f0;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-close" onclick="closePaymentProofModal()">Tutup</button>
+            </div>
+        </div>
     </div>
 
     <!-- Reject Modal -->
@@ -925,6 +951,25 @@
                 window.location.href = "{{ route('pesanan.complete', ':id') }}".replace(':id', orderId);
             }
         }
+
+        function viewPaymentProof(imageUrl) {
+            const modal = document.getElementById('paymentProofModal');
+            const image = document.getElementById('paymentProofImage');
+            image.src = imageUrl;
+            modal.classList.add('active');
+        }
+
+        function closePaymentProofModal() {
+            const modal = document.getElementById('paymentProofModal');
+            modal.classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('paymentProofModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePaymentProofModal();
+            }
+        });
 
         // Close modal when clicking outside
         document.getElementById('rejectModal').addEventListener('click', function(e) {
