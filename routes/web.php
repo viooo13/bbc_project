@@ -26,6 +26,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout.post');
 Route::get('/universal-login', function () { return view('auth.universal-login'); })->name('universal.login');
 Route::post('/universal-login', [AuthController::class, 'universalLoginSubmit'])->name('universal.login.submit');
 
+// Admin specific login (temporary)
+Route::get('/login-admin', [AuthController::class, 'showAdminLogin'])->name('admin.login');
+Route::post('/login-admin', [AuthController::class, 'adminLoginSubmit'])->name('admin.login.submit');
+
 Route::post('/admin/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
 
 // Forgot Password (verifikasi via email OTP)
@@ -156,10 +160,10 @@ Route::get('/admin/dashboard', function (Request $request) {
         'monthlySalesLabels',
         'monthlySalesData'
     ));
-})->name('admin.dashboard');
+})->name('admin.dashboard')->middleware(['auth:admin', 'admin']);
 
 // Admin routes
-Route::group(function () {
+Route::middleware(['auth:admin', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/kelola-pesanan', function (Request $request) {
             $recentOrders = \App\Models\Pesanan::orderByDesc('created_at')->limit(5)->get();

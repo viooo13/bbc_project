@@ -102,15 +102,19 @@
                 </div>
             </div>
 
+            @php
+                $isAdmin = Request::is('login-admin*');
+            @endphp
+
             <!-- Tabs -->
             <div id="tabsContainer" class="auth-tabs flex bg-stone-100 rounded-2xl p-1 mb-6 relative">
-                <div id="tabIndicator" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-white rounded-xl shadow-sm transition-transform duration-300 ease-out z-0 translate-x-0"></div>
-                <button type="button" id="userTab" class="tab flex-1 py-2.5 text-[13px] font-semibold transition-colors duration-300 z-10 text-brand relative" onclick="switchRole('user')">Pelanggan</button>
-                <button type="button" id="adminTab" class="tab flex-1 py-2.5 text-[13px] font-semibold transition-colors duration-300 z-10 text-stone-400 relative" onclick="switchRole('admin')">Admin</button>
+                <div id="tabIndicator" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-white rounded-xl shadow-sm transition-transform duration-300 ease-out z-0 {{ $isAdmin ? 'translate-x-full' : 'translate-x-0' }}"></div>
+                <button type="button" id="userTab" class="tab flex-1 py-2.5 text-[13px] font-semibold transition-colors duration-300 z-10 {{ $isAdmin ? 'text-stone-400' : 'text-brand' }} relative" onclick="window.location.href='{{ route('showLogin') }}'">Pelanggan</button>
+                <button type="button" id="adminTab" class="tab flex-1 py-2.5 text-[13px] font-semibold transition-colors duration-300 z-10 {{ $isAdmin ? 'text-brand' : 'text-stone-400' }} relative" onclick="window.location.href='{{ route('admin.login') }}'">Admin</button>
             </div>
 
             <!-- Title -->
-            <p id="authSubtitle" class="auth-subtitle text-[13.5px] text-stone-500 text-center mb-6">Masuk untuk melanjutkan</p>
+            <p id="authSubtitle" class="auth-subtitle text-[13.5px] text-stone-500 text-center mb-6">{{ $isAdmin ? 'Akses dashboard admin' : 'Masuk untuk melanjutkan' }}</p>
 
             <div class="auth-divider h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent mb-6"></div>
 
@@ -130,7 +134,7 @@
             @endif
 
             <!-- User Form -->
-            <form id="userForm" action="{{ route('universal.login.submit') }}" method="POST">
+            <form id="userForm" class="{{ $isAdmin ? 'hidden' : '' }}" action="{{ route('universal.login.submit') }}" method="POST">
                 @csrf
                 <input type="hidden" name="role" value="user" id="roleInput">
 
@@ -166,7 +170,7 @@
             </form>
 
             <!-- Admin Form -->
-            <form id="adminForm" class="hidden" action="{{ route('universal.login.submit') }}" method="POST">
+            <form id="adminForm" class="{{ $isAdmin ? '' : 'hidden' }}" action="{{ $isAdmin ? route('admin.login.submit') : route('universal.login.submit') }}" method="POST">
                 @csrf
                 <input type="hidden" name="role" value="admin" id="adminRoleInput">
 
