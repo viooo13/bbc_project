@@ -389,7 +389,9 @@
             .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
             .data-table tr { margin-bottom: 16px; border: 1px solid var(--border); border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
             .data-table td { text-align: right; padding: 8px 0; border-bottom: 1px dashed var(--border-light); display: flex; justify-content: space-between; align-items: center; }
-            .data-table td:last-child { border-bottom: none; justify-content: flex-end; padding-top: 12px; }
+            .data-table td:last-child { border-bottom: none; justify-content: flex-start; flex-direction: column; align-items: flex-end; gap: 8px; padding-top: 12px; text-align: right; }
+            .data-table td:last-child::before { text-align: right; width: 100%; }
+            .data-table td:last-child .action-buttons { justify-content: flex-end; width: 100%; flex-wrap: wrap; }
             .data-table td::before { font-weight: 600; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; }
             .data-table td:nth-child(1)::before { content: "ID Pesanan"; }
             .data-table td:nth-child(2)::before { content: "Pelanggan"; }

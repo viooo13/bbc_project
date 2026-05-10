@@ -266,21 +266,27 @@
         .badge.rejected { background: #fee2e2; color: #991b1b; }
 
         .btn-detail {
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--primary);
-            background: #fef2f2;
-            border: none;
-            cursor: pointer;
+            height: 32px;
+            padding: 0 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #2563eb;
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
             text-decoration: none;
-            transition: all 0.2s;
-            display: inline-block;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-detail:hover {
-            background: #fde8e8;
+            background: #dbeafe;
+            color: #1d4ed8;
+            border-color: #bfdbfe;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
         }
 
         /* ── Quick Actions ── */
@@ -361,7 +367,8 @@
         /* ── Responsive ── */
         @media (max-width: 1200px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .content-row { grid-template-columns: 1fr; }
+            .content-row { display: flex; flex-direction: column; gap: 20px; }
+            .quick-actions { order: -1; width: 100%; }
         }
 
         @media (max-width: 992px) {

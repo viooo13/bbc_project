@@ -182,7 +182,7 @@
         .admin-reply-form button {
             padding: 8px 14px;
             border-radius: 8px;
-            background: var(--text);
+            background: #8B0000;
             color: #fff;
             border: none;
             cursor: pointer;
@@ -190,7 +190,7 @@
             font-weight: 600;
             transition: background 0.2s;
         }
-        .admin-reply-form button:hover { background: #334155; }
+        .admin-reply-form button:hover { background: #660000; }
 
         /* ── Alert ── */
         .alert {
@@ -235,20 +235,21 @@
         .pagination li a,
         .pagination li span {
             padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
-            color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500;
+            color: #8B0000; text-decoration: none; font-size: 12px; font-weight: 600;
             background: var(--surface); transition: all 0.15s; min-width: 32px; text-align: center;
         }
-        .pagination li.active span { background: var(--text); color: #fff; border-color: var(--text); }
-        .pagination li a:hover { background: #f1f5f9; color: var(--text); }
+        .pagination li.active span { background: #8B0000; color: #fff; border-color: #8B0000; }
+        .pagination li a:hover { background: #fef2f2; color: #660000; border-color: #fca5a5; }
         .pagination li.disabled span { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
         .pagination .page-item { display: inline-flex; }
         .pagination .page-link {
             padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
-            color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500;
+            color: #8B0000; text-decoration: none; font-size: 12px; font-weight: 600;
             background: var(--surface); transition: all 0.15s; min-width: 32px; text-align: center; margin: 0 2px;
         }
-        .pagination .page-item.active .page-link { background: var(--text); color: #fff; border-color: var(--text); }
-        .pagination .page-item.disabled .page-link { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
+        .pagination .page-link:hover { background: #fef2f2; color: #660000; border-color: #fca5a5; }
+        .pagination .page-item.active .page-link { background: #8B0000; color: #fff; border-color: #8B0000; }
+        .pagination .page-item.disabled .page-link { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; border-color: var(--border); }
 
         /* Responsive */
         @media (max-width: 992px) {
@@ -270,7 +271,9 @@
             .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
             .data-table tr { margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
             .data-table td { text-align: right; padding: 8px 0; border-bottom: 1px dashed var(--border-light); display: flex; justify-content: space-between; align-items: center; }
-            .data-table td:last-child { border-bottom: none; justify-content: flex-end; padding-top: 12px; }
+            .data-table td:last-child { border-bottom: none; justify-content: flex-start; flex-direction: column; align-items: flex-end; gap: 8px; padding-top: 12px; text-align: right; }
+            .data-table td:last-child::before { text-align: right; width: 100%; }
+            .data-table td:last-child .action-buttons { justify-content: flex-end; width: 100%; flex-wrap: wrap; }
             .data-table td::before { font-weight: 600; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; }
             
             .data-table td:nth-child(1)::before { content: "Nama"; }
