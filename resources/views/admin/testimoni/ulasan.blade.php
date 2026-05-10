@@ -4,192 +4,369 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Ulasan Pelanggan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #8B0000;
             --primary-soft: #a70f0f;
-            --secondary: #DAA520;
-            --cream: #ffffff;
-            --surface: #fffaf4;
-            --surface-2: #ffffff;
-            --text-main: #2D3748;
-            --text-soft: #6b7280;
-            --line: #e2e8f0;
-            --shadow-soft: 0 10px 24px rgba(139, 0, 0, 0.08);
-            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: var(--cream); color: var(--text-main); }
-        .dashboard-container { display: flex; min-height: 100vh; }
-        .main-content { flex: 1; margin-left: 272px; padding: 30px; background: transparent; min-height: 100vh; max-width: 1400px; }
-        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .page-header h1 { font-size: 28px; font-weight: 700; color: var(--primary); }
-        .page-header p { color: var(--text-soft); margin-top: 4px; }
-        .header-actions { display: flex; gap: 10px; }
-        .btn { padding: 8px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s ease; }
-        .btn-primary { background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%); color: #fff; box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18); }
-        .btn-primary:hover { filter: brightness(1.03); transform: translateY(-1px); }
-        .btn-danger { background: linear-gradient(90deg, #dc3545 0%, #c82333 100%); color: #fff; }
-        .btn-danger:hover { filter: brightness(1.03); transform: translateY(-1px); }
-        .content-section { background: var(--surface-2); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-card); border: 1px solid var(--line); margin-bottom: 20px; max-width: 100%; overflow: hidden; }
-        .content-section h2 { font-size: 18px; margin-bottom: 16px; color: var(--primary); font-weight: 600; }
-        .table-wrap { overflow-x: auto; max-width: 100%; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; color: var(--text-main); }
-        th { font-size: 13px; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-main); background: #fff3e4; font-weight: 600; border-bottom: 2px solid var(--line); }
-        tr:hover { background-color: #fffaf2; }
-        tr:last-child td { border-bottom: none; }
-        .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
-        .badge.active { background: #d4edda; color: #155724; }
-        .badge.inactive { background: #f8d7da; color: #721c24; }
-        .muted { color: var(--text-soft); font-size: 14px; }
-        .actions { display: flex; gap: 6px; }
-        .icon-btn {
-            background: #f8f7f4;
-            border: 1px solid var(--line);
-            color: var(--text-main);
-            padding: 6px 10px;
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ── Main ── */
+        .main-content {
+            flex: 1;
+            margin-left: 272px;
+            padding: 32px;
+            min-height: 100vh;
+        }
+
+        /* ── Header ── */
+        .page-header {
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            padding: 8px 16px;
+            border: none;
             border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
             font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            text-decoration: none;
         }
-        .icon-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-        .alert { padding: 12px 16px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
-        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-soft); }
+        .btn-secondary { background: #f1f5f9; color: #475569; }
+        .btn-secondary:hover { background: #e2e8f0; }
+        .btn-danger { background: #fee2e2; color: #dc2626; }
+        .btn-danger:hover { background: #fecaca; }
 
+        /* ── Card ── */
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        /* ── Filter Bar ── */
         .filter-bar {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            align-items: center;
             flex-wrap: wrap;
-        }
-        .filter-bar input, .filter-bar select {
-            padding: 8px 12px;
-            border-radius: 10px;
-            border: 1px solid var(--line);
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
+            margin-bottom: 16px;
         }
 
-        .star-rating { color: #f59e0b; }
-        .review-text { max-width: 300px; }
-        .admin-reply-form { display: flex; gap: 6px; align-items: center; }
+        .filter-bar input {
+            flex: 1;
+            min-width: 220px;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .filter-bar input:focus { border-color: var(--primary); }
+
+        /* ── Table ── */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            background: transparent;
+        }
+
+        .data-table td {
+            padding: 14px;
+            font-size: 13px;
+            color: var(--text);
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
+        }
+
+        .data-table tbody tr:hover { background: #f8fafc; }
+        .data-table tbody tr:last-child td { border-bottom: none; }
+
+        .star-rating { color: #f59e0b; font-size: 12px; }
+        .review-text { max-width: 280px; line-height: 1.5; color: var(--text-secondary); }
+
+        /* ── Admin Reply Form ── */
+        .admin-reply-form { display: flex; gap: 8px; align-items: center; }
         .admin-reply-form input {
             flex: 1;
-            padding: 6px 10px;
+            padding: 8px 12px;
             border-radius: 8px;
-            border: 1px solid var(--line);
-            font-family: 'Poppins', sans-serif;
+            border: 1px solid var(--border);
+            font-family: 'Inter', sans-serif;
             font-size: 13px;
+            outline: none;
+            background: var(--bg);
+            color: var(--text);
+            transition: border-color 0.2s;
         }
+        .admin-reply-form input:focus { border-color: var(--primary); }
         .admin-reply-form button {
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 8px;
-            background: var(--primary);
+            background: var(--text);
             color: #fff;
             border: none;
             cursor: pointer;
             font-size: 12px;
             font-weight: 600;
+            transition: background 0.2s;
+        }
+        .admin-reply-form button:hover { background: #334155; }
+
+        /* ── Alert ── */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #ecfdf5;
+            color: #059669;
+            border: 1px solid #d1fae5;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ── Action Buttons ── */
+        .btn-sm {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+            text-decoration: none;
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-sm:hover { background: #f8fafc; }
+        .btn-sm.delete { color: #dc2626; }
+
+        /* ── Pagination ── */
+        .pagination { display: flex; list-style: none; padding: 0; margin: 16px 0 0; gap: 4px; flex-wrap: wrap; }
+        .pagination li { display: inline-flex; }
+        .pagination li a,
+        .pagination li span {
+            padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+            color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500;
+            background: var(--surface); transition: all 0.15s; min-width: 32px; text-align: center;
+        }
+        .pagination li.active span { background: var(--text); color: #fff; border-color: var(--text); }
+        .pagination li a:hover { background: #f1f5f9; color: var(--text); }
+        .pagination li.disabled span { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
+        .pagination .page-item { display: inline-flex; }
+        .pagination .page-link {
+            padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+            color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500;
+            background: var(--surface); transition: all 0.15s; min-width: 32px; text-align: center; margin: 0 2px;
+        }
+        .pagination .page-item.active .page-link { background: var(--text); color: #fff; border-color: var(--text); }
+        .pagination .page-item.disabled .page-link { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-content { margin-left: 0; padding: 80px 20px 20px; }
+            .dashboard-container { flex-direction: column; }
+            .page-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .header-actions { width: 100%; justify-content: flex-start; }
         }
 
         @media (max-width: 768px) {
-            .main-content { margin-left: 0; padding: 20px; }
-            .page-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .main-content { padding: 80px 16px 16px; }
+            .card { padding: 16px; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .filter-bar input, .filter-bar button, .filter-bar a { width: 100%; }
+            .admin-reply-form { flex-direction: column; align-items: stretch; }
+            .review-text { max-width: 100%; }
+
+            .data-table thead { display: none; }
+            .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+            .data-table tr { margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+            .data-table td { text-align: right; padding: 8px 0; border-bottom: 1px dashed var(--border-light); display: flex; justify-content: space-between; align-items: center; }
+            .data-table td:last-child { border-bottom: none; justify-content: flex-end; padding-top: 12px; }
+            .data-table td::before { font-weight: 600; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; }
+            
+            .data-table td:nth-child(1)::before { content: "Nama"; }
+            .data-table td:nth-child(2)::before { content: "Rating"; }
+            .data-table td:nth-child(3)::before { content: "Ulasan"; }
+            .data-table td:nth-child(4)::before { content: "Balasan Admin"; }
+            .data-table td:nth-child(5)::before { content: "Aksi"; }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        @include('admin.partials.sidebar', ['activeMenu' => 'ulasan'])
+<div class="dashboard-container">
+    @include('admin.partials.sidebar', ['activeMenu' => 'ulasan'])
 
-        <main class="main-content">
-            <header class="page-header">
-                <div>
-                    <h1>Ulasan Pelanggan</h1>
-                    <p>Kelola ulasan dan balasan dari pelanggan.</p>
-                </div>
-                <div class="header-actions">
-                    <a href="{{ route('admin.testimoni.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>Kembali ke Influencer</a>
-                </div>
-            </header>
+    <main class="main-content">
+        <header class="page-header">
+            <div>
+                <h1>Ulasan Pelanggan</h1>
+                <p>Kelola ulasan dan balasan dari pelanggan.</p>
+            </div>
+            <div class="header-actions">
+                <a href="{{ route('admin.testimoni.index') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Influencer
+                </a>
+            </div>
+        </header>
 
-            @if(session('success'))
-                <div class="alert alert-success">
-                    <i class="fas fa-check-circle"></i>
-                    {{ session('success') }}
-                </div>
-            @endif
+        @if(session('success'))
+            <div class="alert">
+                <i class="fas fa-check-circle"></i> {{ session('success') }}
+            </div>
+        @endif
 
+        <section class="card">
             <form class="filter-bar" method="GET" action="{{ route('admin.testimoni.ulasan') }}">
                 <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Cari ulasan...">
-                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i>Cari</button>
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Cari</button>
                 @if(($q ?? '') !== '')
-                    <a href="{{ route('admin.testimoni.ulasan') }}" class="btn btn-danger">Reset</a>
+                    <a href="{{ route('admin.testimoni.ulasan') }}" class="btn btn-secondary"><i class="fas fa-rotate-left"></i> Reset</a>
                 @endif
             </form>
 
-            <section class="content-section">
-                <h2>Ulasan Pelanggan</h2>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nama</th>
-                                <th>Rating</th>
-                                <th>Ulasan</th>
-                                <th>Balasan Admin</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @forelse($customerTestimonials as $item)
-                            <tr>
-                                <td>{{ $item->name }}</td>
-                                <td>
-                                    <span class="star-rating">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <i class="fas fa-star{{ $i > $item->rating ? '-half-alt' : '' }}"></i>
-                                        @endfor
-                                    </span>
-                                    <span style="margin-left: 4px; font-size: 13px; color: var(--text-soft);">({{ $item->rating }})</span>
-                                </td>
-                                <td class="review-text">{{ $item->review }}</td>
-                                <td>
-                                    <form class="admin-reply-form" method="POST" action="{{ route('admin.testimoni.customer.reply', $item->id) }}">
-                                        @csrf
-                                        <input type="text" name="admin_reply" value="{{ $item->admin_reply ?? '' }}" placeholder="Balas ulasan...">
-                                        <button type="submit">Simpan</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form method="POST" action="{{ route('admin.testimoni.customer.destroy', $item->id) }}" onsubmit="return confirm('Hapus ulasan pelanggan ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="icon-btn" title="Hapus"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr><td colspan="5" class="muted">Belum ada ulasan pelanggan.</td></tr>
-                        @endforelse
-                        </tbody>
-                    </table>
-                </div>
+            <div style="overflow-x:auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Rating</th>
+                            <th>Ulasan</th>
+                            <th style="min-width: 250px;">Balasan Admin</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($customerTestimonials as $item)
+                        <tr>
+                            <td style="font-weight: 500;">{{ $item->name }}</td>
+                            <td>
+                                <span class="star-rating">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <i class="fas fa-star{{ $i > $item->rating ? '-half-alt' : '' }}"></i>
+                                    @endfor
+                                </span>
+                                <span style="margin-left: 4px; font-size: 12px; color: var(--text-secondary); font-weight: 500;">({{ $item->rating }})</span>
+                            </td>
+                            <td class="review-text">{{ $item->review }}</td>
+                            <td>
+                                <form class="admin-reply-form" method="POST" action="{{ route('admin.testimoni.customer.reply', $item->id) }}">
+                                    @csrf
+                                    <input type="text" name="admin_reply" value="{{ $item->admin_reply ?? '' }}" placeholder="Balas ulasan...">
+                                    <button type="submit">Simpan</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="POST" action="{{ route('admin.testimoni.customer.destroy', $item->id) }}" onsubmit="return confirm('Hapus ulasan pelanggan ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-sm delete" title="Hapus">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" style="text-align:center;color:var(--text-secondary);padding:24px;">Belum ada ulasan pelanggan.</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
 
-                <div style="margin-top: 10px;">
-                    {{ $customerTestimonials->links() }}
-                </div>
-            </section>
-        </main>
-    </div>
+            {{ $customerTestimonials->links('pagination::bootstrap-4') }}
+        </section>
+
+    </main>
+</div>
 </body>
 </html>

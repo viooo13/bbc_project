@@ -80,15 +80,25 @@
             gap: 40px;
         }
 
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 24px;
+                padding-top: 80px;
+            }
+        }
+
         @media (max-width: 768px) {
             .form-layout {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
             .main-content {
-                margin-left: 0;
-                padding: 20px;
+                padding: 16px;
                 padding-top: 80px;
+            }
+            .form-card {
+                padding: 24px;
             }
         }
 
@@ -203,6 +213,10 @@
                             <div class="form-group">
                                 <label>URL YouTube</label>
                                 <input id="youtube_url" type="url" name="youtube_url" value="{{ old('youtube_url', $influencerTestimonial->youtube_url) }}" required placeholder="https://www.youtube.com/...">
+                                <div style="margin-top: 8px; font-size: 12px; color: #0369a1; background: #e0f2fe; padding: 10px 12px; border-radius: 6px; display: flex; align-items: center; gap: 8px; border: 1px solid #bae6fd;">
+                                    <i class="fas fa-magic"></i>
+                                    <span>Isi link YouTube untuk mendapatkan <strong>Nama</strong> dan <strong>Thumbnail</strong> secara otomatis dan cepat!</span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Urutan Tampil</label>
@@ -279,13 +293,30 @@
                 .join(' ');
         }
 
-        async function autofillInfluencerName() {
+        let lastFetchedVideoId = extractYoutubeId(document.getElementById('youtube_url').value);
+
+        async function autofillInfluencerName(isInitialLoad = false) {
             const youtubeInput = document.getElementById('youtube_url');
             const nameInput = document.getElementById('influencer_name');
             const youtubeUrl = youtubeInput.value.trim();
+            const currentVideoId = extractYoutubeId(youtubeUrl);
 
-            if (!extractYoutubeId(youtubeUrl)) return;
-            if (nameInput.value.trim() !== '') return;
+            // If URL is empty/invalid, clear the name (only if it's not the initial page load)
+            if (!currentVideoId) {
+                if (!isInitialLoad) {
+                    nameInput.value = '';
+                    lastFetchedVideoId = null;
+                }
+                return;
+            }
+
+            // If the video ID hasn't changed since last fetch, do nothing
+            if (!isInitialLoad && currentVideoId === lastFetchedVideoId) return;
+
+            // On initial load, if the name is already filled, don't overwrite it
+            if (isInitialLoad && nameInput.value.trim() !== '') {
+                return;
+            }
 
             try {
                 const oembedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(youtubeUrl)}&format=json`;
@@ -294,21 +325,19 @@
                 const data = await res.json();
 
                 const autoName = toTitleCase((data.author_name || data.title || '').trim());
-                if (autoName && nameInput.value.trim() === '') {
+                if (autoName) {
                     nameInput.value = autoName;
+                    lastFetchedVideoId = currentVideoId;
                 }
             } catch (e) {
-                // Ignore fetch errors and keep manual input flow.
+                // Ignore fetch errors
             }
         }
 
         document.getElementById('youtube_url').addEventListener('input', updateYoutubeThumbnailPreview);
-        document.getElementById('youtube_url').addEventListener('blur', autofillInfluencerName);
+        document.getElementById('youtube_url').addEventListener('input', () => autofillInfluencerName(false));
         updateYoutubeThumbnailPreview();
-        // Skip autofill on initial load to not overwrite existing name if present
-        if(!document.getElementById('influencer_name').value) {
-            autofillInfluencerName();
-        }
+        autofillInfluencerName(true);
     </script>
 </body>
 </html>

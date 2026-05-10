@@ -4,35 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin BBC - Laporan Penjualan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary: #8B0000;
             --primary-soft: #a70f0f;
-            --secondary: #DAA520;
-            --cream: #ffffff;
-            --surface: #fffaf4;
-            --surface-2: #ffffff;
-            --text-main: #2D3748;
-            --text-soft: #6b7280;
-            --line: #e2e8f0;
-            --shadow-soft: 0 10px 24px rgba(139, 0, 0, 0.08);
-            --shadow-card: 0 12px 30px rgba(45, 55, 72, 0.08);
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--cream);
-            color: var(--text-main);
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
         }
 
         .dashboard-container {
@@ -40,418 +33,299 @@
             min-height: 100vh;
         }
 
-        /* Main Content Styles */
+        /* ── Main ── */
         .main-content {
             flex: 1;
             margin-left: 272px;
-            padding: 30px;
-            background: transparent;
+            padding: 32px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
+        /* ── Header ── */
         .page-header {
-            margin-bottom: 32px;
+            margin-bottom: 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .page-header h1 {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0;
+            color: var(--text);
+            letter-spacing: -0.3px;
         }
 
         .page-header p {
-            color: var(--text-soft);
-            font-size: 16px;
-            margin-bottom: 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 4px;
         }
-
+        
         .header-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
         }
 
-        .export-btn {
-            background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
-            color: white;
-            border: none;
+        /* ── Buttons ── */
+        .btn {
             padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
             text-decoration: none;
-            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.18);
         }
 
-        .export-btn:hover {
-            filter: brightness(1.03);
-            transform: translateY(-1px);
-        }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-soft); }
+        .btn-secondary { background: #f1f5f9; color: #475569; }
+        .btn-secondary:hover { background: #e2e8f0; }
 
-        .logout-btn {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-soft) 100%);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.18);
-        }
+        .btn-success { background: #16a34a; color: #fff; }
+        .btn-success:hover { background: #15803d; }
 
-        .logout-btn:hover {
-            filter: brightness(1.03);
-            transform: translateY(-1px);
-        }
-
-        /* Stats Grid */
+        /* ── Stats Grid ── */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 32px;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .stat-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 22px 24px;
-            border: 1px solid #f1f5f9;
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-light);
             display: flex;
             align-items: center;
-            gap: 18px;
-            transition: all 0.25s ease;
+            gap: 16px;
+            transition: all 0.2s ease;
         }
 
         .stat-card:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         }
 
         .stat-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             flex-shrink: 0;
         }
 
         .stat-card:nth-child(1) .stat-icon { background: #ecfdf5; color: #059669; }
-        .stat-card:nth-child(2) .stat-icon { background: #f3e8ff; color: #7c3aed; }
-        .stat-card:nth-child(3) .stat-icon { background: #fff7ed; color: #ea580c; }
-        .stat-card:nth-child(4) .stat-icon { background: #eff6ff; color: #2563eb; }
+        .stat-card:nth-child(2) .stat-icon { background: #fffbeb; color: #d97706; }
+        .stat-card:nth-child(3) .stat-icon { background: #eff6ff; color: #2563eb; }
+        .stat-card:nth-child(4) .stat-icon { background: #fef2f2; color: var(--primary); }
 
-        .stat-content {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            min-width: 0;
-        }
+        .stat-content { min-width: 0; }
 
         .stat-label {
-            font-size: 13px;
-            color: #94a3b8;
-            font-weight: 500;
-            white-space: nowrap;
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 2px;
         }
 
         .stat-value {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
-            color: #1e293b;
+            color: var(--text);
             letter-spacing: -0.3px;
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.3;
+            line-height: 1.2;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        /* Tables */
-        .content-section {
-            background: var(--surface-2);
-            border-radius: 16px;
+        /* ── Card / Section ── */
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
             padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--line);
-        }
-
-        .content-section h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary);
             margin-bottom: 20px;
         }
 
-        .table-container {
-            overflow-x: auto;
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 16px;
         }
 
+        /* ── Chart ── */
+        .chart-box canvas {
+            width: 100% !important;
+            height: 320px !important;
+        }
+
+        /* ── Filter Bar ── */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-group label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-group input {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .filter-group input:focus { border-color: var(--primary); }
+        .filter-group input[type="text"] { min-width: 220px; }
+
+        .filter-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* ── Table ── */
         .data-table {
             width: 100%;
             border-collapse: collapse;
         }
 
         .data-table th {
-            background-color: #fff3e4;
-            padding: 14px;
+            padding: 10px 14px;
             text-align: left;
+            font-size: 11px;
             font-weight: 600;
-            color: var(--text-main);
-            border-bottom: 2px solid var(--line);
-            font-size: 13px;
+            color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            background: transparent;
         }
 
         .data-table td {
             padding: 14px;
-            border-bottom: 1px solid var(--line);
-            font-size: 14px;
-            color: var(--text-main);
+            font-size: 13px;
+            color: var(--text);
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
         }
 
-        .data-table tr:hover {
-            background-color: #fffaf2;
-        }
+        .data-table tbody tr:hover { background: #f8fafc; }
+        .data-table tbody tr:last-child td { border-bottom: none; }
 
-        .data-table tr:last-child td {
-            border-bottom: none;
-        }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
 
-        .text-right {
-            text-align: right;
-        }
+        .price { font-weight: 600; color: #059669; }
 
-        .text-center {
-            text-align: center;
-        }
-
-        .chart-box {
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            padding: 14px;
-        }
-
-        .chart-box canvas {
-            width: 100% !important;
-            height: 320px !important;
-        }
-
-        /* Pagination Styling - Compact */
-        .pagination {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            gap: 3px;
-            flex-wrap: wrap;
-        }
-        .pagination li {
-            display: inline-flex;
-        }
+        /* ── Pagination ── */
+        .pagination { display: flex; list-style: none; padding: 0; margin: 16px 0 0; gap: 4px; flex-wrap: wrap; }
+        .pagination li { display: inline-flex; }
         .pagination li a,
         .pagination li span {
-            padding: 5px 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-            background: #fff;
-            transition: all 0.15s ease;
-            min-width: 32px;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
+            padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+            color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500;
+            background: var(--surface); transition: all 0.15s; min-width: 32px; text-align: center;
         }
-        .pagination li.active span {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-        .pagination li a:hover {
-            background: var(--line);
-            color: var(--primary);
-        }
-        .pagination li.disabled span {
-            color: #adb5bd;
-            background: #f8f9fa;
-            cursor: not-allowed;
-        }
-        .pagination li:first-child a,
-        .pagination li:first-child span,
-        .pagination li:last-child a,
-        .pagination li:last-child span {
-            padding: 5px 8px;
-        }
-        /* Bootstrap 4 pagination compatibility */
-        .pagination .page-item {
-            display: inline-flex;
-        }
+        .pagination li.active span { background: var(--text); color: #fff; border-color: var(--text); }
+        .pagination li a:hover { background: #f1f5f9; color: var(--text); }
+        .pagination li.disabled span { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
+        .pagination .page-item { display: inline-flex; }
         .pagination .page-link {
-            padding: 5px 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-            background: #fff;
-            transition: all 0.15s ease;
-            min-width: 32px;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            margin: 0 2px;
+            padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+            color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500;
+            background: var(--surface); transition: all 0.15s; min-width: 32px; text-align: center; margin: 0 2px;
         }
-        .pagination .page-item.active .page-link {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-        .pagination .page-item.disabled .page-link {
-            color: #adb5bd;
-            background: #f8f9fa;
-            cursor: not-allowed;
-        }
+        .pagination .page-item.active .page-link { background: var(--text); color: #fff; border-color: var(--text); }
+        .pagination .page-item.disabled .page-link { color: #cbd5e1; background: #f8fafc; cursor: not-allowed; }
 
-        /* Responsive Design */
+        /* ── Responsive ── */
         @media (max-width: 1200px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 992px) {
-            .main-content {
-                margin-left: 0;
-                padding: 20px;
-            }
-            
-            .dashboard-container {
-                flex-direction: column;
-            }
-
-            .page-header h1 {
-                font-size: 24px;
-            }
-
-            .page-header p {
-                font-size: 14px;
-            }
+            .main-content { margin-left: 0; padding: 80px 20px 20px; }
+            .dashboard-container { flex-direction: column; }
+            .page-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .header-actions { width: 100%; justify-content: flex-start; }
         }
 
         @media (max-width: 768px) {
-            .main-content {
-                padding: 15px;
-            }
+            .main-content { padding: 80px 16px 16px; }
+            .stats-grid { gap: 10px; }
+            .stat-card { padding: 16px; }
+            .stat-icon { width: 42px; height: 42px; font-size: 16px; }
+            .stat-value { font-size: 17px; }
+            .card { padding: 16px; }
+            .filter-bar { flex-direction: column; align-items: stretch; gap: 12px; }
+            .filter-group input { width: 100%; }
+            .filter-actions { justify-content: flex-start; }
+            .chart-box canvas { height: 240px !important; }
 
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
+            .data-table thead { display: none; }
+            .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+            .data-table tr { margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+            .data-table td { text-align: right; padding: 8px 0; border-bottom: 1px dashed var(--border-light); display: flex; justify-content: space-between; align-items: center; }
+            .data-table td:last-child { border-bottom: none; justify-content: flex-end; padding-top: 12px; }
+            .data-table td::before { font-weight: 600; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; }
 
-            .stat-card {
-                padding: 16px;
-            }
+            /* Yearly Sales Report */
+            .card:nth-of-type(2) .data-table td:nth-child(1)::before { content: "Tahun"; }
+            .card:nth-of-type(2) .data-table td:nth-child(2)::before { content: "Jumlah Pesanan"; }
+            .card:nth-of-type(2) .data-table td:nth-child(3)::before { content: "Total Penjualan"; }
+            .card:nth-of-type(2) .data-table td:nth-child(4)::before { content: "Penjualan Paket"; }
 
-            .stat-icon {
-                width: 44px;
-                height: 44px;
-                font-size: 17px;
-            }
-
-            .stat-value {
-                font-size: 18px;
-            }
-
-            .stat-label {
-                font-size: 12px;
-            }
-
-            .content-section {
-                padding: 16px;
-            }
-
-            .data-table th,
-            .data-table td {
-                padding: 10px;
-                font-size: 12px;
-            }
-
-            .chart-box canvas {
-                height: 250px !important;
-            }
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .header-actions {
-                width: 100%;
-                justify-content: flex-start;
-            }
+            /* History Penjualan */
+            .card:nth-of-type(3) .data-table td:nth-child(1)::before { content: "ID Pesanan"; }
+            .card:nth-of-type(3) .data-table td:nth-child(2)::before { content: "Tanggal"; }
+            .card:nth-of-type(3) .data-table td:nth-child(3)::before { content: "Pelanggan"; }
+            .card:nth-of-type(3) .data-table td:nth-child(4)::before { content: "Qty"; }
+            .card:nth-of-type(3) .data-table td:nth-child(5)::before { content: "Total"; }
         }
-
+        
         @media (max-width: 576px) {
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-
-            .stat-card {
-                padding: 14px;
-                gap: 12px;
-            }
-
-            .stat-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-                border-radius: 12px;
-            }
-
-            .stat-value {
-                font-size: 16px;
-            }
-
-            .data-table {
-                font-size: 11px;
-            }
-
-            .data-table th,
-            .data-table td {
-                padding: 8px;
-            }
-
-            .chart-box canvas {
-                height: 200px !important;
-            }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .stat-card { padding: 14px; gap: 10px; flex-direction: column; align-items: flex-start; }
+            .stat-icon { width: 38px; height: 38px; font-size: 15px; border-radius: 10px; }
+            .stat-value { font-size: 15px; }
+            .data-table { font-size: 11px; }
+            .chart-box canvas { height: 200px !important; }
         }
     </style>
 </head>
@@ -464,16 +338,16 @@
             <header class="page-header">
                 <div>
                     <h1>Laporan Penjualan</h1>
-                    <p>Laporan penjualan dari tahun ke tahun</p>
+                    <p>Ringkasan, grafik, dan riwayat laporan penjualan</p>
                 </div>
                 <div class="header-actions">
-                    <a class="export-btn" href="{{ route('admin.laporan.export', request()->query()) }}">
-                        <i class="fas fa-file-excel"></i>
-                        Export Excel
+                    <a class="btn btn-success" href="{{ route('admin.laporan.export', request()->query()) }}">
+                        <i class="fas fa-file-excel"></i> Export Excel
                     </a>
                 </div>
             </header>
 
+            <!-- Stats Grid -->
             <section class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-wallet"></i></div>
@@ -505,17 +379,18 @@
                 </div>
             </section>
 
-            <section class="content-section">
-                <h2>Grafik Penjualan 6 Bulan Terakhir</h2>
+            <!-- Grafik Penjualan -->
+            <section class="card">
+                <div class="card-title">Grafik Penjualan 6 Bulan Terakhir</div>
                 <div class="chart-box">
                     <canvas id="salesChart"></canvas>
                 </div>
             </section>
 
             <!-- Yearly Sales Report -->
-            <section class="content-section">
-                <h2>Laporan Penjualan per Tahun</h2>
-                <div class="table-container">
+            <section class="card">
+                <div class="card-title">Laporan Penjualan per Tahun</div>
+                <div style="overflow-x:auto;">
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -528,14 +403,14 @@
                         <tbody>
                             @forelse($yearlySales as $sale)
                                 <tr>
-                                    <td>{{ $sale->year }}</td>
+                                    <td style="font-weight: 500;">{{ $sale->year }}</td>
                                     <td class="text-center">{{ $sale->orders }}</td>
-                                    <td class="text-right">Rp {{ number_format($sale->total, 0, ',', '.') }}</td>
-                                    <td class="text-right">Rp {{ number_format($yearlyPaketSales[$sale->year] ?? 0, 0, ',', '.') }}</td>
+                                    <td class="text-right price">Rp {{ number_format($sale->total, 0, ',', '.') }}</td>
+                                    <td class="text-right" style="font-weight: 600;">Rp {{ number_format($yearlyPaketSales[$sale->year] ?? 0, 0, ',', '.') }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center">Belum ada data penjualan</td>
+                                    <td colspan="4" class="text-center" style="color:var(--text-secondary);">Belum ada data penjualan tahunan.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -543,33 +418,29 @@
                 </div>
             </section>
 
-            <section class="content-section">
-                <h2>History Penjualan</h2>
-                <form method="GET" action="{{ route('admin.laporan.index') }}" style="margin-bottom: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: end;">
-                    <div style="display:flex;flex-direction:column;gap:6px;min-width:220px;">
-                        <label for="q" style="font-size:12px;font-weight:700;color:#2c3e50;">Search</label>
-                        <input id="q" name="q" value="{{ request('q') }}" placeholder="Cari ID pesanan / nama pelanggan" style="padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;" />
+            <!-- History Penjualan -->
+            <section class="card">
+                <div class="card-title">History Penjualan Keseluruhan</div>
+                <form method="GET" action="{{ route('admin.laporan.index') }}" class="filter-bar">
+                    <div class="filter-group">
+                        <label for="q">Search</label>
+                        <input id="q" type="text" name="q" value="{{ request('q') }}" placeholder="Cari ID pesanan / pelanggan...">
                     </div>
-                    <div style="display:flex;flex-direction:column;gap:6px;">
-                        <label for="from" style="font-size:12px;font-weight:700;color:#2c3e50;">Dari Tanggal</label>
-                        <input id="from" type="date" name="from" value="{{ request('from') }}" style="padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;" />
+                    <div class="filter-group">
+                        <label for="from">Dari Tanggal</label>
+                        <input id="from" type="date" name="from" value="{{ request('from') }}">
                     </div>
-                    <div style="display:flex;flex-direction:column;gap:6px;">
-                        <label for="to" style="font-size:12px;font-weight:700;color:#2c3e50;">Sampai Tanggal</label>
-                        <input id="to" type="date" name="to" value="{{ request('to') }}" style="padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;" />
+                    <div class="filter-group">
+                        <label for="to">Sampai Tanggal</label>
+                        <input id="to" type="date" name="to" value="{{ request('to') }}">
                     </div>
-                    <div style="display:flex;gap:8px;align-items:center;">
-                        <button type="submit" class="export-btn" style="background-color:#3498db;">
-                            <i class="fas fa-filter"></i>
-                            Filter
-                        </button>
-                        <a href="{{ route('admin.laporan.index') }}" class="export-btn" style="background-color:#64748b;">
-                            <i class="fas fa-rotate-left"></i>
-                            Reset
-                        </a>
+                    <div class="filter-actions" style="margin-bottom: 2px;">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i> Filter</button>
+                        <a href="{{ route('admin.laporan.index') }}" class="btn btn-secondary"><i class="fas fa-rotate-left"></i> Reset</a>
                     </div>
                 </form>
-                <div class="table-container">
+
+                <div style="overflow-x:auto;">
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -588,26 +459,26 @@
                                     foreach ($items as $it) { $qty += (int) ($it['quantity'] ?? 0); }
                                 @endphp
                                 <tr>
-                                    <td>{{ $o->order_id }}</td>
-                                    <td>{{ optional($o->created_at)->format('d M Y') }}</td>
-                                    <td>{{ $o->customer_name }}</td>
+                                    <td style="font-weight: 500;">{{ $o->order_id }}</td>
+                                    <td style="color: var(--text-secondary);">{{ optional($o->created_at)->format('d M Y') }}</td>
+                                    <td><span style="font-weight: 500;">{{ $o->customer_name }}</span></td>
                                     <td class="text-center">{{ $qty }}</td>
-                                    <td class="text-right">Rp {{ number_format((float) $o->total_price, 0, ',', '.') }}</td>
+                                    <td class="text-right price">Rp {{ number_format((float) $o->total_price, 0, ',', '.') }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center">Belum ada data penjualan</td>
+                                    <td colspan="5" class="text-center" style="color:var(--text-secondary);padding:24px;">Belum ada riwayat pesanan selesai.</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
-                <div style="margin-top: 16px;">
-                    {{ $completedOrders->links('pagination::bootstrap-4') }}
-                </div>
+                
+                {{ $completedOrders->links('pagination::bootstrap-4') }}
             </section>
         </main>
     </div>
+
     <script>
         const salesLabels = @json($monthlySalesLabels ?? []);
         const salesData = @json($monthlySalesData ?? []);
@@ -622,25 +493,43 @@
                         label: 'Penjualan',
                         data: salesData,
                         borderColor: '#8B0000',
-                        backgroundColor: 'rgba(139, 0, 0, 0.12)',
+                        backgroundColor: 'rgba(139, 0, 0, 0.08)',
                         fill: true,
-                        borderWidth: 3,
+                        borderWidth: 2,
                         tension: 0.35,
                         pointRadius: 4,
                         pointHoverRadius: 6,
-                        pointBackgroundColor: '#DAA520'
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#8B0000',
+                        pointBorderWidth: 2
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: true }
+                        legend: { display: false }
                     },
                     scales: {
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                font: { family: "'Inter', sans-serif", size: 12 },
+                                color: '#64748b'
+                            }
+                        },
                         y: {
                             beginAtZero: true,
+                            grid: {
+                                color: '#f1f5f9',
+                                drawBorder: false
+                            },
                             ticks: {
+                                font: { family: "'Inter', sans-serif", size: 12 },
+                                color: '#64748b',
                                 callback: (value) => 'Rp ' + Number(value).toLocaleString('id-ID')
                             }
                         }
