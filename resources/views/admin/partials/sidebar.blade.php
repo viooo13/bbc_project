@@ -29,6 +29,49 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+    /* ── GLOBAL SKELETON LOADING ── */
+    .main-content {
+        opacity: 0;
+        visibility: hidden;
+    }
+    body.skeleton-loaded .main-content {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.5s ease-in-out;
+    }
+    #page-skeleton {
+        position: fixed;
+        top: 0;
+        left: 272px;
+        right: 0;
+        bottom: 0;
+        padding: 32px;
+        background: var(--bg, #f8fafc);
+        z-index: 990;
+        overflow-y: auto;
+    }
+    @media (max-width: 992px) {
+        #page-skeleton { left: 0; padding: 80px 20px 20px; z-index: 990; }
+    }
+    
+    @keyframes pulse-skeleton {
+        0% { background-color: #e2e8f0; }
+        50% { background-color: #cbd5e1; }
+        100% { background-color: #e2e8f0; }
+    }
+    
+    .skel-box {
+        background: #e2e8f0;
+        border-radius: 8px;
+        animation: pulse-skeleton 1.5s infinite ease-in-out;
+        margin-bottom: 20px;
+    }
+    .skel-title { height: 32px; width: 35%; margin-bottom: 8px; }
+    .skel-subtitle { height: 16px; width: 25%; margin-bottom: 32px; }
+    .skel-card { height: 120px; width: 100%; border-radius: 12px; }
+    .skel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .skel-table { height: 400px; width: 100%; border-radius: 12px; }
+
     .sidebar.admin-sidebar {
         width: 272px;
         background: #ffffff;
@@ -341,8 +384,29 @@
         background: rgba(0, 0, 0, 0.45);
         z-index: 999;
         opacity: 0;
+        pointer-events: none;
         transition: opacity 0.3s ease;
         backdrop-filter: blur(2px);
+    }
+
+    .sidebar-close {
+        display: none;
+        background: #f1f5f9;
+        border: none;
+        color: #64748b;
+        font-size: 20px;
+        cursor: pointer;
+        margin-left: auto;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+    .sidebar-close:hover {
+        color: #ef4444;
+        background: #fee2e2;
     }
 
     @media (max-width: 992px) {
@@ -356,6 +420,7 @@
 
         .sidebar-overlay.is-visible {
             opacity: 1;
+            pointer-events: auto;
         }
 
         .sidebar.admin-sidebar {
@@ -375,27 +440,12 @@
         }
 
         .sidebar-close {
-            display: block;
+            display: flex;
         }
 
         .sidebar-mobile-toggle.is-hidden {
             display: none !important;
         }
-    }
-
-    .sidebar-close {
-        display: none;
-        background: transparent;
-        border: none;
-        color: #64748b;
-        font-size: 20px;
-        cursor: pointer;
-        margin-left: auto;
-        padding: 4px;
-        transition: color 0.2s;
-    }
-    .sidebar-close:hover {
-        color: #ef4444;
     }
 </style>
 
@@ -665,4 +715,44 @@
             }, 3000);
         });
     });
+</script>
+
+<!-- Global Skeleton Loader -->
+<div id="page-skeleton">
+    <div class="skel-box skel-title"></div>
+    <div class="skel-box skel-subtitle"></div>
+    
+    <div class="skel-grid">
+        <div class="skel-box skel-card"></div>
+        <div class="skel-box skel-card"></div>
+        <div class="skel-box skel-card"></div>
+        <div class="skel-box skel-card"></div>
+    </div>
+    
+    <div class="skel-box skel-table"></div>
+</div>
+
+<script>
+    (function() {
+        function hideSkeleton() {
+            const skel = document.getElementById('page-skeleton');
+            if (skel) {
+                skel.style.opacity = '0';
+                skel.style.pointerEvents = 'none';
+                skel.style.transition = 'opacity 0.4s ease';
+                setTimeout(() => skel.remove(), 400);
+            }
+            document.body.classList.add('skeleton-loaded');
+        }
+
+        if (document.readyState === 'complete') {
+            hideSkeleton();
+        } else {
+            const maxTime = setTimeout(() => hideSkeleton(), 3000);
+            window.addEventListener('load', () => {
+                clearTimeout(maxTime);
+                hideSkeleton();
+            });
+        }
+    })();
 </script>
