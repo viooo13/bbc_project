@@ -216,57 +216,6 @@ class AuthController extends Controller
         return back()->with('error', 'Username/email atau password tidak sesuai.');
     }
 
-    // Dedicated admin login methods (temporary)
-    public function showAdminLogin()
-    {
-        return view('auth.login');
-    }
-
-    public function adminLoginSubmit(Request $request)
-    {
-        $data = $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
-        $username = trim((string) $data['username']);
-        $password = $data['password'];
-
-        $admin = \App\Models\Admin::where(function ($q) use ($username) {
-            $q->where('username', $username)
-                ->orWhere('email', $username);
-        })->first();
-
-        if (!$admin) {
-            $admin = User::where(function ($q) use ($username) {
-                $q->where('name', $username)
-                    ->orWhere('email', $username);
-            })->where('role', 'admin')->first();
-
-            if (!$admin && $username === 'bbcjaya123') {
-                $admin = User::create([
-                    'name'     => 'bbcjaya123',
-                    'email'    => 'admin@bbc.com',
-                    'phone'    => '08123456789',
-                    'password' => bcrypt('bbcjaya123'),
-                    'role'     => 'admin',
-                ]);
-            }
-        }
-
-        if (!$admin || !\Illuminate\Support\Facades\Hash::check($password, $admin->password)) {
-            return back()->with('error', 'Username/email atau password tidak sesuai.');
-        }
-
-        if (get_class($admin) === \App\Models\Admin::class && ($admin->status ?? 'active') !== 'active') {
-            return back()->with('error', 'Akun admin sedang nonaktif.');
-        }
-
-        Auth::guard('admin')->login($admin);
-        $request->session()->regenerate();
-        return redirect()->route('admin.dashboard');
-    }
-
     /* ───────── Forgot Password (langsung reset) ───────── */
 
     public function showForgotPassword()
