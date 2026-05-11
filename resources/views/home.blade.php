@@ -632,7 +632,6 @@
             height: 8px;
             border-radius: 50%;
             background: #8B0000;
-            animation: pulse-dot 2s ease-in-out infinite;
         }
 
         @keyframes pulse-dot {
