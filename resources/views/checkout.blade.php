@@ -131,7 +131,9 @@
         }
 
         .btn-order {
-            background: linear-gradient(135deg, #8B0000 0%, #6B0000 100%);
+            background: linear-gradient(to right, #8B0000 50%, #a50000 50%);
+            background-size: 200% 100%;
+            background-position: right bottom;
             color: white;
             font-weight: 800;
             text-transform: uppercase;
@@ -139,15 +141,13 @@
             padding: 1rem;
             border-radius: 16px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 20px -6px rgba(139, 0, 0, 0.4);
             border: none;
             width: 100%;
         }
 
         .btn-order:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 28px -8px rgba(139, 0, 0, 0.5);
-            filter: brightness(1.1);
+            background-position: left bottom;
         }
 
         .btn-order:active {

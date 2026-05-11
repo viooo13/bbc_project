@@ -632,7 +632,6 @@
             height: 8px;
             border-radius: 50%;
             background: #8B0000;
-            animation: pulse-dot 2s ease-in-out infinite;
         }
 
         @keyframes pulse-dot {
@@ -701,7 +700,7 @@
         .hero-btn-primary:hover {
             background-position: left bottom;
             transform: translateY(-1px);
-            box-shadow: 0 10px 20px -5px rgba(139, 0, 0, 0.4);
+            
         }
 
         .hero-btn-secondary {
@@ -1334,7 +1333,7 @@
         .package-cta:hover {
             background-position: left bottom;
             transform: translateY(-1px);
-            box-shadow: 0 10px 20px -5px rgba(139, 0, 0, 0.4);
+            
         }
 
         .package-cta:active {

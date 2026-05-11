@@ -283,16 +283,13 @@
                                             @endfor
                                         </div>
                                     </div>
-                                    <a href="{{ route('transaksi.show', $order->order_id) }}?action=review" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#8B0000] text-white text-[11px] font-bold rounded-xl hover:bg-[#6d0000] transition-all shadow-[0_4px_12px_rgba(139,0,0,0.15)] hover:shadow-[0_6px_16px_rgba(139,0,0,0.25)] hover:-translate-y-0.5">
+                                    <a href="{{ route('transaksi.show', $order->order_id) }}?action=review" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-[11px] font-bold rounded-xl hover:-translate-y-0.5 transition-all duration-300">
                                         <i class="fas fa-pencil-alt text-[9px]"></i> Tulis Ulasan
                                     </a>
                                 @elseif($order->status === 'completed' && $isReviewed)
-                                    <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-semibold mr-1"><i class="fas fa-check-circle text-[10px]"></i> Sudah Diulas</span>
-                                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#8B0000]/20 text-[#8B0000] text-[11px] font-bold rounded-xl hover:bg-[#8B0000]/5 transition-all">
+                                    <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-semibold mr-2"><i class="fas fa-check-circle text-[10px]"></i> Sudah Diulas</span>
+                                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#8B0000]/20 text-[#8B0000] text-[11px] font-bold rounded-lg hover:bg-[#8B0000]/5 transition-all">
                                         <i class="fas fa-redo text-[9px]"></i> Pesan Lagi
-                                    <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-semibold mr-1"><i class="fas fa-check-circle text-[10px]"></i> Diulas</span>
-                                    <a href="{{ route('paket.index') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#8B0000]/20 text-[#8B0000] text-[11px] font-bold rounded-lg hover:bg-[#8B0000]/5 transition-all">
-                                        <i class="fas fa-redo text-[9px]"></i> Beli Lagi
                                     </a>
                                 @else
                                     <a href="{{ route('transaksi.show', $order->order_id) }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#1a120b]/10 text-[#1a120b] text-[11px] font-bold rounded-lg hover:bg-[#1a120b]/[0.03] transition-all">
@@ -323,7 +320,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-[#1a120b] mb-1.5">Belum ada pesanan</h3>
                     <p class="text-sm text-[#8a7b6a] mb-6 max-w-xs font-poppins">Anda belum pernah melakukan pemesanan untuk status ini. Yuk, mulai pesan sekarang!</p>
-                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-2 px-6 py-3 bg-[#8B0000] text-white text-sm font-bold rounded-xl hover:bg-[#6d0000] transition-all shadow-[0_8px_20px_rgba(139,0,0,0.18)] hover:shadow-[0_10px_24px_rgba(139,0,0,0.25)] hover:-translate-y-0.5">
+                    <a href="{{ route('menu.public') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="inline-flex items-center gap-2 px-6 py-3 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold rounded-xl transition-all duration-300 hover:-translate-y-0.5">
                         <i class="fas fa-utensils text-xs"></i> Belanja Sekarang
                     </a>
                 </div>

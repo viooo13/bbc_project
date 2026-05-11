@@ -79,7 +79,9 @@
         }
 
         .btn-premium {
-            background: linear-gradient(135deg, #8B0000 0%, #6B0000 100%);
+            background: linear-gradient(to right, #8B0000 50%, #a50000 50%);
+            background-size: 200% 100%;
+            background-position: right bottom;
             color: white;
             font-weight: 800;
             text-transform: uppercase;
@@ -87,12 +89,11 @@
             padding: 0.75rem 1.5rem;
             border-radius: 14px;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px -6px rgba(139, 0, 0, 0.4);
         }
 
         .btn-premium:hover {
+            background-position: left bottom;
             transform: translateY(-2px);
-            box-shadow: 0 12px 28px -8px rgba(139, 0, 0, 0.5);
         }
 
         .btn-secondary {
@@ -347,7 +348,7 @@
                             </div>
                         @elseif($status === 'completed')
                             <div class="mt-6">
-                                <button type="button" onclick="openReviewModal()" class="w-full py-4 rounded-2xl bg-red-700 text-white text-sm font-extrabold shadow-lg shadow-red-700/20 hover:bg-red-800 hover:shadow-red-800/30 transition-all flex items-center justify-center gap-2 animate-pulse-subtle">
+                                <button type="button" onclick="openReviewModal()" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-extrabold hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 animate-pulse-subtle">
                                     <i class="fas fa-star"></i> Berikan Ulasan
                                 </button>
                             </div>
@@ -403,7 +404,7 @@
                 
                 <div class="px-8 pb-8 flex gap-3">
                     <button type="button" onclick="closeQrisModal()" class="flex-1 py-4 rounded-2xl border-2 border-gray-100 text-stone-400 text-sm font-bold hover:bg-gray-50 transition-all">Nanti</button>
-                    <button onclick="openUploadProofModal()" class="flex-[1.5] py-4 rounded-2xl bg-red-800 text-white text-sm font-bold shadow-lg shadow-red-800/20 hover:bg-red-900 hover:shadow-red-900/30 transition-all flex items-center justify-center gap-2">
+                    <button onclick="openUploadProofModal()" class="flex-[1.5] py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
                         <i class="fas fa-upload text-xs"></i> Upload Bukti
                     </button>
                 </div>
@@ -439,7 +440,7 @@
                     
                     <div class="grid grid-cols-2 gap-4">
                         <button type="button" onclick="closeUploadProofModal()" class="w-full py-4 rounded-2xl border-2 border-gray-100 text-stone-400 text-sm font-bold hover:bg-gray-50 transition-all">Batal</button>
-                        <button type="submit" id="btnSubmitProof" class="w-full py-4 rounded-2xl bg-red-800 text-white text-sm font-bold shadow-lg shadow-red-800/20 hover:bg-red-900 hover:shadow-red-900/30 transition-all flex items-center justify-center gap-2">
+                        <button type="submit" id="btnSubmitProof" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
                             <i class="fas fa-paper-plane text-xs"></i> Kirim Bukti
                         </button>
                     </div>
@@ -483,7 +484,7 @@
 
                     <div class="grid grid-cols-2 gap-4">
                         <button type="button" onclick="closeReviewModal()" class="w-full py-4 rounded-2xl border-2 border-gray-100 text-stone-400 text-sm font-bold hover:bg-gray-50 transition-all">Nanti</button>
-                        <button type="submit" id="btnSubmitReview" class="w-full py-4 rounded-2xl bg-red-700 text-white text-sm font-bold shadow-lg shadow-red-700/20 hover:bg-red-800 hover:shadow-red-800/30 transition-all flex items-center justify-center gap-2">
+                        <button type="submit" id="btnSubmitReview" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
                             <i class="fas fa-paper-plane text-xs"></i> Kirim Ulasan
                         </button>
                     </div>

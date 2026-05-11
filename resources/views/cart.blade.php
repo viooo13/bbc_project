@@ -146,7 +146,7 @@
                         <h2 class="text-lg font-bold text-[#1a120b] mb-1.5">Keranjang Kamu Masih Kosong</h2>
                         <p class="text-sm text-[#8a7b6a] mb-6 max-w-xs font-poppins">Yuk, jelajahi paket lezat kami dan temukan favoritmu!</p>
                         <div class="flex flex-col sm:flex-row justify-center gap-3">
-                            <a href="{{ route('home') }}#paket" class="inline-flex items-center justify-center gap-2 bg-[#8B0000] text-white px-6 py-3 rounded-xl text-sm font-bold shadow-[0_8px_20px_rgba(139,0,0,0.18)] hover:bg-[#6d0000] hover:-translate-y-0.5 transition-all">
+                            <a href="{{ route('home') }}#paket" class="inline-flex items-center justify-center gap-2 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white px-6 py-3 rounded-xl text-sm font-bold hover:-translate-y-0.5 transition-all duration-300">
                                 <i class="fas fa-box-open text-xs"></i> Lihat Paket
                             </a>
                         </div>
@@ -233,7 +233,7 @@
 
                     <div class="mt-6 space-y-2.5">
                         @if(count($items) > 0)
-                            <a href="{{ route('checkout.index') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="w-full inline-flex items-center justify-center gap-2 bg-[#8B0000] text-white px-5 py-3.5 rounded-xl text-sm font-bold shadow-[0_8px_20px_rgba(139,0,0,0.18)] hover:bg-[#6d0000] hover:-translate-y-0.5 transition-all">
+                            <a href="{{ route('checkout.index') }}" onclick="document.body.classList.add('public-skeleton-loading');" class="w-full inline-flex items-center justify-center gap-2 bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white px-5 py-3.5 rounded-xl text-sm font-bold hover:-translate-y-0.5 transition-all duration-300">
                                 Lanjut Pembayaran <i class="fas fa-arrow-right text-xs"></i>
                             </a>
                         @else
