@@ -219,7 +219,6 @@ class TransaksiController extends Controller
                     Log::info("Sending image URL: " . $imageUrl);
                     
                     $data['file'] = $imageUrl;
-                    $data['url'] = $imageUrl;
                 }
                 
                 $response = Http::withHeaders([
