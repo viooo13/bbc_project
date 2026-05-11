@@ -537,6 +537,11 @@
                 }
             });
         }
+
+        // Auto refresh halaman laporan penjualan setiap 3 detik
+        setInterval(function() {
+            window.location.reload();
+        }, 3000);
     </script>
 </body>
 </html>

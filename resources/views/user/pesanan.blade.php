@@ -416,6 +416,11 @@
             updateQuickStars(container, Number.isNaN(initial) ? 0 : initial);
         });
     });
+
+    // Auto refresh halaman Pesanan Saya setiap 3 detik
+    setInterval(function() {
+        window.location.reload();
+    }, 3000);
 </script>
 </body>
 </html>

@@ -709,6 +709,11 @@
         document.getElementById('proofModal').addEventListener('click', function(e) {
             if (e.target === this) closeProofModal();
         });
+
+        // Auto refresh halaman kelola pesanan setiap 3 detik
+        setInterval(function() {
+            window.location.reload();
+        }, 3000);
     </script>
 </body>
 </html>
