@@ -52,6 +52,15 @@ Route::get('/run-migrate', function () {
     return 'Migrasi berhasil dijalankan! Silakan coba checkout lagi.';
 });
 
+Route::get('/debug-log', function () {
+    if (file_exists(storage_path('logs/laravel.log'))) {
+        $logs = file_get_contents(storage_path('logs/laravel.log'));
+        // get last 2000 characters to show the latest error
+        return '<pre>' . substr($logs, -3000) . '</pre>';
+    }
+    return 'Log kosong atau file tidak ada.';
+});
+
 Route::get('/', function () {
     if (auth()->check()) {
         $user = auth()->user();
