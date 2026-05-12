@@ -132,7 +132,7 @@ class CheckoutController extends Controller
 
                     $message = "Order baru masuk!\n\nOrder: #{$orderId}\nNama: {$customerName}\nNo HP: {$customerPhone}\nRekening Pembeli: {$buyerBank}\nTotal: Rp {$total}\nMetode bayar: {$paymentMethod}\nStatus: Menunggu Pembayaran";
 
-                    Http::withHeaders([
+                    Http::timeout(5)->withHeaders([
                         'Authorization' => $token,
                     ])->asForm()->post('https://api.fonnte.com/send', [
                         'target' => $targetDigits,
@@ -142,6 +142,7 @@ class CheckoutController extends Controller
                 }
             } catch (\Throwable $e) {
                 // ignore wa failures
+                \Log::error('Fonnte Error: ' . $e->getMessage());
             }
         }
 
