@@ -197,7 +197,7 @@ class TransaksiController extends Controller
             }
 
             // Kirim notifikasi WA ke Admin
-            $nomorAdmin = '6282123368495';
+            $nomorAdmin = '6282123368495'; // Format: 62 + nomor (tanpa 0 di depan)
             $tokenFonnte = 'bNje3r35BUGGfCq1o19M';
             $pesan = "📸 *Bukti Pembayaran Diterima*\n\n" .
                      "Order ID: {$pesanan->order_id}\n" .
@@ -210,31 +210,32 @@ class TransaksiController extends Controller
                 $data = [
                     'target' => $nomorAdmin,
                     'message' => $pesan,
-                    'countryCode' => '62',
                 ];
                 
                 // Add image if payment proof exists
                 if (isset($filename) && file_exists(public_path('uploads/payment_proofs/' . $filename))) {
-                    $imagePath = public_path('uploads/payment_proofs/' . $filename);
                     $imageUrl = url('uploads/payment_proofs/' . $filename);
                     
-                    Log::info("Image path: " . $imagePath);
                     Log::info("Image URL: " . $imageUrl);
-                    Log::info("File exists: " . (file_exists($imagePath) ? 'yes' : 'no'));
-                    Log::info("File size: " . filesize($imagePath) . ' bytes');
+                    Log::info("File exists: " . (file_exists(public_path('uploads/payment_proofs/' . $filename)) ? 'yes' : 'no'));
                     
-                    // Try sending as binary file (CURLFile) - works on all plans
-                    $data['file'] = new \CURLFile($imagePath, mime_content_type($imagePath), $filename);
-                    Log::info("Sending as binary file with MIME type: " . mime_content_type($imagePath));
+                    // Send image URL to Fonnte
+                    $data['file'] = $imageUrl;
+                    Log::info("Sending image URL to Fonnte");
                 }
                 
                 $response = Http::withHeaders([
                     'Authorization' => $tokenFonnte,
-                ])->asMultipart()->post('https://api.fonnte.com/send', $data);
+                ])->post('https://api.fonnte.com/send', $data);
 
                 Log::info("Fonnte Response Status: " . $response->status());
                 Log::info("Fonnte Response Body: " . $response->body());
-                Log::info("Notifikasi WA bukti pembayaran terkirim ke {$nomorAdmin}");
+                
+                if ($response->successful()) {
+                    Log::info("Notifikasi WA bukti pembayaran terkirim ke {$nomorAdmin}");
+                } else {
+                    Log::error("Fonnte API Error: " . $response->body());
+                }
             } catch (\Exception $e) {
                 Log::error("Gagal kirim notifikasi WA: " . $e->getMessage());
                 Log::error("Stack trace: " . $e->getTraceAsString());

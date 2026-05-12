@@ -579,18 +579,10 @@
                     if(data.success) {
                         btn.innerHTML = '<i class="fas fa-check"></i> Berhasil!';
                         document.getElementById('successSound').play();
-                        // Keep UI updated without a full page reload.
+                        // Reload page to show updated status
                         setTimeout(() => {
-                            // Close modal if present
-                            const modal = document.getElementById('uploadProofModal');
-                            if (modal) modal.classList.add('hidden');
-                            // Optionally show a small success banner
-                            const banner = document.createElement('div');
-                            banner.className = 'fixed top-6 right-6 bg-emerald-600 text-white px-4 py-2 rounded-md shadow';
-                            banner.textContent = 'Bukti berhasil diunggah.';
-                            document.body.appendChild(banner);
-                            setTimeout(() => banner.remove(), 2500);
-                        }, 800);
+                            window.location.reload();
+                        }, 1000);
                     } else {
                         alert(data.message || 'Gagal mengirim bukti.');
                         btn.disabled = false; btn.innerHTML = 'Kirim';
