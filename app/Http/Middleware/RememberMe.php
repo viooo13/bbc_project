@@ -7,6 +7,7 @@ use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class RememberMe
@@ -32,6 +33,7 @@ class RememberMe
                         $request->session()->regenerate();
                         // Refresh last activity timestamp for session expiry tracking
                         session(['last_activity' => now()->timestamp]);
+                        Log::info("Auto-login successful for user: " . $user->email);
                     }
                 } else {
                     // Token invalid or expired — clean up cookie
