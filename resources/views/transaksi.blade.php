@@ -651,10 +651,7 @@
                 }
             };
 
-            // Auto refresh halaman transaksi setiap 3 detik
-            setInterval(function() {
-                window.location.reload();
-            }, 3000);
+           
         </script>
     </main>
 </body>
