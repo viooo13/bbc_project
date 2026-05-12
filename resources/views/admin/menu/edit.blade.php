@@ -299,7 +299,7 @@
                                         <div class="upload-text"><strong>Unggah</strong> File</div>
                                         <div class="upload-subtext">JPG atau PNG, maksimal 10 MB</div>
                                     </div>
-                                    <img id="imagePreview" src="{{ $menu->image }}" style="display:{{ $menu->image ? 'block' : 'none' }}; width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:5;" alt="Preview">
+                                    <img id="imagePreview" src="{{ Str::startsWith($menu->image, 'http') ? $menu->image : ($menu->image ? asset($menu->image) : '') }}" style="display:{{ $menu->image ? 'block' : 'none' }}; width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:5;" alt="Preview">
                                     <button type="button" id="removeImageBtn" onclick="removeImage()" style="display:{{ $menu->image ? 'flex' : 'none' }}; position:absolute; top:12px; right:12px; z-index:30; background:#dc2626; color:white; border:none; border-radius:50%; width:32px; height:32px; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.15); align-items:center; justify-content:center; transition: background 0.2s;"><i class="fas fa-times"></i></button>
                                 </div>
                             </div>

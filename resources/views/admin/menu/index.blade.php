@@ -402,7 +402,7 @@
                             @forelse($menus as $menu)
                                 <tr>
                                     <td>
-                                        <img src="{{ $menu->image }}" alt="{{ $menu->name }}" class="menu-image">
+                                        <img src="{{ Str::startsWith($menu->image, 'http') ? $menu->image : ($menu->image ? asset($menu->image) : 'https://placehold.co/400x400/fdf5e6/3a2a1a?text=' . urlencode($menu->name)) }}" alt="{{ $menu->name }}" class="menu-image">
                                     </td>
                                     <td>
                                         <strong style="color: var(--text);">{{ $menu->name }}</strong>

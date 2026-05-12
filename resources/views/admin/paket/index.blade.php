@@ -397,7 +397,7 @@
                             @forelse($pakets as $paket)
                                 <tr>
                                     <td>
-                                        <img src="{{ $paket->image }}" alt="{{ $paket->name }}" class="paket-image">
+                                        <img src="{{ Str::startsWith($paket->image, 'http') ? $paket->image : ($paket->image ? asset($paket->image) : 'https://placehold.co/400x400/fdf5e6/3a2a1a?text=' . urlencode($paket->name)) }}" alt="{{ $paket->name }}" class="paket-image">
                                     </td>
                                     <td>
                                         <strong style="color: var(--text);">{{ $paket->name }}</strong>

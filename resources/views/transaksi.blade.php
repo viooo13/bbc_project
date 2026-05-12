@@ -588,10 +588,11 @@
                         btn.innerHTML = '<i class="fas fa-check"></i> Berhasil!';
                         document.getElementById('successSound').play();
                         Swal.fire({
-                            title: 'Terkirim!',
-                            text: 'Bukti pembayaran berhasil dikirim.',
+                            title: 'Berhasil Terkirim!',
+                            text: 'Bukti pembayaran berhasil dikirim dan menunggu konfirmasi.',
                             icon: 'success',
-                            confirmButtonColor: '#8B0000'
+                            showConfirmButton: false,
+                            timer: 2000
                         }).then(() => {
                             window.location.reload();
                         });
