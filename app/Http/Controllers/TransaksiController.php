@@ -213,21 +213,31 @@ class TransaksiController extends Controller
                     'countryCode' => '62',
                 ];
                 
-                // Add image URL if payment proof exists
+                // Add image if payment proof exists
                 if (isset($filename) && file_exists(public_path('uploads/payment_proofs/' . $filename))) {
+                    $imagePath = public_path('uploads/payment_proofs/' . $filename);
                     $imageUrl = url('uploads/payment_proofs/' . $filename);
-                    Log::info("Sending image URL: " . $imageUrl);
                     
-                    $data['file'] = $imageUrl;
+                    Log::info("Image path: " . $imagePath);
+                    Log::info("Image URL: " . $imageUrl);
+                    Log::info("File exists: " . (file_exists($imagePath) ? 'yes' : 'no'));
+                    Log::info("File size: " . filesize($imagePath) . ' bytes');
+                    
+                    // Try sending as binary file (CURLFile) - works on all plans
+                    $data['file'] = new \CURLFile($imagePath, mime_content_type($imagePath), $filename);
+                    Log::info("Sending as binary file with MIME type: " . mime_content_type($imagePath));
                 }
                 
                 $response = Http::withHeaders([
                     'Authorization' => $tokenFonnte,
-                ])->post('https://api.fonnte.com/send', $data);
+                ])->asMultipart()->post('https://api.fonnte.com/send', $data);
 
-                Log::info("Notifikasi WA bukti pembayaran terkirim ke {$nomorAdmin}. Response: " . $response->body());
+                Log::info("Fonnte Response Status: " . $response->status());
+                Log::info("Fonnte Response Body: " . $response->body());
+                Log::info("Notifikasi WA bukti pembayaran terkirim ke {$nomorAdmin}");
             } catch (\Exception $e) {
                 Log::error("Gagal kirim notifikasi WA: " . $e->getMessage());
+                Log::error("Stack trace: " . $e->getTraceAsString());
             }
 
             return response()->json([
