@@ -411,12 +411,12 @@
                     </div>
                     <div class="md:col-span-7 lg:col-span-8 flex flex-col justify-center">
                         <p class="text-[0.95rem] md:text-[1.05rem] text-[#5c4637] leading-relaxed text-justify md:text-left mb-6">
-                            Berdiri sejak 12 Februari 2025, kami melayani pelanggan setia dengan sajian bakso tulang dan sumsum yang diracik dari bahan pilihan. Cita rasa dibuat konsisten, tampil lebih bersih, dan tetap mempertahankan karakter rumahan yang hangat.
+                            Berdiri sejak 12 Februari 2021, Bakso Bunderan Ciomas awalnya hanya melayani penjualan langsung (on the spot) dengan dua orang karyawan. Seiring berkembangnya usaha, layanan online melalui Grab dan Gojek mulai dijalankan. Restoran ini sempat viral setelah dikunjungi Tanboy Kun yang me-review menu andalan tulang rangu, sehingga semakin dikenal masyarakat. Setelah itu, jumlah karyawan bertambah dan banyak influencer turut mengulas restoran ini.
                         </p>
                         <!-- Metrics Grid - Clean -->
                         <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 border-t border-[#d8c3ae] pt-5">
                             <div>
-                                <div class="text-xl md:text-2xl font-bold text-red-800 leading-none mb-1">2025</div>
+                                <div class="text-xl md:text-2xl font-bold text-red-800 leading-none mb-1">2021</div>
                                 <div class="text-xs md:text-sm text-[#6a5244] font-medium leading-relaxed">Berdiri melayani pelanggan.</div>
                             </div>
                             <div>
@@ -440,19 +440,19 @@
                         <div class="flex items-start gap-4">
                             <div class="flex-shrink-0 text-red-700 text-2xl mt-1"><i class="fas fa-bowl-food"></i></div>
                             <div>
-                                <div class="font-bold text-[#3a2a1a] text-base md:text-lg">Menu Andalan Yang Jelas</div>
-                                <div class="text-[#5c4637] text-[0.9rem] md:text-[0.95rem] mt-1.5 leading-relaxed">Bakso tulang, sumsum, dan varian favorit lain disiapkan untuk pengalaman makan yang lebih fokus dan mudah diingat.</div>
+                                <div class="font-bold text-[#3a2a1a] text-base md:text-lg">Menu Andalan Tulang Rangu</div>
+                                <div class="text-[#5c4637] text-[0.9rem] md:text-[0.95rem] mt-1.5 leading-relaxed">Menu khas tulang rangu menjadi pembeda dari tempat bakso lainnya, disiapkan untuk pengalaman makan yang lebih fokus dan mudah diingat.</div>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
                             <div class="flex-shrink-0 text-red-700 text-2xl mt-1"><i class="fas fa-shield-heart"></i></div>
                             <div>
-                                <div class="font-bold text-[#3a2a1a] text-base md:text-lg">Proses Yang Terjaga</div>
-                                <div class="text-[#5c4637] text-[0.9rem] md:text-[0.95rem] mt-1.5 leading-relaxed">Mulai dari pemilihan bahan, pengolahan, sampai penyajian, semuanya dibuat rapi agar kualitas tetap stabil.</div>
+                                <div class="font-bold text-[#3a2a1a] text-base md:text-lg">Pelayanan Berstandar Hospitality</div>
+                                <div class="text-[#5c4637] text-[0.9rem] md:text-[0.95rem] mt-1.5 leading-relaxed">Setiap kru dilatih hospitality agar dapat memberikan pelayanan yang ramah dan profesional kepada setiap pelanggan.</div>
                             </div>
                         </div>
                         <div class="pl-5 border-l-2 border-red-700 text-[#5d4638] text-[0.9rem] md:text-[0.95rem] font-medium leading-relaxed italic mt-2">
-                            "Kami ingin setiap porsi terasa familiar, hangat, dan layak direkomendasikan, baik untuk pelanggan baru maupun pelanggan yang sudah kembali berulang kali."
+                            "Dari pelanggan terdekat hingga food vlogger terkemuka, kami ingin setiap porsi terasa familiar, hangat, dan layak direkomendasikan."
                         </div>
                     </div>
                 </div>
@@ -507,7 +507,7 @@
                             </div>
                         </div>
                         <div class="pl-5 border-l-2 border-red-700 text-[#5d4638] text-[0.9rem] md:text-[0.95rem] font-medium leading-relaxed italic mt-2">
-                            "Itulah mengapa BBC mulai dikenal luas, dari pelanggan terdekat hingga food vlogger terkemuka."
+                            "Mulai dari pelanggan terdekat hingga food vlogger terkemuka, BBC terus dikenal luas berkat kualitas dan pelayanan yang konsisten."
                         </div>
                     </div>
                     <div class="lg:col-span-5 relative w-full h-[280px] md:h-[340px] order-1 lg:order-2">
@@ -533,8 +533,8 @@
                         <img src="{{ asset('halal.jpeg') }}" onerror="this.onerror=null;this.src='https://placehold.co/160x80/efe1d1/3a2a1a?text=Halal';" alt="Halal" class="w-24 sm:w-28 h-auto" />
                     </div>
                     <p class="text-sm md:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed halal-desc">
-                        Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen boo
-                    </p>
+                        Bakso Bunderan Ciomas berkomitmen menyajikan makanan yang tidak hanya lezat, tetapi juga terjamin kehalalannya. Kini telah memiliki sertifikasi halal, sebagai bukti bahwa setiap bahan dan proses pengolahan dilakukan sesuai standar halal. Dengan begitu, pelanggan dapat menikmati bakso favorit dengan rasa tenang, nyaman, dan penuh kepercayaan.
+                     </p>
                     </div>
                 </div>
             </div>

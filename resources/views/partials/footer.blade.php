@@ -9,7 +9,7 @@
             <h2 class="statement-text">
                 Setiap mangkuk<br>punya cerita.
             </h2>
-            <a href="/lokasi-kontak" class="statement-link">
+            <a href="https://maps.app.goo.gl/QWu31z8q7NLZPs5b7" class="statement-link">
                 Kunjungi outlet kami
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
             </a>
@@ -26,29 +26,27 @@
 
                 <div class="info-col">
                     <span class="info-label">Lokasi</span>
-                    <p>Jl. Vihara Ciomas,<br>Ciomas Rahayu, Kec. Ciomas<br>Kab. Bogor, Jawa Barat 16610</p>
+                    <p>Jl. Villa Ciomas,<br>Ciomas Rahayu, Kec. Ciomas<br>Kab. Bogor, Jawa Barat 16610</p>
                 </div>
 
                 <div class="info-col">
                     <span class="info-label">Jam Buka</span>
-                    <p>Senin — Sabtu<br>10:00 — 21:00 WIB</p>
-                    <p class="info-note">Minggu & hari libur nasional tutup</p>
+                    <p>Setiap Hari<br>10:00 — 21:00 WIB</p>
                 </div>
 
                 <div class="info-col">
                     <span class="info-label">Kontak</span>
                     <p>
-                        <a href="https://wa.me/6285200000000">0852-xxxx-xxxx</a><br>
-                        <a href="mailto:baksobunderan@gmail.com">baksobunderan@gmail.com</a>
+                        <a href="https://wa.me/6285200000000">0822-6006-8707</a><br>
                     </p>
                 </div>
 
                 <div class="info-col">
                     <span class="info-label">Sosial</span>
                     <div class="social-links">
-                        <a href="#">Instagram</a>
-                        <a href="#">TikTok</a>
-                        <a href="#">Facebook</a>
+                        <a href="https://www.instagram.com/bakso_bunderan_ciomas?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">Instagram</a>
+                        <a href="https://www.tiktok.com/@bakso_bunderan_ciomas">TikTok</a>
+                        <a href="https://www.facebook.com/profile.php?id=61551251751338&rdid=xzJdFUkwwq12fNAp&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1DdUGm4PgF%2F#">Facebook</a>
                     </div>
                 </div>
 
