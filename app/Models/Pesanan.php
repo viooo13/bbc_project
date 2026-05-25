@@ -23,6 +23,7 @@ class Pesanan extends Model
         'status', // pending, confirmed, rejected, shipped, completed
         'payment_proof',
         'rejection_reason',
+        'snap_token',
     ];
 
     protected $casts = [

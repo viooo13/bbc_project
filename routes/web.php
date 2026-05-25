@@ -103,12 +103,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
     Route::get('/transaksi/{orderId}', [TransaksiController::class, 'show'])->name('transaksi.show');
-    Route::post('/transaksi/{orderId}/transfer-notify', [TransaksiController::class, 'notifyTransfer'])->name('transaksi.transfer.notify');
+
     Route::post('/transaksi/{orderId}/pay', [TransaksiController::class, 'pay'])->name('transaksi.pay');
-    Route::post('/transaksi/{orderId}/upload-proof', [TransaksiController::class, 'uploadProof'])->name('transaksi.upload-proof');
+
+    Route::post('/transaksi/{orderId}/midtrans-sync', [TransaksiController::class, 'syncStatus'])->name('transaksi.midtrans.sync');
+    Route::post('/transaksi/{orderId}/regenerate-snap', [TransaksiController::class, 'regenerateSnapToken'])->name('transaksi.regenerate-snap');
 
     Route::get('/my-orders', [TransaksiController::class, 'index'])->name('my-orders');
 });
+
+Route::post('/midtrans/callback', [TransaksiController::class, 'callback'])->name('midtrans.callback');
 
 // Public menu page (user/customer) - separate from admin CRUD
 Route::get('/menu', [MenuController::class, 'publicIndex'])->name('menu.public');

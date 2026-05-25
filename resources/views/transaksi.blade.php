@@ -21,6 +21,9 @@
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if($pesanan->status === 'pending' && config('services.midtrans.client_key'))
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+    @endif
     <style>
         :root {
             --brand-red: #8B0000;
@@ -355,11 +358,26 @@
 
                         @if($status === 'pending')
                             <div class="mt-6">
-                                <button type="button" onclick="openQrisModal()" class="btn-premium w-full flex items-center justify-center gap-2">
-                                    <i class="fas fa-qrcode"></i> Bayar Sekarang
+                                @if(config('services.midtrans.client_key') && config('services.midtrans.server_key'))
+                                    <button type="button" onclick="payWithMidtrans()" class="btn-premium w-full flex items-center justify-center gap-2 animate-pulse-subtle">
+                                        <i class="fas fa-credit-card"></i> Bayar Sekarang
+                                    </button>
+                                @endif
+                            </div>
+                        @endif
+
+                        @if($status === 'pending' && config('app.debug'))
+                            <div class="mt-4 p-4 bg-yellow-50/80 border border-yellow-200 rounded-[20px] backdrop-blur-sm">
+                                <p class="text-[10px] font-bold text-yellow-800 uppercase tracking-widest mb-2 opacity-80 flex items-center gap-1.5">
+                                    <i class="fas fa-bug text-[11px]"></i> Developer Tools (Lokal)
+                                </p>
+                                <button type="button" onclick="simulatePaymentSuccess()" class="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                    <i class="fas fa-check-double"></i> Simulasikan Bayar Sukses
                                 </button>
                             </div>
                         @endif
+
+
 
                         @php
                             $waPhone = '6281947260782';
@@ -382,78 +400,7 @@
             </div>
         </div>
 
-        {{-- Modals --}}
-        {{-- QRIS Modal --}}
-        <div id="qrisModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-[100] px-4 backdrop-blur-sm">
-            <div class="bg-white w-full max-w-sm rounded-[32px] shadow-2xl overflow-hidden animate-slide-up border border-white/20">
-                <div class="px-8 py-6 flex flex-col items-center text-center bg-white border-b border-gray-50">
-                    <div class="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center text-red-700 mb-4 shadow-sm">
-                        <i class="fas fa-qrcode text-2xl"></i>
-                    </div>
-                    <h2 class="text-xl font-extrabold text-brand-brown tracking-tight">QRIS Pembayaran</h2>
-                    <p class="text-[10px] font-bold text-brand-brown-light mt-1 uppercase tracking-widest">Scan & Selesaikan Pembayaran</p>
-                    <button type="button" onclick="closeQrisModal()" class="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:bg-gray-100 transition-all">&times;</button>
-                </div>
-                
-                <div class="p-8 flex flex-col items-center">
-                    <div class="mb-6 text-center">
-                        <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">Total Bayar</p>
-                        <div class="text-2xl font-black text-red-800">Rp {{ number_format((float) $subtotal, 0, ',', '.') }}</div>
-                    </div>
-                    
-                    <div class="relative p-5 bg-white border-2 border-dashed border-red-100 rounded-[24px] shadow-inner mb-6 group">
-                        <img src="{{ asset('qriss.jpeg') }}" alt="QRIS" class="w-48 h-48 object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg'" />
-                        <div class="absolute inset-0 bg-red-800/0 group-hover:bg-red-800/5 transition-all duration-300 rounded-[24px]"></div>
-                    </div>
-                    
-                    <p class="text-[10px] text-center text-stone-400 px-4 leading-relaxed font-medium">Silakan scan QRIS di atas menggunakan m-Banking atau E-Wallet pilihan Anda.</p>
-                </div>
-                
-                <div class="px-8 pb-8 flex gap-3">
-                    <button type="button" onclick="closeQrisModal()" class="flex-1 py-4 rounded-2xl border-2 border-gray-100 text-stone-400 text-sm font-bold hover:bg-gray-50 transition-all">Nanti</button>
-                    <button onclick="openUploadProofModal()" class="flex-[1.5] py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2">
-                        <i class="fas fa-upload text-xs"></i> Upload Bukti
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        {{-- Upload Proof Modal --}}
-        <div id="uploadProofModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-[110] px-4 backdrop-blur-sm">
-            <div class="bg-white w-full max-w-sm rounded-[32px] shadow-2xl overflow-hidden animate-slide-up border border-white/20">
-                <div class="px-8 py-6 flex flex-col items-center text-center bg-white border-b border-gray-50">
-                    <div class="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center text-red-700 mb-4 shadow-sm">
-                        <i class="fas fa-cloud-upload-alt text-2xl"></i>
-                    </div>
-                    <h2 class="text-xl font-extrabold text-brand-brown tracking-tight">Kirim Bukti</h2>
-                    <p class="text-[10px] font-bold text-brand-brown-light mt-1 uppercase tracking-widest">Konfirmasi Pembayaran Anda</p>
-                    <button type="button" onclick="closeUploadProofModal()" class="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:bg-gray-100 transition-all">&times;</button>
-                </div>
-
-                <form id="uploadProofForm" onsubmit="submitPaymentProof(event)" class="p-8 pt-6">
-                    <div class="mb-6">
-                        <label class="block text-[10px] font-bold text-brand-brown-light uppercase tracking-widest mb-3 px-1">Bukti Transfer (Screenshot)</label>
-                        <div class="relative group">
-                            <input type="file" id="paymentProof" name="payment_proof" accept="image/*" required class="hidden" onchange="previewSelectedImage(this)">
-                            <label for="paymentProof" class="w-full h-44 border-2 border-dashed border-gray-100 rounded-3xl flex flex-col items-center justify-center cursor-pointer hover:bg-red-50/30 hover:border-red-200 transition-all duration-300 group" id="dropzone">
-                                <div class="w-14 h-14 rounded-full bg-gray-50 flex items-center justify-center text-stone-300 mb-3 group-hover:bg-white group-hover:text-red-700 transition-all shadow-sm">
-                                    <i class="fas fa-image text-xl"></i>
-                                </div>
-                                <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest group-hover:text-red-800 transition-all" id="uploadLabel">Pilih File Gambar</span>
-                            </label>
-                            <img id="previewImage" src="" alt="Preview" class="w-full h-auto rounded-[24px] hidden shadow-lg border border-gray-100 animate-fade-in">
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <button type="button" onclick="closeUploadProofModal()" class="w-full py-4 rounded-2xl border-2 border-gray-100 text-stone-400 text-sm font-bold hover:bg-gray-50 transition-all">Batal</button>
-                        <button type="submit" id="btnSubmitProof" class="w-full py-4 rounded-2xl bg-[linear-gradient(to_right,#8B0000_50%,#a50000_50%)] bg-[length:200%_100%] bg-right-bottom hover:bg-left-bottom text-white text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2">
-                            <i class="fas fa-paper-plane text-xs"></i> Kirim Bukti
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
 
         {{-- Review Modal --}}
         @if($status === 'completed' && !\App\Models\Testimonial::where('order_id', $pesanan->order_id)->exists())
@@ -503,25 +450,190 @@
         <audio id="successSound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" preload="auto"></audio>
 
         <script>
-            // Modal Logic
-            function openQrisModal() {
-                const m = document.getElementById('qrisModal');
-                m.classList.remove('hidden'); m.classList.add('flex');
-            }
-            function closeQrisModal() {
-                const m = document.getElementById('qrisModal');
-                m.classList.add('hidden'); m.classList.remove('flex');
-            }
-            function openUploadProofModal() {
-                closeQrisModal();
-                const m = document.getElementById('uploadProofModal');
-                m.classList.remove('hidden'); m.classList.add('flex');
-            }
-            function closeUploadProofModal() {
-                const m = document.getElementById('uploadProofModal');
-                m.classList.add('hidden'); m.classList.remove('flex');
+            // Midtrans Payment Integration
+            let currentSnapToken = '{{ $pesanan->snap_token ?? '' }}';
+
+            function payWithMidtrans(token) {
+                if (typeof snap === 'undefined') {
+                    Swal.fire('Error', 'SDK Pembayaran Midtrans gagal dimuat. Silakan muat ulang halaman.', 'error');
+                    return;
+                }
+
+                token = token || currentSnapToken;
+                if (!token) {
+                    // No snap token yet, try to regenerate
+                    regenerateAndPay();
+                    return;
+                }
+
+                snap.pay(token, {
+                    onSuccess: function(result) {
+                        syncPaymentStatus();
+                    },
+                    onPending: function(result) {
+                        syncPaymentStatus();
+                    },
+                    onError: function(result) {
+                        console.error('Midtrans onError:', result);
+                        // Token might be expired, try to regenerate
+                        Swal.fire({
+                            title: 'Token Expired',
+                            text: 'Token pembayaran kedaluwarsa. Sedang membuat ulang...',
+                            allowOutsideClick: false,
+                            didOpen: () => { Swal.showLoading(); }
+                        });
+                        regenerateAndPay();
+                    },
+                    onClose: function() {
+                        Swal.fire({
+                            title: 'Pembayaran Dibatalkan',
+                            text: 'Anda menutup halaman pembayaran. Silakan klik "Bayar Sekarang" untuk mencoba lagi.',
+                            icon: 'info',
+                            confirmButtonColor: '#8B0000'
+                        });
+                    }
+                });
             }
 
+            async function regenerateAndPay() {
+                try {
+                    Swal.fire({
+                        title: 'Menyiapkan Pembayaran...',
+                        text: 'Sedang membuat token pembayaran baru.',
+                        allowOutsideClick: false,
+                        didOpen: () => { Swal.showLoading(); }
+                    });
+
+                    const res = await fetch('{{ route("transaksi.regenerate-snap", $pesanan->order_id) }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const data = await res.json();
+
+                    if (data.success && data.snap_token) {
+                        currentSnapToken = data.snap_token;
+                        Swal.close();
+                        // Small delay to let Swal close
+                        setTimeout(() => {
+                            payWithMidtrans(data.snap_token);
+                        }, 300);
+                    } else {
+                        Swal.fire({
+                            title: 'Gagal',
+                            text: data.message || 'Gagal membuat token pembayaran. Silakan gunakan Transfer Manual.',
+                            icon: 'error',
+                            confirmButtonColor: '#8B0000'
+                        });
+                    }
+                } catch(err) {
+                    console.error('Regenerate snap error:', err);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Gagal menghubungi server. Silakan muat ulang halaman atau gunakan Transfer Manual.',
+                        icon: 'error',
+                        confirmButtonColor: '#8B0000'
+                    });
+                }
+            }
+
+            async function syncPaymentStatus() {
+                Swal.fire({
+                    title: 'Memproses...',
+                    text: 'Sedang menyinkronkan status pembayaran Anda.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                try {
+                    const res = await fetch('{{ route('transaksi.midtrans.sync', $pesanan->order_id) }}', {
+                        method: 'POST',
+                        headers: { 
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const data = await res.json();
+                    if(data.success) {
+                        if (data.status === 'confirmed') {
+                            try {
+                                document.getElementById('successSound').play();
+                            } catch(e) {}
+                            Swal.fire({
+                                title: 'Pembayaran Berhasil!',
+                                text: 'Terima kasih, pembayaran Anda telah diterima.',
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 2000
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Pembayaran Tertunda',
+                                text: 'Pembayaran Anda masih dalam proses verifikasi Midtrans.',
+                                icon: 'info',
+                                confirmButtonColor: '#8B0000'
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        }
+                    } else {
+                        Swal.fire('Gagal', data.message || 'Gagal sinkronisasi pembayaran.', 'error');
+                    }
+                } catch(err) {
+                    Swal.fire('Error', 'Gagal menghubungi server.', 'error');
+                }
+            }
+
+            async function simulatePaymentSuccess() {
+                Swal.fire({
+                    title: 'Menyimulasikan...',
+                    text: 'Sedang menyimulasikan pembayaran sukses.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                try {
+                    const res = await fetch('{{ route('transaksi.pay', $pesanan->order_id) }}', {
+                        method: 'POST',
+                        headers: { 
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const data = await res.json();
+                    if(data.success) {
+                        try {
+                            document.getElementById('successSound').play();
+                        } catch(e) {}
+                        Swal.fire({
+                            title: 'Simulasi Sukses!',
+                            text: 'Pembayaran disimulasikan berhasil.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire('Gagal', data.message || 'Gagal menyimulasikan pembayaran.', 'error');
+                    }
+                } catch(err) {
+                    Swal.fire('Error', 'Gagal menghubungi server.', 'error');
+                }
+            }
+
+            // Modal Logic
             function openReviewModal() {
                 const m = document.getElementById('reviewModal');
                 if(m) { m.classList.remove('hidden'); m.classList.add('flex'); }
@@ -531,20 +643,6 @@
                 if(m) { m.classList.add('hidden'); m.classList.remove('flex'); }
             }
 
-            // Image Preview
-            function previewSelectedImage(input) {
-                const preview = document.getElementById('previewImage');
-                const dropzone = document.getElementById('dropzone');
-                if (input.files && input.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        preview.classList.remove('hidden');
-                        dropzone.classList.add('hidden');
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
 
             // Rating Logic
             function setRating(v) {
@@ -565,45 +663,6 @@
                         s.classList.remove('scale-110');
                     }
                 });
-            }
-
-            // Submissions
-            async function submitPaymentProof(e) {
-                e.preventDefault();
-                const btn = document.getElementById('btnSubmitProof');
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
-
-                const formData = new FormData();
-                formData.append('payment_proof', document.getElementById('paymentProof').files[0]);
-
-                try {
-                    const res = await fetch('{{ route('transaksi.upload-proof', $pesanan->order_id) }}', {
-                        method: 'POST',
-                        headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' },
-                        body: formData
-                    });
-                    const data = await res.json();
-                    if(data.success) {
-                        btn.innerHTML = '<i class="fas fa-check"></i> Berhasil!';
-                        document.getElementById('successSound').play();
-                        Swal.fire({
-                            title: 'Berhasil Terkirim!',
-                            text: 'Bukti pembayaran berhasil dikirim dan menunggu konfirmasi.',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 2000
-                        }).then(() => {
-                            window.location.reload();
-                        });
-                    } else {
-                        Swal.fire('Gagal', data.message || 'Gagal mengirim bukti.', 'error');
-                        btn.disabled = false; btn.innerHTML = '<i class="fas fa-upload text-xs"></i> Kirim Bukti';
-                    }
-                } catch(err) {
-                    Swal.fire('Error', 'Terjadi kesalahan server.', 'error');
-                    btn.disabled = false; btn.innerHTML = '<i class="fas fa-upload text-xs"></i> Kirim Bukti';
-                }
             }
 
             async function submitReview(e) {
