@@ -462,27 +462,12 @@
 
             <!-- Section 2: Kenapa BBC -->
             <div class="fade-up">
-                <!-- Title & Text Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 items-start mb-10">
-                    <div class="md:col-span-5 lg:col-span-4 lg:order-2">
-                        <div class="mb-4">
-                            <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins"><i class="fas fa-award mr-1"></i> Kenapa BBC</span>
-                            <h3 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-4 flex flex-wrap justify-center md:justify-start gap-x-4">
-                                Layak
-                                Direkomendasikan
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="md:col-span-7 lg:col-span-8 lg:order-1 flex flex-col justify-center">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                    <!-- Kolom Kiri: Teks & Poin-poin -->
+                    <div class="lg:col-span-7 flex flex-col gap-6 md:gap-8 order-2 lg:order-1">
                         <p class="text-[0.95rem] md:text-[1.05rem] text-[#5c4637] leading-relaxed text-justify md:text-left lg:pr-8">
                             Setiap porsi dibuat dengan dedikasi penuh menggunakan bahan berkualitas tinggi. Kami menjaga kebersihan, tekstur, dan rasa agar pengalaman makan tetap terasa premium tanpa kehilangan identitas bakso khas rumahan.
                         </p>
-                    </div>
-                </div>
-
-                <!-- Visuals & Points -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                    <div class="lg:col-span-7 flex flex-col gap-6 md:gap-8 justify-center order-2 lg:order-1">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
                             <div class="flex items-start gap-4">
                                 <div class="flex-shrink-0 text-red-700 text-xl md:text-2xl mt-1"><i class="fas fa-seedling"></i></div>
@@ -499,19 +484,43 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-start gap-4 mt-2 md:mt-0">
+                        <div class="flex items-start gap-4">
                             <div class="flex-shrink-0 text-red-700 text-xl md:text-2xl mt-1"><i class="fas fa-star"></i></div>
                             <div>
                                 <div class="font-bold text-[#3a2a1a] text-base md:text-lg">Cita Rasa Konsisten</div>
                                 <div class="text-[#5c4637] text-[0.9rem] md:text-[0.95rem] mt-1.5 leading-relaxed">Setiap mangkuk dijaga agar rasanya stabil dari hari ke hari, bukan hanya enak sesaat, tapi kualitas jangka panjang.</div>
                             </div>
                         </div>
-                        <div class="pl-5 border-l-2 border-red-700 text-[#5d4638] text-[0.9rem] md:text-[0.95rem] font-medium leading-relaxed italic mt-2">
+                        <div class="pl-5 border-l-2 border-red-700 text-[#5d4638] text-[0.9rem] md:text-[0.95rem] font-medium leading-relaxed italic">
                             "Mulai dari pelanggan terdekat hingga food vlogger terkemuka, BBC terus dikenal luas berkat kualitas dan pelayanan yang konsisten."
                         </div>
                     </div>
-                    <div class="lg:col-span-5 relative w-full h-[280px] md:h-[340px] order-1 lg:order-2">
-                        <img src="https://placehold.co/720x560/efe1d1/3a2a1a?text=About+Image" alt="Kenapa BBC" class="w-full h-full object-cover rounded-2xl">
+
+                    <!-- Kolom Kanan: Judul + Carousel sejajar -->
+                    <div class="lg:col-span-5 flex flex-col order-1 lg:order-2">
+                        <div class="mb-5">
+                            <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-2 block font-poppins"><i class="fas fa-award mr-1"></i> Kenapa BBC</span>
+                            <h3 class="text-4xl md:text-5xl font-bold text-[#26180f] tracking-tight font-bold mb-0 flex flex-wrap justify-center md:justify-start gap-x-4">
+                                Layak
+                                Direkomendasikan
+                            </h3>
+                        </div>
+                        <div class="relative w-full h-[280px] md:h-[340px] group rounded-2xl overflow-hidden shadow-lg">
+                            <div id="about-carousel" class="flex w-full h-full snap-x snap-mandatory scroll-smooth overflow-x-auto" style="scrollbar-width:none;-ms-overflow-style:none;">
+                                <div class="snap-center shrink-0 w-full h-full">
+                                    <img src="{{ asset('foto1.jpeg') }}" alt="BBC 1" class="w-full h-full object-cover">
+                                </div>
+                                <div class="snap-center shrink-0 w-full h-full">
+                                    <img src="{{ asset('foto2.jpeg') }}" alt="BBC 2" class="w-full h-full object-cover">
+                                </div>
+                                <div class="snap-center shrink-0 w-full h-full">
+                                    <img src="{{ asset('foto3.webp') }}" alt="BBC 3" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                            <button onclick="document.getElementById('about-carousel').scrollBy({left:-document.getElementById('about-carousel').clientWidth,behavior:'smooth'})" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm shadow-md flex items-center justify-center text-[#8b0000] opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 hover:scale-110" aria-label="Prev"><i class="fas fa-chevron-left text-sm"></i></button>
+                            <button onclick="document.getElementById('about-carousel').scrollBy({left:document.getElementById('about-carousel').clientWidth,behavior:'smooth'})" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm shadow-md flex items-center justify-center text-[#8b0000] opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 hover:scale-110" aria-label="Next"><i class="fas fa-chevron-right text-sm"></i></button>
+                            <style>#about-carousel::-webkit-scrollbar{display:none}</style>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -627,6 +636,26 @@
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+                revealEls.forEach(el => observer.observe(el));
+            } else {
+                revealEls.forEach(el => el.classList.add('visible'));
+            }
+        }
+
+    </script>
+</body>
+</html>
+
+
+
+
+
                             entry.target.classList.add('visible');
                             observer.unobserve(entry.target);
                         }
