@@ -3192,7 +3192,7 @@
 
 
 
-    <!-- PAKET ACARA -->
+    <!-- PILIHAN PAKET -->
 
     <section id="paket" class="py-16">
 
@@ -3204,13 +3204,13 @@
 
                 <h3 class="text-3xl md:text-5xl font-bold text-[#26180f] tracking-tight mb-4 text-center">
 
-                    Paket Acara
+                    Pilihan Paket
 
                 </h3>
 
             </div>
 
-            <p class="text-center mb-5 text-base md:text-lg text-gray-700 font-poppins font-medium">Bawa cita rasa legendaris Bakso Bunderan Ciomas ke momen spesial Anda</p>
+            <p class="text-center mb-5 text-base md:text-lg text-gray-700 font-poppins font-medium">Berbagai pilihan paket katering praktis yang cocok untuk semua jenis acara Anda.</p>
 
 
 
@@ -3228,45 +3228,19 @@
 
             @if(isset($pakets) && $pakets->count() > 0)
 
-                @php
-
-                    $featuredPackageIndex = $pakets->count() > 1 ? (int) ceil($pakets->count() / 2) : 1;
-
-                @endphp
-
-                <div class="relative package-carousel-shell">
-
-                    <div id="packageNavControls" class="flex justify-center sm:justify-end gap-2 mb-3">
-
-                        <button id="packagePrevBtn" type="button" class="package-nav-btn" aria-label="Geser paket ke kiri">
-
-                            <i class="fas fa-chevron-left"></i>
-
-                        </button>
-
-                        <button id="packageNextBtn" type="button" class="package-nav-btn" aria-label="Geser paket ke kanan">
-
-                            <i class="fas fa-chevron-right"></i>
-
-                        </button>
-
-                    </div>
-
-
-
-                    <div id="packageCarousel" class="package-carousel">
-
-                        <div id="packageGrid" class="package-track">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto items-center justify-center">
 
                             @foreach($pakets as $paket)
 
-                                <div class="package-card package-slide fade-left" style="transition-delay: {{ $loop->index * 0.1 }}s">
+                                <div class="package-card fade-left h-full" style="transition-delay: {{ $loop->index * 0.1 }}s">
 
-                                    <div class="package-media">
+                                    <div class="package-media relative w-full aspect-video rounded-t-2xl overflow-hidden">
 
                                         <img src="{{ $paket->image ? asset($paket->image) : 'https://placehold.co/800x600/f5f5f5/999?text=Paket' }}"
 
                                              alt="{{ $paket->name }}"
+
+                                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
 
                                              loading="lazy">
 
@@ -3359,10 +3333,6 @@
                                 </div>
 
                             @endforeach
-
-                        </div>
-
-                    </div>
 
                 </div>
 
@@ -4230,136 +4200,6 @@
 
 
 
-        function initPackageCarousel() {
-
-            const carousel = document.getElementById('packageCarousel');
-
-            const navControls = document.getElementById('packageNavControls');
-
-            const prevBtn = document.getElementById('packagePrevBtn');
-
-            const nextBtn = document.getElementById('packageNextBtn');
-
-            const firstSlide = carousel?.querySelector('.package-slide');
-
-            if (!carousel || !prevBtn || !nextBtn) return;
-
-
-
-            function updateButtons() {
-
-                const scrollLeft = carousel.scrollLeft;
-
-                const maxScroll = Math.max(0, carousel.scrollWidth - carousel.clientWidth);
-
-                
-
-                // Disable previous button if at the very start
-
-                const isAtStart = scrollLeft <= 10;
-
-                prevBtn.disabled = isAtStart;
-
-                
-
-                // Disable next button if at the very end
-
-                const isAtEnd = scrollLeft >= maxScroll - 10;
-
-                nextBtn.disabled = isAtEnd;
-
-            }
-
-
-
-            function syncNavVisibility() {
-
-                const hasOverflow = (carousel.scrollWidth - carousel.clientWidth) > 2;
-
-
-
-                if (navControls) {
-
-                    // Show controls only when cards exceed container bounds on all devices
-
-                    navControls.classList.toggle('hidden', !hasOverflow);
-
-                }
-
-
-
-                // Center the track if there is no overflow
-
-                const track = document.getElementById('packageGrid');
-
-                if (track) {
-
-                    if (!hasOverflow) {
-
-                        track.style.minWidth = '100%';
-
-                        track.style.justifyContent = 'center';
-
-                    } else {
-
-                        track.style.minWidth = 'min-content';
-
-                        track.style.justifyContent = 'flex-start';
-
-                    }
-
-                }
-
-
-
-                updateButtons();
-
-            }
-
-
-
-            function scrollByAmount(direction) {
-
-                const slideGap = 16;
-
-                const slideWidth = firstSlide ? firstSlide.getBoundingClientRect().width : 280;
-
-                const amount = slideWidth + slideGap;
-
-                carousel.scrollBy({
-
-                    left: direction * amount,
-
-                    behavior: 'smooth'
-
-                });
-
-            }
-
-
-
-            prevBtn.addEventListener('click', () => scrollByAmount(-1));
-
-            nextBtn.addEventListener('click', () => scrollByAmount(1));
-
-            carousel.addEventListener('scroll', updateButtons, { passive: true });
-
-            window.addEventListener('resize', syncNavVisibility);
-
-            window.addEventListener('load', syncNavVisibility);
-
-            requestAnimationFrame(syncNavVisibility);
-
-        }
-
-
-
-
-
-        initPackageCarousel();
-
-
-
         function updateCartCount() {
 
             fetch('/api/cart-count')
@@ -4476,7 +4316,7 @@
 
 
 
-        // ========== AUTO GESER REKOMENDASI (LOOP MULUS) ==========
+        // ========== AUTO GESER REKOMENDASI (LOOP MULUS) & SWIPE MANUAL ==========
 
         function initRecommendedAutoScroll() {
 
@@ -4529,6 +4369,13 @@
             const slidePause = 4000;
 
             const transitionDuration = 1000;
+
+            
+            // Swipe state
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
+            let dragStartTime = 0;
 
 
 
@@ -4668,7 +4515,7 @@
 
                 resumeTimer = setTimeout(() => {
 
-                    if (pauseOnHover || isAnimating || loopWidth <= 0) {
+                    if (pauseOnHover || isAnimating || loopWidth <= 0 || isDragging) {
 
                         scheduleNextStep();
 
@@ -4765,6 +4612,60 @@
                 }
 
             }
+            
+            // Mouse & Touch events for manual sliding
+            
+            function handleDragStart(e) {
+                if (isAnimating) return;
+                isDragging = true;
+                pauseOnHover = true;
+                clearTimeout(resumeTimer);
+                startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+                currentX = startX;
+                dragStartTime = Date.now();
+                track.style.transition = 'none';
+            }
+
+            function handleDragMove(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+                const diffX = currentX - startX;
+                
+                // Add resistive pull at the ends, though cloning means it mostly feels endless
+                track.style.transform = `translateX(${currentCenterOffset - (currentIndex * stepWidth) + diffX}px)`;
+            }
+
+            function handleDragEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+                pauseOnHover = false;
+                
+                const diffX = currentX - startX;
+                const timeDiff = Date.now() - dragStartTime;
+                
+                // If swiped far enough or fast enough
+                if (Math.abs(diffX) > stepWidth / 3 || (Math.abs(diffX) > 30 && timeDiff < 300)) {
+                    if (diffX > 0) {
+                        prev();
+                    } else {
+                        next();
+                    }
+                } else {
+                    // Snap back
+                    goTo(currentIndex);
+                }
+                
+                scheduleNextStep();
+            }
+
+            slider.addEventListener('mousedown', handleDragStart);
+            window.addEventListener('mousemove', handleDragMove);
+            window.addEventListener('mouseup', handleDragEnd);
+
+            slider.addEventListener('touchstart', handleDragStart, {passive: true});
+            slider.addEventListener('touchmove', handleDragMove, {passive: false});
+            slider.addEventListener('touchend', handleDragEnd);
 
 
 
@@ -4778,9 +4679,11 @@
 
             slider.addEventListener('mouseleave', () => {
 
-                pauseOnHover = false;
+                if (!isDragging) {
+                    pauseOnHover = false;
 
-                scheduleNextStep();
+                    scheduleNextStep();
+                }
 
             });
 
@@ -4806,7 +4709,7 @@
 
             prevBtn.addEventListener('click', () => {
 
-                if (loopWidth <= 0) return;
+                if (loopWidth <= 0 || isAnimating) return;
 
                 clearTimeout(resumeTimer);
 
@@ -4818,7 +4721,7 @@
 
             nextBtn.addEventListener('click', () => {
 
-                if (loopWidth <= 0) return;
+                if (loopWidth <= 0 || isAnimating) return;
 
                 clearTimeout(resumeTimer);
 

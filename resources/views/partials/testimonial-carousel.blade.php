@@ -83,6 +83,17 @@
         gap: 1rem;
         will-change: transform;
         padding: 0.4rem 0;
+        width: max-content;
+        animation: marqueeScroll 40s linear infinite;
+    }
+
+    .testimonial-carousel-container:hover .testimonial-carousel-track {
+        animation-play-state: paused;
+    }
+
+    @keyframes marqueeScroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(calc(-50% - 0.5rem)); }
     }
 
     .testimonial-summary {
@@ -613,12 +624,6 @@
         </div>
 
         <div class="testimonial-carousel-container" id="testimonialCarousel">
-            <button id="testimoniPrev" type="button" class="testimonial-nav prev" aria-label="Geser ulasan ke kiri">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button id="testimoniNext" type="button" class="testimonial-nav next" aria-label="Geser ulasan ke kanan">
-                <i class="fas fa-chevron-right"></i>
-            </button>
             <div class="testimonial-fade testimonial-fade-left" aria-hidden="true"></div>
             <div class="testimonial-fade testimonial-fade-right" aria-hidden="true"></div>
             <div class="testimonial-carousel-track" id="testimonialTrack">
@@ -703,190 +708,49 @@
 
         function initTestimonialCarousel() {
             try {
-                const carousel = document.getElementById('testimonialCarousel');
                 const track = document.getElementById('testimonialTrack');
-                const prevBtn = document.getElementById('testimoniPrev');
-                const nextBtn = document.getElementById('testimoniNext');
-
-                if (!carousel) {
-                    console.warn('Testimonial carousel not found');
-                    return;
-                }
-                if (!track) {
-                    console.warn('Testimonial track not found');
-                    return;
-                }
-                if (!prevBtn) {
-                    console.warn('Testimonial prev button not found');
-                    return;
-                }
-                if (!nextBtn) {
-                    console.warn('Testimonial next button not found');
-                    return;
-                }
-
-                const baseItems = Array.from(track.querySelectorAll('.testimonial-card:not([data-testi-clone])'));
-                if (baseItems.length <= 1) {
-                    prevBtn.style.display = 'none';
-                    nextBtn.style.display = 'none';
-                    return;
-                }
+                if (!track) return;
 
                 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    track.style.animation = 'none';
                     return;
                 }
 
-                let loopWidth = 0;
-                let stepWidth = 0;
-                let currentCenterOffset = 0;
-                const clonesCount = baseItems.length;
-                let currentIndex = clonesCount;
-                let isAnimating = false;
-                let resumeTimer = null;
-                let pauseOnHover = false;
-                const slideStep = 1;
-                const slidePause = 4000;
-                const transitionDuration = 1000;
+                // Remove existing clones if any
+                track.querySelectorAll('[data-testi-clone]').forEach(el => el.remove());
 
-                track.style.transform = 'translateX(0)';
+                const baseItems = Array.from(track.querySelectorAll('.testimonial-card:not([data-testi-clone])'));
+                if (baseItems.length === 0) return;
 
-                function clearClones() {
-                    track.querySelectorAll('[data-testi-clone]').forEach(el => el.remove());
-                }
+                // Ensure we have enough items to scroll smoothly across large screens
+                // We'll multiply the base items so they overflow the screen width, then duplicate once for the marquee
+                const screenWidth = window.innerWidth;
+                const totalBaseWidth = baseItems.length * 420; // Approx card width
+                
+                let repeatCount = Math.ceil((screenWidth * 1.5) / totalBaseWidth);
+                if (repeatCount < 1) repeatCount = 1;
 
-                function rebuild() {
-                    clearClones();
-
-                    for (let i = 0; i < clonesCount; i++) {
-                        const clone = baseItems[i].cloneNode(true);
-                        clone.setAttribute('data-testi-clone', 'pre');
-                        clone.removeAttribute('data-testimonial-id');
-                        track.appendChild(clone);
-                    }
-
+                // First, create the full base array
+                let fullSet = [...baseItems];
+                for (let i = 1; i < repeatCount; i++) {
                     baseItems.forEach(item => {
-                        track.appendChild(item.cloneNode(true));
-                    });
-
-                    for (let i = 0; i < clonesCount; i++) {
-                        const clone = baseItems[i].cloneNode(true);
-                        clone.setAttribute('data-testi-clone', 'post');
-                        clone.removeAttribute('data-testimonial-id');
+                        const clone = item.cloneNode(true);
+                        clone.setAttribute('data-testi-clone', 'pre');
                         track.appendChild(clone);
-                    }
-
-                    if (typeof window.initReviewReadMore === 'function') {
-                        window.initReviewReadMore(track);
-                    }
-
-                    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '24') || 24;
-                    const first = track.querySelector('.testimonial-card');
-                    stepWidth = first ? (first.offsetWidth + gap) : 320;
-                    
-                    const containerPadding = parseFloat(getComputedStyle(carousel).paddingLeft) || 0;
-                    currentCenterOffset = (carousel.clientWidth - (first ? first.offsetWidth : 320)) / 2 - containerPadding;
-
-                    loopWidth = stepWidth * baseItems.length;
-                    currentIndex = clonesCount;
-                    track.style.transition = 'none';
-                    track.style.transform = `translateX(${currentCenterOffset - (currentIndex * stepWidth)}px)`;
-                    void track.offsetWidth;
-                    track.style.transition = `transform ${transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+                        fullSet.push(clone);
+                    });
                 }
 
-            function goTo(index, immediate = false) {
-                    if (stepWidth <= 0 || isAnimating) return;
-                    isAnimating = true;
+                // Now duplicate the exact full set once more for seamless looping
+                fullSet.forEach(item => {
+                    const clone = item.cloneNode(true);
+                    clone.setAttribute('data-testi-clone', 'post');
+                    track.appendChild(clone);
+                });
 
-                    track.style.transition = immediate ? 'none' : `transform ${transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-                    track.style.transform = `translateX(${currentCenterOffset - (index * stepWidth)}px)`;
-
-                    if (!immediate) {
-                        setTimeout(() => {
-                            isAnimating = false;
-                        }, transitionDuration);
-                    } else {
-                        isAnimating = false;
-                    }
+                if (typeof window.initReviewReadMore === 'function') {
+                    window.initReviewReadMore(track);
                 }
-
-                function scheduleNextStep() {
-                    clearTimeout(resumeTimer);
-                    resumeTimer = setTimeout(() => {
-                        if (pauseOnHover || isAnimating || loopWidth <= 0) {
-                            scheduleNextStep();
-                            return;
-                        }
-                        next();
-                    }, slidePause);
-                }
-
-                function next() {
-                    if (isAnimating) return;
-                    currentIndex += slideStep;
-                    goTo(currentIndex);
-
-                    if (currentIndex >= baseItems.length * 2) {
-                        setTimeout(() => {
-                            currentIndex = clonesCount;
-                            goTo(currentIndex, true);
-                            scheduleNextStep();
-                        }, transitionDuration);
-                    } else {
-                        scheduleNextStep();
-                    }
-                }
-
-                function prev() {
-                    if (isAnimating) return;
-                    currentIndex -= slideStep;
-                    goTo(currentIndex);
-
-                    if (currentIndex < clonesCount) {
-                        setTimeout(() => {
-                            currentIndex = baseItems.length * 2 - slideStep;
-                            goTo(currentIndex, true);
-                            scheduleNextStep();
-                        }, transitionDuration);
-                    } else {
-                        scheduleNextStep();
-                    }
-                }
-
-                carousel.addEventListener('mouseenter', () => {
-                    pauseOnHover = true;
-                    clearTimeout(resumeTimer);
-                });
-
-                carousel.addEventListener('mouseleave', () => {
-                    pauseOnHover = false;
-                    scheduleNextStep();
-                });
-
-                carousel.addEventListener('touchstart', () => {
-                    pauseOnHover = true;
-                    clearTimeout(resumeTimer);
-                }, { passive: true });
-
-                carousel.addEventListener('touchend', () => {
-                    pauseOnHover = false;
-                    scheduleNextStep();
-                });
-
-                prevBtn.addEventListener('click', () => {
-                    clearTimeout(resumeTimer);
-                    prev();
-                });
-
-                nextBtn.addEventListener('click', () => {
-                    clearTimeout(resumeTimer);
-                    next();
-                });
-
-                window.addEventListener('resize', rebuild);
-
-                rebuild();
-                scheduleNextStep();
             } catch (error) {
                 console.error('Testimonial carousel initialization error:', error);
             }
