@@ -192,7 +192,6 @@
             <!-- Header Section -->
             <header class="text-center mb-10 md:mb-16 fade-in-up">
                 <div class="inline-flex items-center gap-2 mb-4 px-4 py-1.5 md:px-[18px] md:py-2 rounded-full bg-[rgba(139,0,0,0.08)] border border-[rgba(139,0,0,0.15)] text-[10px] md:text-xs font-bold uppercase tracking-[0.5px] text-[#8B0000]">
-                    <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#8B0000]"></span>
                     Hubungi Kami
                 </div>
                 <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#1a1a1a] tracking-tight mb-4 md:mb-6 leading-[1.15]">

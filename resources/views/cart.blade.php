@@ -23,7 +23,7 @@
     </script>
     <style>
         .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
-        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter Display", sans-serif !important; }
 
         /* ── Cart item card ── */
         .cart-item-card {

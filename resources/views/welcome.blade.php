@@ -23,7 +23,7 @@
    
     <style>
         .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
-        h1, h2, h3, h4 { font-family: "Inter", sans-serif !important; }
+        h1, h2, h3, h4 { font-family: "Inter Display", sans-serif !important; }
     </style>
 </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">

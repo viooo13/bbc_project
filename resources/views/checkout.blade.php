@@ -112,7 +112,7 @@
         }
 
         .section-title {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter Display', sans-serif;
             font-size: 1.1rem;
             font-weight: 800;
             color: var(--brand-brown);
