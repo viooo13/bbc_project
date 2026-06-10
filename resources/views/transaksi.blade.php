@@ -132,6 +132,7 @@
             margin-bottom: 2rem;
         }
     </style>
+    <link rel="icon" href="{{ asset('logo.jpeg') }}">
 </head>
 <body class="font-poppins">
     @include('partials.navbar')

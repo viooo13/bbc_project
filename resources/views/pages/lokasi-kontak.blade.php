@@ -182,6 +182,7 @@
             transform: translateY(-5px);
         }
     </style>
+    <link rel="icon" href="{{ asset('logo.jpeg') }}">
 </head>
 <body class="overflow-x-hidden">
     @include('partials.navbar')

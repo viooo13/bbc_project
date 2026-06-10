@@ -14,6 +14,7 @@
         .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
         h1, h2, h3, h4 { font-family: "Inter Display", sans-serif !important; }
     </style>
+    <link rel="icon" href="{{ asset('logo.jpeg') }}">
 </head>
 <body>
     <div class="container">

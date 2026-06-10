@@ -409,6 +409,7 @@
             .chart-wrap { height: 200px; }
         }
     </style>
+    <link rel="icon" href="{{ asset('logo.jpeg') }}">
 </head>
 <body>
     <div class="dashboard-container">

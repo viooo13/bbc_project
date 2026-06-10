@@ -172,6 +172,7 @@
             margin-left: 20px;
         }
     </style>
+    <link rel="icon" href="{{ asset('logo.jpeg') }}">
 </head>
 <body>
     <div class="dashboard-container">

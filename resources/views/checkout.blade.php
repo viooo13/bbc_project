@@ -177,6 +177,7 @@
             .premium-card { padding: 1.5rem !important; }
         }
     </style>
+    <link rel="icon" href="{{ asset('logo.jpeg') }}">
 </head>
 <body class="font-poppins">
     @include('partials.navbar')

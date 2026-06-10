@@ -419,6 +419,7 @@
             .data-table td:nth-child(7)::before { content: "Aksi"; }
         }
     </style>
+    <link rel="icon" href="{{ asset('logo.jpeg') }}">
 </head>
 <body>
     <div class="dashboard-container">

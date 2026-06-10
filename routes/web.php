@@ -157,7 +157,7 @@ Route::get('/admin/dashboard', function (Request $request) {
 
     for ($i = 5; $i >= 0; $i--) {
         $month = now()->copy()->subMonths($i);
-        $key = $month->format('Y-%m');
+        $key = $month->format('Y-m');
         $monthlySalesLabels[] = $month->translatedFormat('M Y');
         $monthlySalesData[] = (float) ($monthlySalesRaw[$key] ?? 0);
     }

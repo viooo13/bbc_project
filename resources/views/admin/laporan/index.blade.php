@@ -328,6 +328,7 @@
             .chart-box canvas { height: 200px !important; }
         }
     </style>
+    <link rel="icon" href="{{ asset('logo.jpeg') }}">
 </head>
 <body>
     <div class="dashboard-container">

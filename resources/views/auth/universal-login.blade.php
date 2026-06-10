@@ -85,6 +85,7 @@
         .auth-tagline, .auth-subtitle, h5, h6 { font-family: "Poppins", sans-serif !important; }
         h1, h2, h3, h4 { font-family: "Inter Display", sans-serif !important; }
     </style>
+    <link rel="icon" href="{{ asset('logo.jpeg') }}">
 </head>
 <body class="font-sans min-h-screen flex items-center justify-center bg-stone-50 p-5 overflow-x-hidden">
     <div class="w-full max-w-[440px] relative z-10">
