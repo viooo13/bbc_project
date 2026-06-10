@@ -3232,7 +3232,7 @@
 
                                 <div class="package-card fade-left h-full" style="transition-delay: {{ $loop->index * 0.1 }}s">
 
-                                    <div class="package-media relative w-full aspect-video rounded-t-2xl overflow-hidden">
+                                    <div class="package-media relative w-full h-[180px] md:h-auto md:aspect-video rounded-t-2xl overflow-hidden">
 
                                         <img src="{{ $paket->image ? asset($paket->image) : 'https://placehold.co/800x600/f5f5f5/999?text=Paket' }}"
 
