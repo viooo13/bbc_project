@@ -514,6 +514,10 @@
                 </a>
             </div>
         </div>
+        <a href="/kelola-user" class="menu-item {{ $activeMenu === 'user-management' ? 'active' : '' }}">
+            <i class="fas fa-users"></i>
+            <span>Kelola User</span>
+        </a>
         <a href="/kelola-admin" class="menu-item {{ $activeMenu === 'admin' ? 'active' : '' }}">
             <i class="fas fa-user-cog"></i>
             <span>Kelola Admin</span>

@@ -288,6 +288,9 @@ Route::middleware(['auth:admin', 'admin'])->group(function () {
     Route::get('/pesanan/{id}/ship', [PesananController::class, 'ship'])->name('pesanan.ship');
     Route::get('/pesanan/{id}/complete', [PesananController::class, 'complete'])->name('pesanan.complete');
     Route::get('/pesanan/{id}/paid', [PesananController::class, 'paid'])->name('pesanan.paid');
+    // User Management Routes
+    Route::get('/kelola-user', [\App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('admin.user-management.index');
+    Route::delete('/kelola-user/{id}', [\App\Http\Controllers\Admin\UserManagementController::class, 'destroy'])->name('admin.user-management.destroy');
 
     // Admin Management Routes
     Route::get('/kelola-admin', [AdminManagementController::class, 'index'])->name('admin.management.index');
